@@ -225,7 +225,10 @@ class LCAppModel: ObservableObject, Hashable {
         }
         
         await withCheckedContinuation({ c in
+            let start = CFAbsoluteTimeGetCurrent()
             appInfo.patchExecAndSignIfNeed(completionHandler: { success, error in
+                let diff = CFAbsoluteTimeGetCurrent() - start
+                NSLog("Took \(diff) seconds")
                 signError = error;
                 signSuccess = success;
                 c.resume()
@@ -243,7 +246,7 @@ class LCAppModel: ObservableObject, Hashable {
         })
         if let signError {
             if !signSuccess {
-                throw signError
+                throw signError.loc
             }
         }
         
