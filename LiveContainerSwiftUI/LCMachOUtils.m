@@ -98,11 +98,11 @@ void LCPatchExecSlice(const char *path, struct mach_header_64 *header, bool doIn
     }
 }
 
-NSString *LCParseMachO(const char *path, LCParseMachOCallback callback) {
-    int fd = open(path, O_RDWR, (mode_t)0600);
+NSString *LCParseMachO(const char *path, bool readOnly, LCParseMachOCallback callback) {
+    int fd = open(path, readOnly ? O_RDONLY : O_RDWR, (mode_t)readOnly ? 0400 : 0600);
     struct stat s;
     fstat(fd, &s);
-    void *map = mmap(NULL, s.st_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+    void *map = mmap(NULL, s.st_size, readOnly ? PROT_READ : (PROT_READ | PROT_WRITE), readOnly ? MAP_PRIVATE : MAP_SHARED, fd, 0);
     if (map == MAP_FAILED) {
         return [NSString stringWithFormat:@"Failed to map %s: %s", path, strerror(errno)];
     }
@@ -252,7 +252,7 @@ NSString* getLCEntitlementXML(void) {
 bool checkCodeSignature(const char* path) {
     __block bool checked = false;
     __block bool ans = false;
-    LCParseMachO(path, ^(const char *path, struct mach_header_64 *header, int fd, void *filePtr) {
+    LCParseMachO(path, true, ^(const char *path, struct mach_header_64 *header, int fd, void *filePtr) {
         if(checked || header->cputype != CPU_TYPE_ARM64) {
             return;
         }

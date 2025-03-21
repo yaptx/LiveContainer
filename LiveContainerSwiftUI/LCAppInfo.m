@@ -300,7 +300,7 @@
     if ([info[@"LCPatchRevision"] intValue] < currentPatchRev) {
 
         __block bool has64bitSlice = NO;
-        NSString *error = LCParseMachO(execPath.UTF8String, ^(const char *path, struct mach_header_64 *header, int fd, void* filePtr) {
+        NSString *error = LCParseMachO(execPath.UTF8String, false, ^(const char *path, struct mach_header_64 *header, int fd, void* filePtr) {
             if(header->cputype == CPU_TYPE_ARM64) {
                 has64bitSlice |= YES;
                 LCPatchExecSlice(path, header, ![self dontInjectTweakLoader]);
@@ -335,7 +335,7 @@
 
     int signRevision = 1;
 
-    // check if iOS think this app's signature is valid
+    // check if iOS think this app's signature is valid, if so, we can skip any further signature check
     NSString* executablePath = [appPath stringByAppendingPathComponent:infoPlist[@"CFBundleExecutable"]];
     if([[[NSUserDefaults alloc] initWithSuiteName:[LCUtils appGroupID]] boolForKey:@"LCSignOnlyOnExpiration"] && !forceSign) {
         bool signatureValid = checkCodeSignature(executablePath.UTF8String);

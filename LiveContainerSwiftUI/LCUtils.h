@@ -13,7 +13,7 @@ typedef NS_ENUM(NSInteger, Signer){
     ZSign = 1
 };
 
-NSString *LCParseMachO(const char *path, LCParseMachOCallback callback);
+NSString *LCParseMachO(const char *path, bool readOnly, LCParseMachOCallback callback);
 void LCPatchAddRPath(const char *path, struct mach_header_64 *header);
 void LCPatchExecSlice(const char *path, struct mach_header_64 *header, bool doInject);
 void LCPatchLibrary(const char *path, struct mach_header_64 *header);
