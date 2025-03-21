@@ -3041,23 +3041,6 @@
         }
       }
     },
-    "lc.settings.isSignOnlyOnInvalidSignature" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Re-Sign Only on Invalid Signature"
-          }
-        },
-        "zh_CN" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "仅在签名无效时重新签名"
-          }
-        }
-      }
-    },
     "lc.settings.JitAddress" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -3601,23 +3584,6 @@
         }
       }
     },
-    "lc.settings.signOnlyOnExpirationDesc" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "If you see frequent re-sign, enable this option."
-          }
-        },
-        "zh_CN" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "如果App重新签名过于频繁，可尝试启用此项。"
-          }
-        }
-      }
-    },
     "lc.settings.silentOpenWebPage" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -3846,6 +3812,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Failed to find signing certificate. Please check JIT-Less Diagnose page and see if there's something with your JIT-Less setup."
+          }
+        },
+        "zh_CN" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法找到证书用于签名。请查看“免JIT诊断”页面以检查免JIT模式设置存在问题。"
           }
         }
       }

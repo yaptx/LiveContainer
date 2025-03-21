@@ -536,7 +536,7 @@ extension LCUtils {
                 }
                 let inodeNumber = try fm.attributesOfItem(atPath: fileURL.path)[.systemFileNumber] as? NSNumber
                 if let fileInodeNumber = tweakFileINodeRecord[fileURL.lastPathComponent] {
-                    if(fileInodeNumber != inodeNumber || checkCodeSignature((fileURL.path as NSString).utf8String)) {
+                    if(fileInodeNumber != inodeNumber || !checkCodeSignature((fileURL.path as NSString).utf8String)) {
                         signNeeded = true
                         break
                     }

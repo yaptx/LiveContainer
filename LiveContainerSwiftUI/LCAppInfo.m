@@ -288,17 +288,20 @@
     }
     NSFileManager* fm = NSFileManager.defaultManager;
     NSString *execPath = [NSString stringWithFormat:@"%@/%@", appPath, _infoPlist[@"CFBundleExecutable"]];
-    NSString *backupPath = [NSString stringWithFormat:@"%@/%@_LiveContainerPatchBackUp", appPath, _infoPlist[@"CFBundleExecutable"]];
-    // copy-delete-move to avoid EXC_BAD_ACCESS (SIGKILL - CODESIGNING)
-    NSError *err;
-    [fm copyItemAtPath:execPath toPath:backupPath error:&err];
-    [fm removeItemAtPath:execPath error:&err];
-    [fm moveItemAtPath:backupPath toPath:execPath error:&err];
     
     // Update patch
     int currentPatchRev = 6;
-    if ([info[@"LCPatchRevision"] intValue] < currentPatchRev) {
-
+    bool needPatch = [info[@"LCPatchRevision"] intValue] < currentPatchRev;
+    if (needPatch || forceSign) {
+        // copy-delete-move to avoid EXC_BAD_ACCESS (SIGKILL - CODESIGNING)
+        NSString *backupPath = [NSString stringWithFormat:@"%@/%@_LiveContainerPatchBackUp", appPath, _infoPlist[@"CFBundleExecutable"]];
+        NSError *err;
+        [fm copyItemAtPath:execPath toPath:backupPath error:&err];
+        [fm removeItemAtPath:execPath error:&err];
+        [fm moveItemAtPath:backupPath toPath:execPath error:&err];
+    }
+    
+    if (needPatch) {
         __block bool has64bitSlice = NO;
         NSString *error = LCParseMachO(execPath.UTF8String, false, ^(const char *path, struct mach_header_64 *header, int fd, void* filePtr) {
             if(header->cputype == CPU_TYPE_ARM64) {
@@ -333,11 +336,9 @@
         return;
     }
 
-    int signRevision = 1;
-
     // check if iOS think this app's signature is valid, if so, we can skip any further signature check
     NSString* executablePath = [appPath stringByAppendingPathComponent:infoPlist[@"CFBundleExecutable"]];
-    if([[[NSUserDefaults alloc] initWithSuiteName:[LCUtils appGroupID]] boolForKey:@"LCSignOnlyOnExpiration"] && !forceSign) {
+    if(!forceSign) {
         bool signatureValid = checkCodeSignature(executablePath.UTF8String);
         
         if(signatureValid) {
@@ -347,20 +348,13 @@
         }
     }
     
-    // We're only getting the first 8 bytes for comparison
-    NSUInteger signID;
-    if (LCUtils.certificateData) {
-        uint8_t digest[CC_SHA1_DIGEST_LENGTH];
-        CC_SHA1(LCUtils.certificateData.bytes, (CC_LONG)LCUtils.certificateData.length, digest);
-        signID = *(uint64_t *)digest + signRevision;
-    } else {
+    if (!LCUtils.certificateData) {
         [NSUserDefaults.standardUserDefaults removeObjectForKey:@"SigningInProgress"];
         completetionHandler(NO, @"lc.signer.noCertificateFoundErr");
         return;
     }
     
     // Sign app if JIT-less is set up
-    if ([info[@"LCJITLessSignID"] unsignedLongValue] != signID || forceSign) {
         NSURL *appPathURL = [NSURL fileURLWithPath:appPath];
         [self preprocessBundleBeforeSiging:appPathURL completion:^{
             // We need to temporarily fake bundle ID and main executable to sign properly
@@ -382,9 +376,6 @@
             
             void (^signCompletionHandler)(BOOL success, NSError *error)  = ^(BOOL success, NSError *_Nullable error) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    if (success) {
-                        info[@"LCJITLessSignID"] = @(signID);
-                    }
                     
                     // Remove fake main executable
                     [fm removeItemAtPath:tmpExecPath error:nil];
@@ -429,12 +420,6 @@
             }
         }];
 
-    } else {
-        // no need to sign again
-        [NSUserDefaults.standardUserDefaults removeObjectForKey:@"SigningInProgress"];
-        completetionHandler(NO, @"lc.signer.latestCertificateInvalidErr");
-        return;
-    }
 }
 
 - (bool)isJITNeeded {
