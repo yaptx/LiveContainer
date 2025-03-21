@@ -149,7 +149,7 @@ Class LCSharedUtilsClass = nil;
         }
 
         // Remove LC_CODE_SIGNATURE
-        NSString *error = LCParseMachO(fileURL.path.UTF8String, ^(const char *path, struct mach_header_64 *header) {
+        NSString *error = LCParseMachO(fileURL.path.UTF8String, ^(const char *path, struct mach_header_64 *header, int fd, void* filePtr) {
             uint8_t *imageHeaderPtr = (uint8_t *)header + sizeof(struct mach_header_64);
             struct load_command *command = (struct load_command *)imageHeaderPtr;
             for(int i = 0; i < header->ncmds > 0; i++) {
@@ -170,7 +170,7 @@ Class LCSharedUtilsClass = nil;
     }
 }
 
-+ (NSProgress *)signAppBundle:(NSURL *)path completionHandler:(void (^)(BOOL success, NSDate* expirationDate, NSString* teamId, NSError *error))completionHandler {
++ (NSProgress *)signAppBundle:(NSURL *)path completionHandler:(void (^)(BOOL success, NSError *error))completionHandler {
     NSError *error;
 
     // I'm too lazy to reimplement signer, so let's borrow everything from SideStore
@@ -180,20 +180,20 @@ Class LCSharedUtilsClass = nil;
     // Load libraries from Documents, yeah
     [self loadStoreFrameworksWithError:&error];
     if (error) {
-        completionHandler(NO, nil, nil, error);
+        completionHandler(NO, error);
         return nil;
     }
 
     ALTCertificate *cert = [[NSClassFromString(@"ALTCertificate") alloc] initWithP12Data:self.certificateData password:self.certificatePassword];
     if (!cert) {
-        error = [NSError errorWithDomain:NSBundle.mainBundle.bundleIdentifier code:1 userInfo:@{NSLocalizedDescriptionKey: @"Failed to create ALTCertificate. Please try: 1. make sure your store is patched 2. reopen your store 3. refresh all apps"}];
-        completionHandler(NO, nil, nil, error);
+        error = [NSError errorWithDomain:NSBundle.mainBundle.bundleIdentifier code:1 userInfo:@{NSLocalizedDescriptionKey: @"lc.signer.failedToCreateAltCertErr"}];
+        completionHandler(NO, error);
         return nil;
     }
     ALTProvisioningProfile *profile = [[NSClassFromString(@"ALTProvisioningProfile") alloc] initWithURL:profilePath];
     if (!profile) {
-        error = [NSError errorWithDomain:NSBundle.mainBundle.bundleIdentifier code:2 userInfo:@{NSLocalizedDescriptionKey: @"Failed to create ALTProvisioningProfile. Please try: 1. make sure your store is patched 2. reopen your store 3. refresh all apps"}];
-        completionHandler(NO, nil, nil, error);
+        error = [NSError errorWithDomain:NSBundle.mainBundle.bundleIdentifier code:2 userInfo:@{NSLocalizedDescriptionKey: @"lc.signer.failedToCreateAltProvisionCertErr"}];
+        completionHandler(NO, error);
         return nil;
     }
 
@@ -202,13 +202,13 @@ Class LCSharedUtilsClass = nil;
     ALTSigner *signer = [[NSClassFromString(@"ALTSigner") alloc] initWithTeam:team certificate:cert];
     
     void (^signCompletionHandler)(BOOL success, NSError *error)  = ^(BOOL success, NSError *_Nullable error) {
-        completionHandler(success, [profile expirationDate], [profile teamIdentifier], error);
+        completionHandler(success, error);
     };
 
     return [signer signAppAtURL:path provisioningProfiles:@[(id)profile] completionHandler:signCompletionHandler];
 }
 
-+ (NSProgress *)signAppBundleWithZSign:(NSURL *)path completionHandler:(void (^)(BOOL success, NSDate* expirationDate, NSString* teamId, NSError *error))completionHandler {
++ (NSProgress *)signAppBundleWithZSign:(NSURL *)path completionHandler:(void (^)(BOOL success, NSError *error))completionHandler {
     NSError *error;
 
     // use zsign as our signer~
@@ -218,7 +218,7 @@ Class LCSharedUtilsClass = nil;
     [self loadStoreFrameworksWithError2:&error];
 
     if (error) {
-        completionHandler(NO, nil, nil, error);
+        completionHandler(NO, error);
         return nil;
     }
 
@@ -317,14 +317,14 @@ Class LCSharedUtilsClass = nil;
     // Sign the test app bundle
     if(signer == AltSign && ![NSUserDefaults.standardUserDefaults boolForKey:@"LCCertificateImported"]) {
         [LCUtils signAppBundle:[NSURL fileURLWithPath:path]
-        completionHandler:^(BOOL success, NSDate* expirationDate, NSString* teamId, NSError *_Nullable error) {
+        completionHandler:^(BOOL success, NSError *_Nullable error) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 completionHandler(success, error);
             });
         }];
     } else {
         [LCUtils signAppBundleWithZSign:[NSURL fileURLWithPath:path]
-        completionHandler:^(BOOL success, NSDate* expirationDate, NSString* teamId, NSError *_Nullable error) {
+        completionHandler:^(BOOL success, NSError *_Nullable error) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 completionHandler(success, error);
             });
@@ -378,7 +378,7 @@ Class LCSharedUtilsClass = nil;
     }
     
     // We have to change executable's UUID so iOS won't consider 2 executables the same
-    NSString* errorChangeUUID = LCParseMachO([execToPath.path UTF8String], ^(const char *path, struct mach_header_64 *header) {
+    NSString* errorChangeUUID = LCParseMachO([execToPath.path UTF8String], ^(const char *path, struct mach_header_64 *header, int fd, void* filePtr) {
         LCChangeExecUUID(header);
     });
     if (errorChangeUUID) {
@@ -452,7 +452,7 @@ Class LCSharedUtilsClass = nil;
         execToPatch = [tmpPayloadPath URLByAppendingPathComponent:@"App.app/AltStore"];;
     }
     
-    NSString* errorPatchAltStore = LCParseMachO([execToPatch.path UTF8String], ^(const char *path, struct mach_header_64 *header) {
+    NSString* errorPatchAltStore = LCParseMachO([execToPatch.path UTF8String], ^(const char *path, struct mach_header_64 *header, int fd, void* filePtr) {
         LCPatchAltStore(execToPatch.path.UTF8String, header);
     });
     if (errorPatchAltStore) {

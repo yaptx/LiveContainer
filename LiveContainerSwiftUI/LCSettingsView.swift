@@ -42,7 +42,7 @@ struct LCSettingsView: View {
     
     @State var isJitLessEnabled = false
     @AppStorage("LCDefaultSigner", store: LCUtils.appGroupUserDefault) var defaultSigner = Signer.ZSign
-    @AppStorage("LCSignOnlyOnExpiration", store: LCUtils.appGroupUserDefault) var isSignOnlyOnExpiration = true
+    @AppStorage("LCSignOnlyOnExpiration", store: LCUtils.appGroupUserDefault) var isSignOnlyOnInvalidSignature = true
     @AppStorage("LCFrameShortcutIcons") var frameShortIcon = false
     @AppStorage("LCSwitchAppWithoutAsking") var silentSwitchApp = false
     @AppStorage("LCOpenWebPageWithoutAsking") var silentOpenWebPage = false
@@ -114,8 +114,8 @@ struct LCSettingsView: View {
                         }
                         
                         if isAltStorePatched {
-                            Toggle(isOn: $isSignOnlyOnExpiration) {
-                                Text("lc.settings.signOnlyOnExpiration".loc)
+                            Toggle(isOn: $isSignOnlyOnInvalidSignature) {
+                                Text("lc.settings.isSignOnlyOnInvalidSignature".loc)
                             }
                         }
                         

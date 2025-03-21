@@ -287,19 +287,20 @@
         return;
     }
     NSFileManager* fm = NSFileManager.defaultManager;
+    NSString *execPath = [NSString stringWithFormat:@"%@/%@", appPath, _infoPlist[@"CFBundleExecutable"]];
+    NSString *backupPath = [NSString stringWithFormat:@"%@/%@_LiveContainerPatchBackUp", appPath, _infoPlist[@"CFBundleExecutable"]];
+    // copy-delete-move to avoid EXC_BAD_ACCESS (SIGKILL - CODESIGNING)
+    NSError *err;
+    [fm copyItemAtPath:execPath toPath:backupPath error:&err];
+    [fm removeItemAtPath:execPath error:&err];
+    [fm moveItemAtPath:backupPath toPath:execPath error:&err];
+    
     // Update patch
     int currentPatchRev = 6;
     if ([info[@"LCPatchRevision"] intValue] < currentPatchRev) {
-        NSString *execPath = [NSString stringWithFormat:@"%@/%@", appPath, _infoPlist[@"CFBundleExecutable"]];
-        NSString *backupPath = [NSString stringWithFormat:@"%@/%@_LiveContainerPatchBackUp", appPath, _infoPlist[@"CFBundleExecutable"]];
-        // copy-delete-move to avoid EXC_BAD_ACCESS (SIGKILL - CODESIGNING)
-        NSError *err;
-        [fm copyItemAtPath:execPath toPath:backupPath error:&err];
-        [fm removeItemAtPath:execPath error:&err];
-        [fm moveItemAtPath:backupPath toPath:execPath error:&err];
-        
+
         __block bool has64bitSlice = NO;
-        NSString *error = LCParseMachO(execPath.UTF8String, ^(const char *path, struct mach_header_64 *header) {
+        NSString *error = LCParseMachO(execPath.UTF8String, ^(const char *path, struct mach_header_64 *header, int fd, void* filePtr) {
             if(header->cputype == CPU_TYPE_ARM64) {
                 has64bitSlice |= YES;
                 LCPatchExecSlice(path, header, ![self dontInjectTweakLoader]);
@@ -334,11 +335,12 @@
 
     int signRevision = 1;
 
-    NSDate* expirationDate = info[@"LCExpirationDate"];
-    NSString* teamId = info[@"LCTeamId"];
-    if(expirationDate && [teamId isEqualToString:[LCUtils teamIdentifier]] && [[[NSUserDefaults alloc] initWithSuiteName:[LCUtils appGroupID]] boolForKey:@"LCSignOnlyOnExpiration"] && !forceSign) {
-        if([expirationDate laterDate:[NSDate now]] == expirationDate) {
-            // not expired yet, don't sign again
+    // check if iOS think this app's signature is valid
+    NSString* executablePath = [appPath stringByAppendingPathComponent:infoPlist[@"CFBundleExecutable"]];
+    if([[[NSUserDefaults alloc] initWithSuiteName:[LCUtils appGroupID]] boolForKey:@"LCSignOnlyOnExpiration"] && !forceSign) {
+        bool signatureValid = checkCodeSignature(executablePath.UTF8String);
+        
+        if(signatureValid) {
             [NSUserDefaults.standardUserDefaults removeObjectForKey:@"SigningInProgress"];
             completetionHandler(YES, nil);
             return;
@@ -353,7 +355,7 @@
         signID = *(uint64_t *)digest + signRevision;
     } else {
         [NSUserDefaults.standardUserDefaults removeObjectForKey:@"SigningInProgress"];
-        completetionHandler(NO, @"Failed to find signing certificate. Please refresh your store and try again.");
+        completetionHandler(NO, @"lc.signer.noCertificateFoundErr");
         return;
     }
     
@@ -378,7 +380,7 @@
             [infoPlist removeObjectForKey:@"LCBundleExecutable"];
             [infoPlist removeObjectForKey:@"LCBundleIdentifier"];
             
-            void (^signCompletionHandler)(BOOL success, NSDate* expirationDate, NSString* teamId, NSError *error)  = ^(BOOL success, NSDate* expirationDate, NSString* teamId, NSError *_Nullable error) {
+            void (^signCompletionHandler)(BOOL success, NSError *error)  = ^(BOOL success, NSError *_Nullable error) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     if (success) {
                         info[@"LCJITLessSignID"] = @(signID);
@@ -387,19 +389,21 @@
                     // Remove fake main executable
                     [fm removeItemAtPath:tmpExecPath error:nil];
                     
-
-                    if(success && expirationDate) {
-                        info[@"LCExpirationDate"] = expirationDate;
-                    }
-                    if(success && teamId) {
-                        info[@"LCTeamId"] = teamId;
-                    }
                     // Save sign ID and restore bundle ID
                     [self save];
                     [infoPlist writeToFile:infoPath atomically:YES];
                     [NSUserDefaults.standardUserDefaults removeObjectForKey:@"SigningInProgress"];
-                    completetionHandler(success, error.localizedDescription);
-
+                    if(!success) {
+                        completetionHandler(NO, error.localizedDescription);
+                    } else {
+                        bool signatureValid = checkCodeSignature(executablePath.UTF8String);
+                        if(signatureValid) {
+                            completetionHandler(YES, nil);
+                        } else {
+                            completetionHandler(NO, @"lc.signer.latestCertificateInvalidErr");
+                        }
+                    }
+                    
                 });
             };
             
@@ -428,7 +432,7 @@
     } else {
         // no need to sign again
         [NSUserDefaults.standardUserDefaults removeObjectForKey:@"SigningInProgress"];
-        completetionHandler(YES, nil);
+        completetionHandler(NO, @"lc.signer.latestCertificateInvalidErr");
         return;
     }
 }

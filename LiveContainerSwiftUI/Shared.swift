@@ -448,7 +448,7 @@ struct SiteAssociation : Codable {
 extension LCUtils {
     public static let appGroupUserDefault = UserDefaults.init(suiteName: LCUtils.appGroupID()) ?? UserDefaults.standard
     
-    public static func signFilesInFolder(url: URL, signer:Signer, onProgressCreated: (Progress) -> Void) async -> (String?, Date?) {
+    public static func signFilesInFolder(url: URL, signer:Signer, onProgressCreated: (Progress) -> Void) async -> String? {
         let fm = FileManager()
         var ans : String? = nil
         let codesignPath = url.appendingPathComponent("_CodeSignature")
@@ -462,11 +462,10 @@ extension LCUtils {
         do {
             try fm.copyItem(at: Bundle.main.executableURL!, to: tmpExecPath)
         } catch {
-            return (nil, nil)
+            return nil
         }
-        var ansDate : Date? = nil
         await withCheckedContinuation { c in
-            func compeletionHandler(success: Bool, expirationDate: Date?, teamId : String?, error: Error?){
+            func compeletionHandler(success: Bool, error: Error?){
                 do {
                     if let error = error {
                         ans = error.localizedDescription
@@ -480,7 +479,6 @@ extension LCUtils {
 
                     try fm.removeItem(at: tmpExecPath)
                     try fm.removeItem(at: tmpInfoPath)
-                    ansDate = expirationDate
                 } catch {
                     ans = error.localizedDescription
                 }
@@ -499,7 +497,7 @@ extension LCUtils {
             }
             onProgressCreated(progress)
         }
-        return (ans, ansDate)
+        return ans
 
     }
     
@@ -516,10 +514,8 @@ extension LCUtils {
         // check if re-sign is needed
         // if sign is expired, or inode number of any file changes, we need to re-sign
         let tweakSignInfo = NSMutableDictionary(contentsOf: tweakFolderUrl.appendingPathComponent("TweakInfo.plist")) ?? NSMutableDictionary()
-        let expirationDate = tweakSignInfo["expirationDate"] as? Date
         var signNeeded = false
-        if let expirationDate, expirationDate.compare(Date.now) == .orderedDescending, !force {
-            
+        if !force {
             let tweakFileINodeRecord = tweakSignInfo["files"] as? [String:NSNumber] ?? [String:NSNumber]()
             let fileURLs = try fm.contentsOfDirectory(at: tweakFolderUrl, includingPropertiesForKeys: nil)
             for fileURL in fileURLs {
@@ -540,7 +536,7 @@ extension LCUtils {
                 }
                 let inodeNumber = try fm.attributesOfItem(atPath: fileURL.path)[.systemFileNumber] as? NSNumber
                 if let fileInodeNumber = tweakFileINodeRecord[fileURL.lastPathComponent] {
-                    if(fileInodeNumber != inodeNumber) {
+                    if(fileInodeNumber != inodeNumber || checkCodeSignature((fileURL.path as NSString).utf8String)) {
                         signNeeded = true
                         break
                     }
@@ -593,7 +589,7 @@ extension LCUtils {
             return
         }
         
-        let (error, expirationDate2) = await LCUtils.signFilesInFolder(url: tmpDir, signer: signer) { p in
+        let error = await LCUtils.signFilesInFolder(url: tmpDir, signer: signer) { p in
             if let progressHandler {
                 progressHandler(p)
             }
@@ -604,7 +600,6 @@ extension LCUtils {
         
         // move signed files back and rebuild TweakInfo.plist
         tweakSignInfo.removeAllObjects()
-        tweakSignInfo["expirationDate"] = expirationDate2
         var fileInodes = [String:NSNumber]()
         for tmpFile in tmpPaths {
             let toPath = tweakFolderUrl.appendingPathComponent(tmpFile.lastPathComponent)
