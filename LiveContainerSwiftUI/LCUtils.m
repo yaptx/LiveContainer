@@ -414,6 +414,11 @@ Class LCSharedUtilsClass = nil;
 
     [manager removeItemAtURL:tmpPath error:error];
     if (*error) return nil;
+    
+    if([manager fileExistsAtPath:tmpIPAPath.path]) {
+        [manager removeItemAtURL:tmpIPAPath error:error];
+        if (*error) return nil;
+    }
 
     [zipData writeToURL:tmpIPAPath options:0 error:error];
     if (*error) return nil;
@@ -448,6 +453,10 @@ Class LCSharedUtilsClass = nil;
     NSURL *tmpPayloadPath = [tmpPath URLByAppendingPathComponent:@"Payload"];
     NSURL *tmpIPAPath = [appGroupPath URLByAppendingPathComponent:@"tmp.ipa"];
 
+    if([manager fileExistsAtPath:tmpPath.path]) {
+        [manager removeItemAtURL:tmpPath error:error];
+        if (*error) return nil;
+    }
     [manager createDirectoryAtURL:tmpPath withIntermediateDirectories:YES attributes:nil error:error];
     if (*error) return nil;
 
@@ -488,6 +497,10 @@ Class LCSharedUtilsClass = nil;
     [manager removeItemAtURL:tmpPath error:error];
     if (*error) return nil;
 
+    if([manager fileExistsAtPath:tmpIPAPath.path]) {
+        [manager removeItemAtURL:tmpIPAPath error:error];
+        if (*error) return nil;
+    }
     [zipData writeToURL:tmpIPAPath options:0 error:error];
     if (*error) return nil;
 

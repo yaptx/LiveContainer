@@ -81,7 +81,7 @@ import SwiftUI
             return true
         }
         
-        if url.host == "open-web-page" {
+        if url.host == "open-web-page" || url.host == "open-url" {
             if let urlComponent = URLComponents(url: url, resolvingAgainstBaseURL: false), let queryItem = urlComponent.queryItems?.first {
                 if queryItem.value?.isEmpty ?? true {
                     return true

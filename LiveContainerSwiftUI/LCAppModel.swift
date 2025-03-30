@@ -293,12 +293,6 @@ class LCAppModel: ObservableObject, Hashable {
                   let jitEnabler = JITEnablerType(rawValue: groupUserDefaults.integer(forKey: "LCJITEnablerType")) else {
                 return
             }
-            
-            if jitEnabler == .JITStreamerEB && enableResult{
-                UserDefaults.standard.set(true, forKey: "LCNeedToAcquireJIT")
-                LCUtils.launchToGuestApp()
-            }
-
         }
         guard let result = await jitAlert?.open(), result else {
             UserDefaults.standard.removeObject(forKey: "selected")

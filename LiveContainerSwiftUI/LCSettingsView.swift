@@ -16,8 +16,9 @@ enum PatchChoice {
 
 enum JITEnablerType : Int {
     case SideJITServer = 0
-    case JITStreamerEB = 1
+    case StkiJIT = 1
     case JITStreamerEBLegacy = 2
+    case StikJITLC = 3
 }
 
 struct LCSettingsView: View {
@@ -158,11 +159,13 @@ struct LCSettingsView: View {
                     }
                 }
                 Section {
-                    HStack {
-                        Text("lc.settings.JitAddress".loc)
-                        Spacer()
-                        TextField(JITEnabler == .SideJITServer ? "http://x.x.x.x:8080" : "http://[fd00::]:9172", text: $sideJITServerAddress)
-                            .multilineTextAlignment(.trailing)
+                    if JITEnabler == .SideJITServer || JITEnabler == .JITStreamerEBLegacy {
+                        HStack {
+                            Text("lc.settings.JitAddress".loc)
+                            Spacer()
+                            TextField(JITEnabler == .SideJITServer ? "http://x.x.x.x:8080" : "http://[fd00::]:9172", text: $sideJITServerAddress)
+                                .multilineTextAlignment(.trailing)
+                        }
                     }
                     if JITEnabler == .SideJITServer {
                         HStack {
@@ -174,7 +177,8 @@ struct LCSettingsView: View {
                     }
                     Picker(selection: $JITEnabler) {
                         Text("SideJITServer/JITStreamer 2.0").tag(JITEnablerType.SideJITServer)
-                        Text("JitStreamer-EB (Attach)").tag(JITEnablerType.JITStreamerEB)
+                        Text("StikJIT (StandAlone)").tag(JITEnablerType.StkiJIT)
+                        Text("StikJIT (Another LiveContainer)").tag(JITEnablerType.StikJITLC)
                         Text("JitStreamer-EB (Relaunch)").tag(JITEnablerType.JITStreamerEBLegacy)
                     } label: {
                         Text("lc.settings.jitEnabler".loc)
