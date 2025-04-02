@@ -10,7 +10,7 @@
 #include <mach-o/dyld.h>
 #include <mach-o/dyld_images.h>
 #include <mach-o/ldsyms.h>
-#import "../fishhook/fishhook.h"
+#import "../../fishhook/fishhook.h"
 #import "../utils.h"
 #include <sys/mman.h>
 @import Foundation;

@@ -11,6 +11,12 @@
             "value": "Add to Home Screen"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ضع للصفحه الرئيسية"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -21,6 +27,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ajouter à l'écran d'accueil"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lägg till på hemskärmen"
           }
         }
       }
@@ -42,6 +54,48 @@
                 "stringUnit": {
                   "state": "translated",
                   "value": "Do you want to delete %lld unused data folders?"
+                }
+              }
+            }
+          }
+        },
+        "ar": {
+          "variations": {
+            "plural": {
+              "zero": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "هل تريد أن تحذف %lld الملفات الغير مستخدمة؟"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "هل تريد أن تحذف %lld المِلَف الغير مستخدم؟"
+                }
+              },
+              "two": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "هل تريد أن تحذف %lld الملفان الغير مستخدمان؟"
+                }
+              },
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "هل تريد أن تحذف %lld الملفات الغير مستخدمة؟"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "هل تريد أن تحذف %lld الملفات الغير مستخدمة؟"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "هل تريد أن تحذف %lld الملفات الغير مستخدمة؟"
                 }
               }
             }
@@ -76,6 +130,24 @@
               }
             }
           }
+        },
+        "sv": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Vill du ta bort %lld oanvänd datamapp?"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Vill du ta bort %lld oanvända datamappar?"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -89,6 +161,12 @@
             "value": "Error while performing signing test"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حدث خطأ عند اختبار التوقيع"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -99,6 +177,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Erreur lors de l'exécution du test de signature"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fel vid signeringstest"
           }
         }
       }
@@ -113,6 +197,12 @@
             "value": "The test library has failed to load. This means your certificate may be having issue. Please try to: 1. Reopen %@; 2. Refresh all apps in %@; 3. Re-patch %@ and try again."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "فشل تحميل مكتبة الاختبار. هذا يعني أن الشهادة الخاصة بك قد تواجه مشكلة. يرجى محاولة: 1. إعادة فتح %@؛ 2. تحديث جميع التطبيقات في %@؛ 3. إعادة تصحيح %@ وحاول مرة أخرى."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -123,6 +213,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "La bibliothèque de test n'a pas pu être chargée. Cela signifie que votre certificat peut avoir un problème. Veuillez essayer de : 1. Rouvrir %@ ; 2. Rafraîchir toutes les applications dans %@ ; 3. Re-patcher %@ et réessayer."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Testbiblioteket har misslyckats med att ladda. Detta innebär att ditt certifikat kan ha problem. Försök att: 1. Öppna %@; 2. Uppdatera alla appar i %@; 3. Re-patch %@ och försök igen."
           }
         }
       }
@@ -137,6 +233,12 @@
             "value": "JIT-Less Mode Test Passed"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بدون-JIT نجح بالاختبار"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -147,6 +249,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Test du mode sans JIT réussi"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "JIT-Less Mode Test lyckades"
           }
         }
       }
@@ -161,6 +269,12 @@
             "value": "LiveContainer JIT-less setup"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أعداد وضع بدون-JIT في LiveContainer"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -171,6 +285,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Installation de LiveContainer sans JIT"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LiveContainer JIT-less setup"
           }
         }
       }
@@ -185,6 +305,12 @@
             "value": "About Me"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "عني"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -195,6 +321,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "À propos de moi"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Om mig"
           }
         }
       }
@@ -209,6 +341,12 @@
             "value": "Move success."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تم النقل بنجاح."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -219,6 +357,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Déplacement réussi."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Flyttningen lyckades."
           }
         }
       }
@@ -233,6 +377,12 @@
             "value": "There are files in the shared app group folder. Move it out first and try again."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هذه ملفات في مجلد مجموعه التطبيقات المُشارَكه. قم بنقلها اولاً قم حاول مرة أخرى."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -243,6 +393,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Il y a des fichiers dans le dossier partagé du groupe d'apps. Déplacez-les d'abord et réessayez."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Det finns filer i mappen för delade appgrupper. Flytta ut den först och försök igen."
           }
         }
       }
@@ -257,6 +413,12 @@
             "value": "There are files in the private app group folder. Move it out first and try again."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هذه ملفات في مجلد مجموعة التطبيقات الخاصة. قم بنقلها أولاً ثم حاول مرة أخرى."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -267,6 +429,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Il y a des fichiers dans le dossier du groupe d'apps privées. Déplacez-les d'abord et réessayez."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Det finns filer i mappen för privata appgrupper. Flytta ut den först och försök igen."
           }
         }
       }
@@ -281,6 +449,12 @@
             "value": "Move Private App Group to Shared Documents Folder"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أنقل تطبيق خاص ألى مِلَف المستندات المُشارَك"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -291,6 +465,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Déplacer le groupe d'apps privées vers le dossier de documents partagés"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Flytta privat appgrupp till delad dokumentmapp"
           }
         }
       }
@@ -305,6 +485,12 @@
             "value": "Move Shared App Group Files to Private Documents Folder"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أنقل تطبيق مُشارَك ألى مِلَف المستندات الخاص"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -315,6 +501,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Déplacer les fichiers du groupe d'apps partagées vers le dossier de documents privés"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Flytta delade appgruppfiler till privata dokument mapp"
           }
         }
       }
@@ -329,6 +521,12 @@
             "value": "Clean Unused Data Folders"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مسح الملفات الغير مستخدمة"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -339,6 +537,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Nettoyer les dossiers de données inutilisés"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rensa oanvända datamappar"
           }
         }
       }
@@ -353,6 +557,12 @@
             "value": "Clean Up Keychain"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تنظيف سلسله المفاتيح"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -363,6 +573,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Nettoyer le trousseau"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rensa upp nyckelring"
           }
         }
       }
@@ -377,6 +593,12 @@
             "value": "Failed to find certificate data. Refresh app in SideStore/AltStore and try again."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "فشل البحث عن بيانات الشهادة. حَدثْ التطبيق في SideStore/Altstore ثم حاول مرة أخرى."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -387,6 +609,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Les données du certificat n'ont pas été trouvées. Actualisez l'application dans SideStore/AltStore et réessayez."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Det gick inte att hitta certifikatdata. Uppdatera appen i SideStore/AltStore och försök igen."
           }
         }
       }
@@ -401,6 +629,12 @@
             "value": "If some app's account can not be synced between LiveContainers, it's may because it is still stored in current LiveContainer's private keychain. Cleaning up keychain may solve this issue, but it may sign you out of some of your accounts. Continue?"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إذا حساب من حسابات التطبيقات لا يعمل مع التطبيقات الاخرى في LiveContainers، قد يكون ذلك بسبب أنه محفوظ في سلسله مفاتيح LiveContainer الحالي الخاصة. تنظيف سلسله المفاتيح هذا قد تَحُل المشكله، لكن يمكنها أن تسجل الخروج من بعض حساباتك داخل التطبيق، هل تود المتابعه؟"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -411,6 +645,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Si le compte d'une application ne peut pas être synchronisé entre les LiveContainers, c'est peut-être parce qu'il est encore stocké dans le trousseau privé du LiveContainer actuel. Le nettoyage du trousseau peut résoudre ce problème, mais il se peut que vous soyez déconnecté de certains de vos comptes. Continuer ?"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Om vissa appars konto inte kan synkroniseras mellan LiveContainers kan det bero på att det fortfarande är lagrat i nuvarande LiveContainers privata nyckelring. Rensa upp nyckelring kan lösa detta problem, men det kan logga ut dig från några av dina konton. Fortsätt?"
           }
         }
       }
@@ -425,6 +665,12 @@
             "value": "Default Signer"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "المُوقع الأساسي"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -435,6 +681,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Signataire par défaut"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Standard Signer"
           }
         }
       }
@@ -449,6 +701,12 @@
             "value": "Don’t Sign New Apps"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا تُوقع التطبيقات الجديدة"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -459,6 +717,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ne pas signer les nouvelles applications"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Signera inte nya appar"
           }
         }
       }
@@ -473,6 +737,12 @@
             "value": "LiveContainer will not sign new apps until this option is off. App installed during this option is on will remain unsigned."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LiveContainer لا يوقع التطبيقات الجديدة حتى أطفاء هذا الخيار. عند تثبيت التطبيق مع هذه الميزة مفعله سوف يكون التطبيق غير مُوقع."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -483,6 +753,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "LiveContainer ne signera pas de nouvelles applications tant que cette option est activée. Les applications installées pendant que cette option est activée resteront non signées."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LiveContainer kommer inte att signera nya appar förrän det här alternativet är avstängt. Appen är installerad medans det här alternativet är på kommer att förbli osignerad."
           }
         }
       }
@@ -497,6 +773,12 @@
             "value": "Dynamic colors"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الألوان الديناميكية"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -507,6 +789,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Couleurs dynamiques"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dynamiska färger"
           }
         }
       }
@@ -521,6 +809,12 @@
             "value": "Enable dynamic colors for app boxes"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تفعيل الألوان الديناميكية للبرامج"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -531,6 +825,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Activer les couleurs dynamiques pour les contours des applications"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aktivera dynamiska färger för appboxar"
           }
         }
       }
@@ -545,6 +845,12 @@
             "value": "You must patch %@ before testing JIT-Less mode."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يجب ان تصحح %@ قبل اختبار وضع بدون-JIT."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -555,6 +861,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Vous devez patcher %@ avant de tester le mode sans JIT."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Du måste patcha %@ innan du testar JIT-Less läge."
           }
         }
       }
@@ -569,6 +881,12 @@
             "value": "Frame Shortcut Icon"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أيقونة الأختصار"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -579,6 +897,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Encadrer les icônes de raccourci"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rama genvägsikon "
           }
         }
       }
@@ -593,6 +917,12 @@
             "value": "Frame shortcut icons with LiveContainer icon."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ايقونة الأختصار مع أيقونة LiveContainer."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -603,6 +933,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Encadrer les icônes de raccourci avec l'icône de LiveContainer."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rama genvägsikoner med LiveContainer-ikonen."
           }
         }
       }
@@ -617,6 +953,12 @@
             "value": "Import Certificate"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "استيراد شهادة"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -627,6 +969,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Certificat d'importation"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importera certifikat"
           }
         }
       }
@@ -641,6 +989,12 @@
             "value": "To use JITLess mode without AltStore/SideStore, you have to import the certificate used to sign LiveContainer. Continue?"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لأستعمال وضع بدون-JIT دون AltStore/SideStore، عليك أستيراد الشهادة الذي تم توقيع LiveContainer بها، هل تود المتابعة؟"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -651,6 +1005,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Pour utiliser le mode sans JIT sans AltStore/SideStore, vous devez importer le certificat utilisé pour signer LiveContainer. Poursuivre ?"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "För att använda JITLess utan AltStore/SideStore måste du importera certifikatet som används för att signera LiveContainer. Vill du fortsätta?"
           }
         }
       }
@@ -665,6 +1025,12 @@
             "value": "Please Input Password of the Certificate"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الرجاء أدخال رمز الشهادة"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -675,6 +1041,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Veuillez saisir le mot de passe du certificat"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vänligen ange lösenord för certifikatet"
           }
         }
       }
@@ -689,6 +1061,12 @@
             "value": "Failed to find certificate password"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "فضل البحث عن رمز الشهادة"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -699,6 +1077,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Échec de la recherche du mot de passe du certificat"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Det gick inte att hitta certifikatets lösenord"
           }
         }
       }
@@ -713,6 +1097,12 @@
             "value": "Team ID"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "معرف الفريق"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -723,6 +1113,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "ID de l'équipe"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Team ID"
           }
         }
       }
@@ -737,6 +1133,12 @@
             "value": "Place your tweaks into the global “Tweaks” folder and LiveContainer will pick them up."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ضع تعديلاتك على مِلَفّ التعديلات العالمي و LiveContainer سوف يأخذهم."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -747,6 +1149,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Placez vos tweaks dans le dossier global \"Tweaks\" et LiveContainer les récupérera."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Placera din tweaks i den globala “Tweaks” mappen och LiveContainer kommer att plocka upp dem."
           }
         }
       }
@@ -761,6 +1169,12 @@
             "value": "Please restart LiveContainer to install apps."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الرجاء أعادة تشغيل LiveContainer لتثبيت التطبيقات."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -771,6 +1185,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Veuillez redémarrer LiveContainer pour installer les applications."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Starta om LiveContainer för att installera appar."
           }
         }
       }
@@ -785,6 +1205,12 @@
             "value": "Set As Default Container"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ضعة كالحاوية الأساسية"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -795,6 +1221,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Définir comme conteneur par défaut"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ställ in som standard behållare"
           }
         }
       }
@@ -809,6 +1241,12 @@
             "value": "Can't add more than 3 containers."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا يمكن وضع اكثر من 3 حاويات."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -819,6 +1257,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Impossible d'ajouter plus de 3 conteneurs."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kan inte lägga till mer än 3 behållare."
           }
         }
       }
@@ -833,6 +1277,12 @@
             "value": "Unbind From App"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ألغاء الربط من تطبيق"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -843,6 +1293,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Détacher de l'application"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Koppla från appen"
           }
         }
       }
@@ -857,6 +1313,12 @@
             "value": "Downloading"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يتم التنزيل"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -867,6 +1329,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Téléchargement"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hämtar"
           }
         }
       }
@@ -881,6 +1349,12 @@
             "value": "Are you sure you want to switch to %@? Doing so will terminate this app."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هل أنت متأكد بالتحويل إلى %@؟ الفعل هذا سيتسبب بأغلاق هذا التطبيق."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -891,6 +1365,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Voulez-vous vraiment ouvrir %@ ? Cela entraînera la fermeture de cette application."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Är du säker på att du vill byta till %@? Om du gör det kommer appen att avslutas."
           }
         }
       }
@@ -905,6 +1385,12 @@
             "value": "App %@ not found."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لم يتم العثور على البرنامَج %@."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -915,6 +1401,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "L'application %@ n'a pas été trouvée."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Appen %@ hittades inte."
           }
         }
       }
@@ -929,6 +1421,12 @@
             "value": "Failed to acquire JIT: %@"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خطأ، لم يتم الحصول على JIT:%@"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -939,6 +1437,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Échec de l'acquisition du JIT : %@"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Misslyckades att skaffa JIT: %@"
           }
         }
       }
@@ -953,6 +1457,12 @@
             "value": "JIT is successfully acquired."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تم الحصول على JIT بنجاح."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -963,6 +1473,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Le JIT a été acquis avec succès."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "JIT förvärvas framgångsrikt."
           }
         }
       }
@@ -977,6 +1493,12 @@
             "value": "Current App"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "التطبيق الحالي"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -987,6 +1509,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Application actuelle"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nuvarande app"
           }
         }
       }
@@ -1001,6 +1529,12 @@
             "value": "Open In LiveContainer2"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "فتح في LiveContainer2"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1011,6 +1545,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ouvrir dans LiveContainer2"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Öppna i LiveContainer2"
           }
         }
       }
@@ -1025,6 +1565,12 @@
             "value": "Are you sure you want to open the web page and launch an app? Doing so will terminate this app. You can try to open it in the current app if it supports Universal Links."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هل أنت متأكد من فتح المتصفح و فتح التطبيق؟ الفعل هذا سوف يتسبب بغلق التطبيق. يمكنك المحاولة أن تشغل التطبيق الحالي إذا يدعم الروابط العالمية."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1035,6 +1581,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Êtes-vous sûr de vouloir ouvrir la page web et lancer une application ? Cela entraînera la fermeture de cette application. Vous pouvez essayer de l'ouvrir dans l'application actuelle si elle prend en charge les liens universels."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Är du säker på att du vill öppna webbsidan och starta en app? Gör så kommer att avsluta den här appen. Du kan försöka öppna den i den aktuella appen om den stöder Universal Länkar."
           }
         }
       }
@@ -1049,6 +1601,12 @@
             "value": "Setup JITLess mode (Patch Store) in settings to use LiveContainer without JIT.\n\n**Check JITLess Diagnose page in settings if you have trouble enabling JITLess mode.**\n\nPress plus button to install apps.\n\nLong press app for app-specific settings, fixes and adding apps to homescreen."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إعداد وضع بدون-JIT (متجر التصحيحات) في الإعدادات لاستخدام LiveContainer بدون JIT.\nتحقق من صفحة تشخيص بدون-JIT في الإعدادات إذا واجهت مشكلة في تفعيل وضع بدون-JIT.\nاضغط على زر الإضافة لتثبيت التطبيقات.\nاضغط مطولاً على التطبيق للوصول إلى إعدادات المحددة للتطبيق، وإصلاحات، وإضافة التطبيقات إلى الشاشة الرئيسية."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1059,6 +1617,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Configurer le mode sans JIT (patch du store) dans les paramètres pour utiliser LiveContainer sans le JIT.\n\n**Consultez la page Diagnostic du mode sans JIT dans les paramètres si vous avez des difficultés à activer le mode sans JIT.\n\nAppuyez sur le bouton Plus pour installer des applications.\n\nAppuyez longuement sur une application pour accéder aux paramètres spécifiques à l'application, aux correctifs et pour ajouter l'application à l'écran d'accueil."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Konfigurera JITLess (Patch Store) i inställningar för att använda LiveContainer utan JIT.\n\n**Kontrollera JITLess diagnostisera sidan i inställningar om du har problem med att aktivera JITLess läge. **\n\nTryck på plusknappen för att installera appar.\n\nTryck länge på appen för appspecifika inställningar, fixar och lägger till appar på startskärmen."
           }
         }
       }
@@ -1073,6 +1637,12 @@
             "value": "Store"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الحفظ"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1080,6 +1650,12 @@
           }
         },
         "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Store"
+          }
+        },
+        "sv": {
           "stringUnit": {
             "state": "translated",
             "value": "Store"
@@ -1097,6 +1673,12 @@
             "value": "**Check [LiveContainer FAQ](https://github.com/khanhduytran0/LiveContainer/issues/265) for common issues.**\n                         \nIf you encounter a bug or compatibility issue please submit on [GitHub issues](https://github.com/khanhduytran0/LiveContainer/issues)."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أفحص [الأسئلة المتكررة LiveContainer]\n(https://github.com/khanhduytran0/LiveContainer/issues/265) للأخطاء الشائعة.\n\nوأذا واجهت مشكله أو مشكله توافق الرجاء إرسال طلب مساعده او شكوى في [Github]\n(https://github.com/khanhduytran0/LiveContainer/issues)."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1107,6 +1689,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "**Consultez la [FAQ de LiveContainer](https://github.com/khanhduytran0/LiveContainer/issues/265) (en anglais) pour voir les problèmes courants.\n                         \nSi vous rencontrez un bug ou un problème de compatibilité, veuillez le soumettre sur [GitHub](https://github.com/khanhduytran0/LiveContainer/issues)."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**Kontrollera [Vanliga frågor om LiveContainer](https://github.com/khanhduytran0/LiveContainer/issues/265) för vanliga problem.**\n                         \nOm du stöter på ett fel eller kompatibilitetsproblem vänligen skicka in [GitHub-problem](https://github.com/khanhduytran0/LiveContainer/issues)."
           }
         }
       }
@@ -1121,6 +1709,12 @@
             "value": "LiveContainer Help"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مساعدة LiveContainer"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1131,6 +1725,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Aide LiveContainer"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LiveContainer hjälp"
           }
         }
       }
@@ -1145,6 +1745,12 @@
             "value": "Entitlement File"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مِلَفّ الاستحقاق"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1155,6 +1761,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Fichier d'habilitations"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Entitlement File"
           }
         }
       }
@@ -1169,6 +1781,12 @@
             "value": "App Group Accessible"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الوصول عبر مجموعة التطبيقات"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1179,6 +1797,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Groupe d'apps accessible"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App Group tillgänglig"
           }
         }
       }
@@ -1193,6 +1817,12 @@
             "value": "App Group ID"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "معرف مجموعه التطبيق"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1203,6 +1833,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "ID du groupe d'apps"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App Group ID"
           }
         }
       }
@@ -1217,6 +1853,12 @@
             "value": "Bundle Identifier"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "معرف الحُزْمَة"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1227,6 +1869,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Identifiant du bundle"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bundle Identifier"
           }
         }
       }
@@ -1241,6 +1889,12 @@
             "value": "Expected Bundle Identifier"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "معرف الحُزْمَة المتوقع"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1251,6 +1905,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Identifiant du bundle attendu"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Förväntade paketidentifierare"
           }
         }
       }
@@ -1265,6 +1925,12 @@
             "value": "Certificate Data Found"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بيانات الشهادة اكتشفت"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1275,6 +1941,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Données du certificat trouvées"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Certifikatdata hittades"
           }
         }
       }
@@ -1289,6 +1961,12 @@
             "value": "Certificate Last Update Date"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "موعد أخر تحديث للشهاده"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1299,6 +1977,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Date de la dernière mise à jour du certificat"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Certifikatets senaste uppdateringsdatum"
           }
         }
       }
@@ -1313,6 +1997,12 @@
             "value": "Certificate Password Found"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اكتشف رمزًا للشهادة"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1323,6 +2013,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mot de passe du certificat trouvé"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Certifikatets lösenord hittades"
           }
         }
       }
@@ -1337,6 +2033,12 @@
             "value": "Get Help"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أحصل على المساعدة"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1347,6 +2049,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Obtenir de l'aide"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Få hjälp"
           }
         }
       }
@@ -1361,6 +2069,12 @@
             "value": "Patch Detected"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تم أكتشاف تصحيح"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1371,6 +2085,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Patch détecté"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Patch upptäckt"
           }
         }
       }
@@ -1385,6 +2105,12 @@
             "value": "Load Tweaks to LiveContainer Itself"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حمل التعديلات ألى LiveContainer ذات نفسه"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1395,6 +2121,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Charger les tweaks dans LiveContainer lui-même"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ladda Tweaks till LiveContainer själv"
           }
         }
       }
@@ -1409,6 +2141,12 @@
             "value": "interface"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الواجهة"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1419,6 +2157,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "interface"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "gränssnitt"
           }
         }
       }
@@ -1433,6 +2177,12 @@
             "value": "No unused data folders."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا ملفات غير مستعمله."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1443,6 +2193,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Pas de dossiers de données inutilisés."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inga oanvända datamappar."
           }
         }
       }
@@ -1457,6 +2213,12 @@
             "value": "Failed to find signing certificate. Please check JIT-Less Diagnose page and see if there's something with your JIT-Less setup."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "فشل في البحث عن شهادة توقيع. الرجاء النظر في قائمه تشخيص بدون-JIT والتأكد من عدم وجود أي خطأ."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1467,6 +2229,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Impossible de trouver le certificat de signature. Veuillez vérifier la page du Diagnostic du mode sans JIT et vérifier s'il y a quelque chose avec votre configuration du mode sans JIT."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Det gick inte att hitta signeringscertifikatet. Kontrollera JIT-Less diagnostik sida och se om det finns något med din JIT-less setup."
           }
         }
       }
@@ -1481,6 +2249,12 @@
             "value": "Switch App Without Asking"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "غير البرنامَج دون سؤال"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1491,6 +2265,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Changer d'application sans demander"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Byt app utan att fråga"
           }
         }
       }
@@ -1505,6 +2285,12 @@
             "value": "By default, LiveContainer asks you before switching app. Enable this to switch app immediately. Any unsaved data will be lost."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بالأساس، LiveContainer سوف يسألك قبل تغيير البرنامَج. فعل هذا الخيار لتحويل البرنامَج مباشره دون سؤال."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1515,6 +2301,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Par défaut, LiveContainer vous demande votre avis avant de changer d'application. Activez cette option pour changer d'application immédiatement. Toutes les données non sauvegardées seront perdues."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Som standard frågar LiveContainer dig innan du byter app. Aktivera detta för att byta app direkt. Alla osparade data kommer att gå förlorade."
           }
         }
       }
@@ -1529,6 +2321,12 @@
             "value": "Strict Hiding Mode"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "وضع الأخفاء الصارم"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1539,6 +2337,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mode de masquage strict"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Strikt gömt läge"
           }
         }
       }
@@ -1553,6 +2357,12 @@
             "value": "Enabling this mode will only allow hidden apps to be launched by triple clicking the installed app counter."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تفعيل هذا الوضع سيسمح للتطبيقات المخفية أن تُشغل بالضغط عليها ثلاث مرات في عداد التطبيقات المثبته."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1563,6 +2373,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "L'activation de ce mode ne permet de lancer les applications masquées que par un triple appui sur le compteur d'applications installées."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aktivering av detta läge tillåter bara dolda appar att startas genom att tredubbla att klicka på den installerade appräknaren."
           }
         }
       }
@@ -1577,6 +2393,12 @@
             "value": "Test JIT-Less Mode"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اختبار وضع بدون-JIT"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1587,6 +2409,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Test du mode sans JIT"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Testa JIT-Less läge"
           }
         }
       }
@@ -1601,6 +2429,12 @@
             "value": "Unsupported installation method. Please use AltStore or SideStore to setup this feature."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "طريقة التثبيت غير مدعومة. الرجاء أستعمال AltStore أو SideStore لأعداد هذه الميزة."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1611,6 +2445,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Méthode d'installation non prise en charge. Veuillez utiliser AltStore ou SideStore pour configurer cette fonctionnalité."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installationsmetod stöds inte. Använd AltStore eller SideStore för att använda denna funktion."
           }
         }
       }
@@ -1625,6 +2465,12 @@
             "value": "Please Don't use LiveContainer for piracy."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الرجاء عدم استعمال LiveContainer للقرصنة."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1635,6 +2481,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "N'utilisez pas LiveContainer pour le piratage."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vänligen använd inte LiveContainer för piratkopiering."
           }
         }
       }
@@ -1649,6 +2501,12 @@
             "value": "LiveContainer seems to crash during last app signing, and the app might be corrupted. Please consider reinstalling the app or switching to another signer."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يبدو أن LiveContainer وقف عن العمل عند توقيع آخر تطبيق، وقد يكون التطبيق تالفًا. الرجاء اعتبار اعادة تنزيل التطبيق أو التغيير ألى موقع أخر خيارًا."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1659,6 +2517,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "LiveContainer semble avoir planté lors de la dernière signature de l'application, et l'application pourrait être corrompue. Veuillez envisager de réinstaller l'application ou de changer de signataire."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LiveContainer verkar krascha under senaste app-signering, och appen kan vara skadad. Vänligen överväg att installera om appen eller byta till en annan signer."
           }
         }
       }
@@ -1673,6 +2537,12 @@
             "value": "Failed to create ALTCertificate. This is likely to be caused by an invalid certificate. Please check the JIT-Less Diagnose page and see if there’s something wrong with your JIT-Less setup"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "فضل في انشاء شهاده ALT. هذا الخطأ محتمل ان حدث بسبب شهادة غير صالحة. الرجاء التحقق من وضع بدون-JIT بالذهاب الى قائمه تشخيص بدون-JIT وألقي نظره لأي خطأ في وضع بدون-JIT"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1683,6 +2553,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Impossible de créer ALTCertificate. Ceci est probablement dû à un certificat non valide. Veuillez vérifier la page du Diagnostic du mode sans JIT et voir s'il y a quelque chose qui ne va pas avec votre configuration du mode sans JIT"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Det gick inte att skapa ALTCertificate. Detta beror sannolikt på ett ogiltigt certifikat. Kontrollera JIT-Less Diagnosen och se om det är något fel med din JIT-Less setup"
           }
         }
       }
@@ -1697,6 +2573,12 @@
             "value": "Failed to create ALTProvisioningProfile. This is likely to be caused by an invalid certificate. Please check the JIT-Less Diagnose page and see if there’s something wrong with your JIT-Less setup"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "فشل في أنشاء مِلَفّ تعريف ALTProvisioning. هذا الخطأ محتمل ان حدث بسبب شهادة غير صالحه. الرجاء التحقق من وضع بدون-JIT بالذهاب إلى قائمه تشخيص بدون-JIT وألقي نظره لأي خطأ في وضع بدون-JIT"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1707,6 +2589,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Impossible de créer ALTProvisioningProfile. Cela est probablement dû à un certificat invalide. Veuillez vérifier la page du Diagnostic du mode sans JIT et voir s'il y a quelque chose de mal avec votre configuration du mode sans JIT"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Det gick inte att skapa ALTProvisioningProfile. Detta beror sannolikt på ett ogiltigt certifikat. Kontrollera JIT-Less Diagnosen och se om det är något fel med din JIT-Less setup"
           }
         }
       }
@@ -1721,6 +2609,12 @@
             "value": "The app is signed with the latest certificate but its code signature is invalid. Please check JIT-Less Diagnose page and see if there's something with your JIT-Less setup."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هذا التطبيق مُوقع مع أخر شهادة لكن توقيع الكود غير صالح. الرجاء التحقق من وضع JIT-بدون في قائمه التشخيص و ألقي نظر في قائمه تشخيص بدون-JIT."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1731,6 +2625,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "L'application est signée avec le dernier certificat mais sa signature est invalide. Veuillez consulter la page du Diagnostic du mode sans JIT et voir s'il y a quelque chose avec votre configuration du mode sans JIT."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Appen är signerad med det senaste certifikatet men dess kodsignatur är ogiltig. Kolla gärna JIT-Less Diagnostisera sidan och se om det finns något med din JIT-Less inställning."
           }
         }
       }
@@ -1745,6 +2645,12 @@
             "value": "Apps"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "التطبيقات"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1755,6 +2661,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Applications"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Appar"
           }
         }
       }
@@ -1769,6 +2681,12 @@
             "value": "Always Open URL in Current App"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "افتح الروابط دائمًا في التطبيق الحالي"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1779,6 +2697,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Toujours ouvrir l'URL dans l'application en cours"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Öppna alltid URL i aktuell app"
           }
         }
       }
@@ -1793,6 +2717,12 @@
             "value": "Settings"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الإعدادات"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1803,6 +2733,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Paramètres"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inställningar"
           }
         }
       }
@@ -1817,6 +2753,12 @@
             "value": "Tweaks"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": " تعديلات"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1824,6 +2766,12 @@
           }
         },
         "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tweaks"
+          }
+        },
+        "sv": {
           "stringUnit": {
             "state": "translated",
             "value": "Tweaks"
@@ -1841,6 +2789,12 @@
             "value": "This is the app-specific folder. Set the tweak folder and the guest app will pick them up recursively."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هذا المِلَفّ يستعمل في تطبيق محدد. ضع مِلَفّ التعديل والتطبيق سوف يلتقط مِلَفّ التعديل بتكرار."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1851,6 +2805,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Il s'agit du dossier spécifique à l'application. Définissez le dossier tweaks et l'application invitée les récupérera de manière récursive."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Detta är den app-specifik mapp. Ange tweak mapp och gäst-appen kommer att plocka upp dem rekursivt."
           }
         }
       }
@@ -1865,6 +2825,12 @@
             "value": "This is the global folder. All tweaks put here will be injected to all guest apps. Create a new folder if you use app-specific tweaks."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هذا هو المِلَفّ العام. جميع التعديلات الذي هنا سوف تُشغل في جميع التطبيقات. أنشئ مِلَفّ جديد أذا ترغب بتفعيل تعديد معين إلى تطبيق معين."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1875,6 +2841,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Il s'agit du dossier global. Tous les tweaks placés ici seront injectés dans toutes les applications invitées. Créez un nouveau dossier si vous utilisez des tweaks spécifiques à une application."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Detta är den globala mappen. Alla tweaks som läggs här kommer att injiceras till alla gästappar. Skapa en ny mapp om du använder app-specifika tweaks."
           }
         }
       }
@@ -1889,6 +2861,12 @@
             "value": "Import Tweak"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "استيراد تعديل"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1899,6 +2877,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Importer un tweak"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importera Tweak"
           }
         }
       }
@@ -1913,6 +2897,12 @@
             "value": "New folder"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مِلَفّ جديد"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1923,6 +2913,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Nouveau dossier"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ny mapp"
           }
         }
       }
@@ -1937,6 +2933,12 @@
             "value": "%@ is not a file."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ ليس ملفًا."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1947,6 +2949,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@ n'est pas un fichier."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ är inte en fil."
           }
         }
       }
@@ -1961,6 +2969,12 @@
             "value": "Cannot open %@, permission denied."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا يمكن تفعيل %@، رُفضت الصَّلاحِيَة."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1971,6 +2985,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Impossible d'ouvrir %@, permission refusée."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kan inte öppna %@, behörighet nekad."
           }
         }
       }
@@ -1985,6 +3005,12 @@
             "value": "Failed to initiate bundle signing."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خطأ في تفعيل مُوقع الحزم."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -1995,6 +3021,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Échec de l'initialisation de la signature du bundle."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Det gick inte att initiera paketsignering."
           }
         }
       }
@@ -2009,6 +3041,12 @@
             "value": "Authentication Required."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "التحقق مطلوب."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2019,6 +3057,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Authentification requise."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Autentisering krävs."
           }
         }
       }
@@ -2033,6 +3077,12 @@
             "value": "This web page can be opened in \"%@\",  continue?"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يمكن فتح هذه الصفحة في \"%@\" هل تود المتابعة؟"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2043,6 +3093,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Cette page web peut être ouverte dans \"%@\", continuer ?"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Denna webbsida kan öppnas i \"%@\", fortsätt?"
           }
         }
       }
@@ -2057,6 +3113,12 @@
             "value": "This web page is trying to launch \"%@\", continue?"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هذه الصفحه تحاول ان تشغل \"%@\" هل تود المتابعه؟"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2067,6 +3129,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Cette page web tente de lancer \"%@\", continuer ?"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Denna webbsida försöker starta \"%@\", fortsätt?"
           }
         }
       }
@@ -2081,6 +3149,12 @@
             "value": "By default, LiveContainer asks you how to open an URL. Enable this to automatically open URL in current app."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بالأساس، LiveContainer يسألك كيف تفتح رابط. فهل هذا الخِيار وسوف يفتح LiveContainer الروابط تِلْقائيًا في التطبيق الحالي."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2091,6 +3165,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Par défaut, LiveContainer vous demande comment ouvrir une URL. Activez cette option pour ouvrir automatiquement l'URL dans l'application en cours."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Som standard frågar LiveContainer dig hur du öppnar en URL. Aktivera detta för att automatiskt öppna URL i aktuell app."
           }
         }
       }
@@ -2105,6 +3185,12 @@
             "value": "If AltSign reports an error, please try ZSign and vice versa. Please restart LiveContainer after switching Signer."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أذا أعطى AltSign خطأ، فحاول أن تستعمل Zsign و العكس صحيح. الرجاء اعادة تشغيل التطبيق LiveContainer بعد تغيير الُموقع."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2115,6 +3201,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Si AltSign signale une erreur, essayez ZSign et vice versa. Veuillez redémarrer LiveContainer après avoir changé de signataire."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Om AltSign rapporterar ett fel, försök ZSign och vice versa. Starta om LiveContainer efter byte av Signer."
           }
         }
       }
@@ -2129,6 +3221,12 @@
             "value": "Failed to validate certificate. Please check the password and if the selected certificate is used to sign LiveContainer."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خطأ في التأكيد من صحة هذه الشهادة. الرجاء التأكد من صحة الرمز السري و أذا الشهادة الذي تم اختيارها هي نفسها الذي استخدمت لتوقيع LiveContainer."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2139,6 +3237,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Échec de la validation du certificat. Veuillez vérifier le mot de passe et si le certificat sélectionné est utilisé pour signer LiveContainer."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Det gick inte att validera certifikatet. Kontrollera lösenordet och om det valda certifikatet används för att signera LiveContainer."
           }
         }
       }
@@ -2153,6 +3257,12 @@
             "value": "By installing multiple LiveContainers, and converting apps to Shared Apps, you can open one app between all LiveContainers with most of its data and settings."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بتثبيت عده LiveContainers، وتحويل عده تطبيقات الى تطبيقات مُشارَكه، يمكنك فتح تطبيق واحد بين جميع LiveContainers مع جميع ملفاتها وبياناتها وأعداداتها."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2163,6 +3273,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "En installant plusieurs LiveContainers et en convertissant les applications en apps partagées, vous pouvez ouvrir une application entre tous les LiveContainers avec la plupart de ses données et paramètres."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Genom att installera flera LiveContainers och konvertera appar till delade appar kan du öppna en app mellan alla LiveContainers med de flesta av dess data och inställningar."
           }
         }
       }
@@ -2177,6 +3293,12 @@
             "value": "Address"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الموقع"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2187,6 +3309,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Adresse"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adress"
           }
         }
       }
@@ -2201,6 +3329,12 @@
             "value": "Set up your SideJITServer/JITStreamer server. Local Network permission is required."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أعد سيرفر SideJITServer/JITStreamer. أذن الشبكة المحلية مطلوب."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2211,6 +3345,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Configurez votre serveur SideJITServer/JITStreamer. L'autorisation du réseau local est requise."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Konfigurera din SideJITServer/JITStreamer-server. Lokalt nätverkstillstånd krävs."
           }
         }
       }
@@ -2225,6 +3365,12 @@
             "value": "JIT Enabler"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مشغل JIT"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2235,6 +3381,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Activateur du JIT"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "JIT-aktiverare"
           }
         }
       }
@@ -2249,6 +3401,12 @@
             "value": "JIT-Less"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بدون-JIT"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2259,6 +3417,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Sans JIT"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "JIT-Less"
           }
         }
       }
@@ -2273,6 +3437,12 @@
             "value": "JIT-less allows you to use LiveContainer without having to enable JIT. Patch AltStore or SideStore to enable."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يمنحك دون-JIT أن تستعمل LiveContainer دون الحاجة لتفعيل JIT. صحح AltStore او SideStore للتفعيل."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2283,6 +3453,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Le mode sans JIT vous permet d'utiliser LiveContainer sans avoir à activer le JIT. Veuillez patcher AltStore ou SideStore pour l'activer."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "JIT-less låter dig använda LiveContainer utan att behöva aktivera JIT. Patch AltStore eller SideStore för att aktivera."
           }
         }
       }
@@ -2297,6 +3473,12 @@
             "value": "JIT-Less Mode Diagnose"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تشخيص وضع بدون-JIT"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2307,6 +3489,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Diagnostic du mode sans JIT"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "JIT-Mindre Läge Diagnostik"
           }
         }
       }
@@ -2321,6 +3509,12 @@
             "value": "UDID"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "UDID"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2328,6 +3522,12 @@
           }
         },
         "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "UDID"
+          }
+        },
+        "sv": {
           "stringUnit": {
             "state": "translated",
             "value": "UDID"
@@ -2345,6 +3545,12 @@
             "value": "Moved %#@arg1@ and %#@arg2@."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تم نقل %#@arg1@ و %#@arg2@."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2355,6 +3561,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Déplacement de %#@arg1@ et %#@arg2@ réussi."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Flyttade %#@arg1@ och %#@arg2@."
           }
         }
       }
@@ -2369,6 +3581,12 @@
             "value": "Move Dangling Folders Out of App Group"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نقل الملفات المعلقة خارج مجموعة التطبيقات"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2379,6 +3597,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Déplacer les dossiers isolés hors du groupe d'apps"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Flytta Farliga mappar ur appgruppen"
           }
         }
       }
@@ -2393,6 +3617,12 @@
             "value": "Multiple LiveContainers"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "عده LiveContainers"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2403,6 +3633,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Plusieurs LiveContainers"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Flera LiveContainers"
           }
         }
       }
@@ -2417,6 +3653,12 @@
             "value": "The packed second LiveContainer has been saved to LiveContainer's document folder. Please install it manually."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الـLiveContainer الثاني المعبأ تم حفظه الى ملف مستندات LiveContainer. يرجى تثبيتة يدويًا."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2427,6 +3669,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Le deuxième LiveContainer compressé a été sauvegardé dans le dossier documents de LiveContainer. Veuillez l'installer manuellement."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Den packade andra LiveContainer har sparats i LiveContainers dokumentmapp. Installera den manuellt."
           }
         }
       }
@@ -2441,6 +3689,12 @@
             "value": "Install Another LiveContainer"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ثبت LiveContainer أخر"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2451,6 +3705,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Installer un autre LiveContainer"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installera ytterligare en LiveContainer"
           }
         }
       }
@@ -2465,6 +3725,12 @@
             "value": "Renew JIT-less certificate"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "جدد شهاده بدون-JIT"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2475,6 +3741,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Renouveler le certificat sans JIT"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Förnya JIT-less certifikat"
           }
         }
       }
@@ -2489,6 +3761,12 @@
             "value": "%@ will be opened to install the second LiveContainer, Continue?\n\nSelect “Archive Only” if you want to do some customization and install manually."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "سوف يتم تشغيل %@ لتثبيت الـLiveContainer الثاني، هل تود المتابعه؟\n\nأختر \"أرشيف فقط\" أذا كنت ترغب بالتعديلات و الثبت يدويًا."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2499,6 +3777,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@ sera ouvert pour installer le deuxième LiveContainer. Continuer ?\n\nSélectionnez \"Uniquement en archive\" si vous voulez faire quelques personnalisations et installer manuellement."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ kommer att öppnas för att installera den andra LiveContainer, Fortsätt?\n\nVälj ”Archive Only” om du vill göra vissa anpassningar och installera manuellt."
           }
         }
       }
@@ -2513,6 +3797,12 @@
             "value": "This is the second LiveContainer"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هذا هو الـLiveContainer الثاني"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2523,6 +3813,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Il s'agit du deuxième LiveContainer"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Detta är den andra LiveContainer"
           }
         }
       }
@@ -2537,6 +3833,12 @@
             "value": "Reinstall Another LiveContainer"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أعد تثبيت LiveContainer الأخر"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2547,6 +3849,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Réinstaller un autre LiveContainer"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installera om ytterligare en LiveContainer"
           }
         }
       }
@@ -2561,6 +3869,12 @@
             "value": "No data folder to remove. All data folders are in use."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا يوجد ملف بيانات للحذف. جميع ملفات البيانات مستعمله حاليًا."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2571,6 +3885,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Aucun dossier de données à supprimer. Tous les dossiers de données sont utilisés."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ingen datamapp att ta bort. Alla datamappar används."
           }
         }
       }
@@ -2585,6 +3905,12 @@
             "value": "Patch %@"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "صحح %@"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2595,6 +3921,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Patcher %@"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Patch %@"
           }
         }
       }
@@ -2609,6 +3941,12 @@
             "value": "Patch %@ Again"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "صحح %@ مرى أخرى"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2619,6 +3957,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Patcher %@ une nouvelle fois"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Patch %@ Igen"
           }
         }
       }
@@ -2633,6 +3977,12 @@
             "value": "Archive Only"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أرشيف فقط"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2643,6 +3993,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Uniquement en archive"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Endast arkiv"
           }
         }
       }
@@ -2657,6 +4013,12 @@
             "value": "Patched %@ ipa has been saved to LiveContainer's document folder. Please install it with the %@ that LiveContainer is installed with."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تم تصحيح IPA %@ وتم حفظه لملف ارشيف LiveContainer. الرجاء تثبيتها مع %@ الذي ثبتها LiveContainer معها."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2667,6 +4029,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "L'IPA patchée %@ a été sauvegardée dans le dossier de documents de LiveContainer. Veuillez l'installer avec le %@ avec lequel LiveContainer est installé."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Patchad %@ ipa har sparats i LiveContainers dokumentmapp. Installera den med %@ som LiveContainer är installerad med."
           }
         }
       }
@@ -2681,6 +4049,12 @@
             "value": "To use JIT-Less mode with %@, you must patch %@ in order to retrieve certificate. %@’s functions will not be affected. Please confirm that you can refresh %@ before applying the patch. Continue?"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لأستعمل وضع بدون-JIT مع %@، يجب أن تصحح %@ للحصول على الشهادة. لن تتأثر وظائف %@. يمكنك تأكيد أنه يمكنك تحديث %@ قبل تطبيق التصحيح. هل تستمر؟"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2691,6 +4065,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Pour utiliser le mode sans JIT avec %@, vous devez patcher %@ afin de récupérer le certificat. Les fonctions de %@ ne seront pas affectées. Veuillez confirmer que vous pouvez actualiser %@ avant d'appliquer le correctif. Continuer ?"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "För att använda JIT-Less läge med %@ måste du patcha %@ för att kunna hämta certifikat. %@s funktioner kommer inte att påverkas. Vänligen bekräfta att du kan uppdatera %@ innan du applicerar patchen. Fortsätt?"
           }
         }
       }
@@ -2705,6 +4085,12 @@
             "value": "If you have multiple SideStore installed, please select “Archive Only” and install the tweaked IPA manually."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اذا مثبتة لديك عده SideStore، الرجاء اختيار \"ارشيف فقط\" وثبت الـIPA المعدل يدويًا."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2715,6 +4101,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Si plusieurs SideStore sont installés, veuillez sélectionner \"Uniquement en archive\" et installer l'IPA modifiée manuellement."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Om du har flera SideStore installerat, välj ”Archive Only” och installera den tweakade IPA manuellt."
           }
         }
       }
@@ -2729,6 +4121,12 @@
             "value": "Remove Certificate"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حذف الشهادة"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2739,6 +4137,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Supprimer le certificat"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ta bort certifikat"
           }
         }
       }
@@ -2753,6 +4157,12 @@
             "value": "You won’t be able to install apps after removing the certificate. Continue?"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا يمكنك أن تثبت تطبيقات بعد حذف الشهادة. هل تود المتابعه؟"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2763,6 +4173,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Vous ne pourrez pas installer d'applications après avoir supprimé le certificat. Poursuivre ?"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Du kommer inte att kunna installera appar efter att ha tagit bort certifikatet. Fortsätt?"
           }
         }
       }
@@ -2777,6 +4193,12 @@
             "value": "Unknown app"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تطبيق غير معروف"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2787,6 +4209,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Application inconnue"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Okänd app"
           }
         }
       }
@@ -2801,6 +4229,12 @@
             "value": "Select Unused Containers"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أختر حاويات غير مستعمله"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2811,6 +4245,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Sélectionner les conteneurs inutilisés"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Välj oanvända behållare"
           }
         }
       }
@@ -2825,6 +4265,12 @@
             "value": "Are you sure you want to uninstall %@?"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هل أنت متأكد من الغاء تثبيت %@؟"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2835,6 +4281,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Voulez-vous vraiment désinstaller %@ ?"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Är du säker på att du vill avinstallera %@?"
           }
         }
       }
@@ -2849,6 +4301,12 @@
             "value": "Landscape"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "افقي"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2859,6 +4317,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Paysage"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Liggande"
           }
         }
       }
@@ -2873,6 +4337,12 @@
             "value": "Press the Plus Button to Install Apps."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اضغط على علامه + لتثبيت التطبيقات."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2883,6 +4353,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Appuyez sur le bouton Plus pour installer des applications."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tryck på Plus-knappen för att installera appar."
           }
         }
       }
@@ -2897,6 +4373,12 @@
             "value": "Please Input Install URL"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الرجاء أدخال رابط تثبيث التطبيق"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2907,6 +4389,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Veuillez saisir l'URL d'installation"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vänligen lägg in installations-URL"
           }
         }
       }
@@ -2921,6 +4409,12 @@
             "value": "Failed to access IPA"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خطأ عند الوصول لملف IPA"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2931,6 +4425,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Échec de l'accès à l'IPA"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Det gick inte att komma åt IPA"
           }
         }
       }
@@ -2945,6 +4445,12 @@
             "value": "Manage apps in the primary LiveContainer"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أداره التطبيقات في LiveContainer حصراً"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2955,6 +4461,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Gérer les applications dans le LiveContainer principal"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hantera appar i den primära LiveContainer"
           }
         }
       }
@@ -2969,6 +4481,12 @@
             "value": "My Apps"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تطبيقاتي"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -2979,6 +4497,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mes applications"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mina appar"
           }
         }
       }
@@ -2993,6 +4517,12 @@
             "value": "Open Link"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "فتح رابط"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -3003,6 +4533,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ouvrir le lien"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Öppna länk"
           }
         }
       }
@@ -3017,6 +4553,12 @@
             "value": "Scheme \"%@\" cannot be opened by any app installed in LiveContainer."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا يمكن فتح المخطط '%@' بواسطة أي تطبيق مثبت في LiveContainer."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -3027,6 +4569,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Le schéma \"%@\" ne peut être ouvert par aucune application installée dans LiveContainer."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scheme \"%@\" kan inte öppnas av någon app installerad i LiveContainer."
           }
         }
       }
@@ -3041,6 +4589,12 @@
             "value": "App was signed successfully, but LiveContainer was unable to sign the following files. You may be able to use the app, but do expect crash."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تم توقيع التطبيق بنجاح، لكن LiveContainer لم يستطيع ان يُوقع الملفات التالية. يمكنك ان تستعمل التطبيق، لكن توقف مفاجئ على أي لحظه متوقع."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -3051,6 +4605,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "L'application a été signée avec succès, mais LiveContainer n'a pas pu signer les fichiers suivants. Vous pouvez utiliser l'application, mais attendez-vous à un crash."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Appen signerades framgångsrikt, men LiveContainer kunde inte signera följande filer. Du kanske kan använda appen, men förvänta dig krasch."
           }
         }
       }
@@ -3065,6 +4625,12 @@
             "value": "Please provide an IPA file to install."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الرجاء اعطاء ملف IPA للتثبيت."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -3075,6 +4641,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Veuillez fournir un fichier IPA à installer."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vänligen ange en IPA-fil att installera."
           }
         }
       }
@@ -3089,6 +4661,12 @@
             "value": "The input url is invalid. Please check and try again"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الرابط الذي أدخلته لا يعمل"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -3099,6 +4677,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "L'URL d'entrée n'est pas valide. Veuillez vérifier et réessayer"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inmatningsadressen är ogiltig. Kontrollera och försök igen"
           }
         }
       }
@@ -3113,6 +4697,12 @@
             "value": "Orientation Lock"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "قُفْل الاتجاه"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -3123,6 +4713,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Verrouillage de l'orientation"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lås för orientering"
           }
         }
       }
@@ -3137,6 +4733,12 @@
             "value": "Portrait"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "صوره عموديه"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -3147,6 +4749,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Portrait"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stående"
           }
         }
       }
@@ -3161,6 +4769,12 @@
             "value": "Install from URL"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ثبت من رابط"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -3171,6 +4785,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Installer à partir d'une URL"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installera från URL"
           }
         }
       }
@@ -3185,6 +4805,12 @@
             "value": "Data of this app is currently in %@. Open %@ and launch it to 'My Apps' screen and try again."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بيانات هذا التطبيق حاليًا في %@. شغل %@ و اضغط على زر 'تطبيقاتي' وحاول مجدداً."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -3195,6 +4821,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Les données de cette application se trouvent actuellement dans %@. Ouvrez %@ et lancez-la dans l'écran \"Mes applications\", puis réessayez."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Data för denna app finns för närvarande i %@. Öppna %@ och starta den till \"Mina appar\" skärmen och försök igen."
           }
         }
       }
@@ -3209,6 +4841,12 @@
             "value": "Bundle Folder"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حزمة الملفات"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -3219,6 +4857,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Dossier du bundle"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paketmapp"
           }
         }
       }
@@ -3233,6 +4877,12 @@
             "value": "Bypass AssertBarrierOnQueue"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تجاوز AssertBarrierOnQueue"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -3243,6 +4893,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Contourner AssertBarrierOnQueue"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bypass AssertBarrierOnQuue"
           }
         }
       }
@@ -3257,6 +4913,12 @@
             "value": "Might prevent some games from crashing, but may cause them to be unstable."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يمكن أن يقف بعض الالعاب من التوقف المفاجئ، لكن يمكنه ان يجعلهم غير مستقريين."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -3267,6 +4929,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Cela peut empêcher certains jeux de planter, mais peut les rendre instables."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kan förhindra vissa spel från att krascha, men kan orsaka dem att vara instabila."
           }
         }
       }
@@ -3281,6 +4949,12 @@
             "value": "Data Folder"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ملف البيانات"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -3291,6 +4965,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Dossier de données"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Datamapp"
           }
         }
       }
@@ -3305,6 +4985,12 @@
             "value": "Don’t Inject TweakLoader"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا تقوم بأدخال مشغل التعديلات (TweakLoader)"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -3315,6 +5001,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ne pas injecter TweakLoader"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Injektera inte TweakLoader"
           }
         }
       }
@@ -3329,6 +5021,12 @@
             "value": "Don’t Load TweakLoader"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا تشغل مشغل التعديلات TweakLoader"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -3339,6 +5037,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ne pas charger TweakLoader"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ladda inte TweakLoader"
           }
         }
       }
@@ -3353,6 +5057,12 @@
             "value": "Fix Black Screen"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أصلح الشاشة السوداء"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -3363,6 +5073,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Corriger l'écran noir"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fixa svart skärm"
           }
         }
       }
@@ -3377,6 +5093,12 @@
             "value": "If app shows a black screen when launching and crash after about 10s, enable this option."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أذا التطبيق يظهر شاشة سوداء عند التشغيل و يتوقف عن العمل بعد حوالي 10 ثواني، فعل هذا الخِيار."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -3387,6 +5109,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Si l'application affiche un écran noir au lancement et se bloque au bout d'une dizaine de secondes, activez cette option."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Om appen visar en svart skärm när du startar och kraschar efter ungefär 10-talet, aktivera det här alternativet."
           }
         }
       }
@@ -3401,6 +5129,12 @@
             "value": "Fixes"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أصلاحات"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -3411,6 +5145,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Correctifs"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fixar"
           }
         }
       }
@@ -3425,6 +5165,12 @@
             "value": "(Legacy) Fix File Picker"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(قديم) أصلح لاقط الملفات"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -3435,6 +5181,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "(Ancien) Corriger le sélecteur de fichiers"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(Legacy) Fixa filväljare"
           }
         }
       }
@@ -3449,6 +5201,12 @@
             "value": "Fix file picker not responding when hitting 'open' by forcing this app to copy selected files to its inbox. You may view imported files in the 'Inbox' folder in app's data folder."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اصلح لاقط الملفات عندما لا يستجيب عند ضغط 'فتح' بأجبار هذا التطبيق على نسخ الملفات المحدده في صندوق الوارد الخاص به. يمكنك مشاهده الملفات المستورده في 'صندوق الوارد' في ملف بيانات التطبيق."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -3459,6 +5217,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Corrigez le fait que le sélecteur de fichiers ne répond pas lorsque vous appuyez sur \"ouvrir\" en forçant cette application à copier les fichiers sélectionnés dans sa boîte de réception. Vous pouvez voir les fichiers importés dans le dossier \"Inbox\" du dossier de données de l'application."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fixa filväljaren som inte svarar när du trycker på 'öppna' genom att tvinga denna app att kopiera markerade filer till sin inkorg. Du kan se importerade filer i mappen 'Inkorg' i appens datamapp."
           }
         }
       }
@@ -3473,6 +5237,12 @@
             "value": "There is an existing application with the same bundle identifier. Replace one or install as new."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هنالك تطبيق موجود بالفعل بهذا معرف الحزمه. بدل هذا المعرف او ثبت كجديد."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -3483,6 +5253,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Il existe une application existante avec le même identifiant de paquet. Remplacez-la ou installez-la en tant que nouvelle application."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Det finns ett befintligt app med samma bundle identifierare. Ersätt en eller installera som ny."
           }
         }
       }
@@ -3497,6 +5273,12 @@
             "value": "Install IPA File"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ثبت مِلَفّ IPA"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -3507,6 +5289,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Installer un fichier IPA"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installera IPA-fil"
           }
         }
       }
@@ -3521,6 +5309,12 @@
             "value": "Try to sign again if this app failed to launch with error like 'Invalid Signature'. If this still don't work, renew JIT-Less certificate."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حاول التوقيع مره أخرى أذا التطبيق فشل فالتشغيل ويظهر خطأ مثل 'توقيع غير صالح' أذا هذا لم يعمل، حاول أن تعيد شهاده بدون-JIT."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -3531,6 +5325,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Essayez de signer à nouveau si l'application ne s'est pas lancée avec une erreur telle que \"Signature invalide\". Si cela ne fonctionne toujours pas, renouvelez le certificat sans JIT."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Försök att signera om appen misslyckades med att starta med fel som \"Ogiltig signatur\". Om detta fortfarande inte fungerar, förnya JIT-Mindre certifikat."
           }
         }
       }
@@ -3545,6 +5345,12 @@
             "value": "Uninstall"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حذف"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -3555,6 +5361,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Désinstaller"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avinstallera"
           }
         }
       }
@@ -3569,6 +5381,12 @@
             "value": "Confirm Uninstallation"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تأكيد الحذف"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -3579,6 +5397,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Confirmer la désinstallation"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bekräfta avinstallation"
           }
         }
       }
@@ -3593,6 +5417,12 @@
             "value": "Copy Launch Url"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أنسخ رابط التشغيل"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -3603,6 +5433,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Copier l'URL de lancement"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kopiera start-URL"
           }
         }
       }
@@ -3617,6 +5453,12 @@
             "value": "Create App Clip"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "انشاء تطبيق قصير"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -3627,6 +5469,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Créer un extrait d'app"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skapa App Clip"
           }
         }
       }
@@ -3641,6 +5489,12 @@
             "value": "Do you also want to delete data folder of %@? You can keep it for future use."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هل تريد ان تحذف ملف البيانات لـ%@؟ يمكنك أن تبقيها لأستخدام مستقبلي."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -3651,6 +5505,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Voulez-vous également supprimer le dossier de données de %@ ? Vous pouvez le conserver pour un usage ultérieur."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vill du också ta bort datamappen %@? Du kan behålla den för framtida användning."
           }
         }
       }
@@ -3665,6 +5525,12 @@
             "value": "Delete Data Folder"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حذف ملف البيانات"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -3675,6 +5541,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Supprimer le dossier de données"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ta bort datamapp"
           }
         }
       }
@@ -3689,6 +5561,12 @@
             "value": "Run without JIT"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "شغل بدون JIT"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -3699,6 +5577,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Lancer sans JIT"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kör utan JIT"
           }
         }
       }
@@ -3713,6 +5597,12 @@
             "value": "Data folder not created yet"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مِلَفّ البيانات لم ينشئ بعد"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -3723,6 +5613,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Le dossier de données n'a pas encore été créé"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Datamappen har inte skapats ännu"
           }
         }
       }
@@ -3737,6 +5633,12 @@
             "value": "Open Data Folder"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "افتح مِلَفّ البيانات"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -3747,6 +5649,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ouvrir le dossier de données"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Öppna datamapp"
           }
         }
       }
@@ -3761,6 +5669,12 @@
             "value": "Run"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تشغيل"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -3771,6 +5685,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Lancer"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kör"
           }
         }
       }
@@ -3785,6 +5705,12 @@
             "value": "Save App Icon"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "احفظ شعار التطبيق"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -3795,6 +5721,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Sauvegarder l'icône de l'application"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spara app-ikon"
           }
         }
       }
@@ -3809,6 +5741,12 @@
             "value": "Please use your favourite way to enable jit for current LiveContainer."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الرجاء استخدام طريقتك المفضله لتفعيل JIT لـLiveContainer الحالي."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -3819,6 +5757,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Veuillez utiliser votre méthode préférée pour activer JIT pour le LiveContainer actuel."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Använd ditt favoritsätt för att aktivera jit för aktuell LiveContainer."
           }
         }
       }
@@ -3833,6 +5777,12 @@
             "value": "Installation"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "التثبيت"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -3840,6 +5790,12 @@
           }
         },
         "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installation"
+          }
+        },
+        "sv": {
           "stringUnit": {
             "state": "translated",
             "value": "Installation"
@@ -3857,6 +5813,12 @@
             "value": "Waiting for JIT"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "انتظار الحصول على JIT"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -3867,6 +5829,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "En attente du JIT"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Väntar på JIT"
           }
         }
       }
@@ -3881,6 +5849,12 @@
             "value": "Abort Installation"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الغاء التثبيت"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -3891,6 +5865,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Annuler l'installation"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avbryt installation"
           }
         }
       }
@@ -3912,6 +5892,48 @@
                 "stringUnit": {
                   "state": "translated",
                   "value": "%lld Apps in total"
+                }
+              }
+            }
+          }
+        },
+        "ar": {
+          "variations": {
+            "plural": {
+              "zero": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld تطبيق في الإجمال"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld تطبيق في الإجمال"
+                }
+              },
+              "two": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld تطبيقان في الإجمال"
+                }
+              },
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld تطبيقات في الإجمال"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld تطبيقات في الإجمال"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld تطبيقات في الإجمال"
                 }
               }
             }
@@ -3946,6 +5968,24 @@
               }
             }
           }
+        },
+        "sv": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld App totalt"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld appar totalt"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -3959,6 +5999,12 @@
             "value": "Failed to Initialize AppInfo!"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "فشل في تهيئة معلومات التطبيق!"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -3969,6 +6015,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Échec de l'initialisation AppInfo !"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Det gick inte att initiera AppInfo!"
           }
         }
       }
@@ -3983,6 +6035,12 @@
             "value": "App not Found."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لم يتم العثور على التطبيق."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -3993,6 +6051,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "L'application n'a pas été trouvée."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Appen hittades inte."
           }
         }
       }
@@ -4007,6 +6071,12 @@
             "value": "App bundle not found."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لم يتم العثور على حزمة التطبيقات."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4017,6 +6087,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Le paquet d'applications n'a pas été trouvé."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App bundle hittades inte."
           }
         }
       }
@@ -4031,6 +6107,12 @@
             "value": "Convert Apps to Shared Apps to Use Them in LiveContainer2"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حول التطبيقات الى تطبيقات مُشارَكه لاستعمالها في LiveContainer2"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4041,6 +6123,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Convertir des applications en applications partagées pour les utiliser dans LiveContainer2"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Konvertera appar till delade appar för att använda dem i LiveContainer2"
           }
         }
       }
@@ -4055,6 +6143,12 @@
             "value": "Enter Url or Url Scheme"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ادخل الurl او الurl scheme"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4065,6 +6159,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Saisir une URL ou un schéma d'URL"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ange Url- eller Url-schema"
           }
         }
       }
@@ -4079,6 +6179,12 @@
             "value": "Hidden Apps"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "التطبيقات المخفية"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4089,6 +6195,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Applications masquées"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dolda appar"
           }
         }
       }
@@ -4103,6 +6215,12 @@
             "value": "Hide app in app settings."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اخفي التطبيق في اعدادات التطبيق."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4113,6 +6231,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Masquer l'application dans les paramètres de l'application."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dölj app i appinställningar."
           }
         }
       }
@@ -4127,6 +6251,12 @@
             "value": "Failed to read app's Info.plist."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لم يتم قراءه info.plist التطبيق."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4137,6 +6267,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Échec de la lecture du fichier Info.plist de l'application."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Det gick inte att läsa appens Info.plist."
           }
         }
       }
@@ -4151,6 +6287,12 @@
             "value": "Install as new"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ثبت كجديد"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4161,6 +6303,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Installer comme neuf"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installera som ny"
           }
         }
       }
@@ -4175,6 +6323,12 @@
             "value": "Force Sign"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "توقيع أجباري"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4185,6 +6339,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Forcer la signature"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tvinga signering"
           }
         }
       }
@@ -4199,6 +6359,12 @@
             "value": "Hide App"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اخفي التطبيق"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4209,6 +6375,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Masquer l'application"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dölj app"
           }
         }
       }
@@ -4223,6 +6395,12 @@
             "value": "Do you want to remove the keychain of this container?"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هل تريد ان تحذف سلسلة المفاتيح لهذهِ الحاوية؟"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4233,6 +6411,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Voulez-vous retirer le trousseau de ce conteneur ?"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vill du ta bort nyckelkedjan för denna behållare?"
           }
         }
       }
@@ -4247,6 +6431,12 @@
             "value": "Yes"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نعم"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4257,6 +6447,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Oui"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ja"
           }
         }
       }
@@ -4271,6 +6467,12 @@
             "value": "Error"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خطأ"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4281,6 +6483,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Erreur"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fel"
           }
         }
       }
@@ -4295,6 +6503,12 @@
             "value": "Language"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اللغة"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4305,6 +6519,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Langue"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Språk"
           }
         }
       }
@@ -4319,6 +6539,12 @@
             "value": "Loading…"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تحميل…"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4329,6 +6555,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Chargement..."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Laddar…"
           }
         }
       }
@@ -4343,6 +6575,12 @@
             "value": "Miscellaneous"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "متنوع"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4353,6 +6591,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Divers"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diverse"
           }
         }
       }
@@ -4367,6 +6611,12 @@
             "value": "Move"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نقل"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4377,6 +6627,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Déplacer"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Flytta"
           }
         }
       }
@@ -4391,6 +6647,12 @@
             "value": "No"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "كلا"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4401,6 +6663,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Non"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nej"
           }
         }
       }
@@ -4415,6 +6683,12 @@
             "value": "None"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا يوجد"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4425,6 +6699,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Aucun"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inga"
           }
         }
       }
@@ -4439,6 +6719,12 @@
             "value": "OK"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تم"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4449,6 +6735,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "OK"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ok"
           }
         }
       }
@@ -4463,6 +6755,12 @@
             "value": "Rename"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أعد تسميه"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4473,6 +6771,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Renommer"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Byt namn"
           }
         }
       }
@@ -4487,6 +6791,12 @@
             "value": "Success"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نجاح"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4497,6 +6807,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Succès"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lyckades"
           }
         }
       }
@@ -4511,6 +6827,12 @@
             "value": "Unknown"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "غير معروف"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4521,6 +6843,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Inconnu"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Okänd"
           }
         }
       }
@@ -4535,6 +6863,12 @@
             "value": "This is the default container"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هذه هي الحاوية الأساسية"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4545,6 +6879,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Il s'agit du conteneur par défaut"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Detta är standard behållaren"
           }
         }
       }
@@ -4559,6 +6899,12 @@
             "value": "Enter the name of new folder"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أدخِل اسم ملف جديد"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4569,6 +6915,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Saisir le nom du nouveau dossier"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ange namnet på ny mapp"
           }
         }
       }
@@ -4583,6 +6935,12 @@
             "value": "Container Folder Name"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اسم ملف الحاوية"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4593,6 +6951,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Nom du dossier du conteneur"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mappnamn för behållare"
           }
         }
       }
@@ -4607,6 +6971,12 @@
             "value": "Container Name"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اسم الحاوية"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4617,6 +6987,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Nom du conteneur"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Behållarens namn"
           }
         }
       }
@@ -4631,6 +7007,12 @@
             "value": "LiveContainer will use the default container when none is specified."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "سوف يستعمل LiveContainer الحاوية الأساسية أذا لم يتم تحديد واحدة."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4641,6 +7023,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "LiveContainer utilisera le conteneur par défaut si aucun n'est spécifié."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LiveContainer kommer att använda standardbehållaren när inget anges."
           }
         }
       }
@@ -4655,6 +7043,12 @@
             "value": "Delete Data"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "احذف البيانات"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4665,6 +7059,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Supprimer les données"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Radera data"
           }
         }
       }
@@ -4679,6 +7079,12 @@
             "value": "Do you want to delete all data of this container?"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هل تريد أن تحذف بيانات وملفات هذه الحاوية؟"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4689,6 +7095,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Voulez-vous supprimer toutes les données de ce conteneur ?"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vill du ta bort all data från denna behållare?"
           }
         }
       }
@@ -4703,6 +7115,12 @@
             "value": "This container is currently in use"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هذه الحاوية مستعمله حاليًا"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4713,6 +7131,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ce conteneur est actuellement utilisé"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Denna behållare används för närvarande"
           }
         }
       }
@@ -4727,6 +7151,12 @@
             "value": "Container is currently used by %@."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الحاوية مستعمله حالياً من قبل %@."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4737,6 +7167,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Le conteneur est actuellement utilisé par %@."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Behållare används för närvarande av %@."
           }
         }
       }
@@ -4751,6 +7187,12 @@
             "value": "Isolate App Group"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أعزل مجموعه التطبيق"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4761,6 +7203,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Isoler le groupe d'apps"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Isolera appgrupp"
           }
         }
       }
@@ -4775,6 +7223,12 @@
             "value": "Not enough keychain Access Group."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لا توجد مجموعة وصول كافية لسلسلة المفاتيح."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4785,6 +7239,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Accès insuffisant au groupe du trousseau."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inte tillräckligt med nyckelring Access Group."
           }
         }
       }
@@ -4799,6 +7259,12 @@
             "value": "Container Preferences"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تفضيلات الحاوية"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4809,6 +7275,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Préférences des conteneurs"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inställningar för behållare"
           }
         }
       }
@@ -4823,6 +7295,12 @@
             "value": "Remove Container"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "امسح الحاوية"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4833,6 +7311,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Retirer le conteneur"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ta bort behållare"
           }
         }
       }
@@ -4847,6 +7331,12 @@
             "value": "Do you want to remove this container?"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هل تريد أن تحذف هذه الحاوية؟"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4857,6 +7347,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Voulez-vous retirer ce conteneur ?"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vill du ta bort denna behållare?"
           }
         }
       }
@@ -4871,6 +7367,12 @@
             "value": "Enter New Name"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أدخل اسم جديد"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4881,6 +7383,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Saisir un nouveau nom"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ange ett nytt namn"
           }
         }
       }
@@ -4895,6 +7403,12 @@
             "value": "Done"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تم"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4905,6 +7419,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Terminé"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klar"
           }
         }
       }
@@ -4919,6 +7439,12 @@
             "value": "To completely hide apps, enable Strict Hiding mode in settings."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لأخفاء البرامج بالكامل، فعل ميزة الاخفاء بالاعدادات."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4929,6 +7455,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Pour masquer complètement les applications, activez le mode de masquage strict dans les paramètres."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "För att helt dölja appar, aktivera Strict Hiding mode i inställningar."
           }
         }
       }
@@ -4943,6 +7475,12 @@
             "value": "Moving this app to Private Document Folder allows you to access its data and tweaks in the Files app, but it can not be run by other LiveContainers."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بنقل هذا البرنامَج إلى ملفات مستندات خاصة سوف يمنحك هذا صلاحية أضافه التعديلات والتحكم بملفات البرنامَج في برنامَج الملفات، لكن لا يمكن تشغيله من تطبيقات LiveContainers  الاخرى."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4953,6 +7491,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "En déplaçant cette application vers le dossier de documents privés, vous pouvez accéder à ses données et à ses tweaks dans l'application Fichiers, mais elle ne peut pas être lancée par d'autres LiveContainers."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Genom att flytta denna app till privat dokumentmapp kan du komma åt dess data och tweaks i appen Filer, men det kan inte köras av andra LiveContainers."
           }
         }
       }
@@ -4967,6 +7511,12 @@
             "value": "Hide LiveContainer from Dyld Api"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اخفي LiveContainer من Dyld Api"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -4977,6 +7527,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Masquer LiveContainer de l'API Dyld"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dölj LiveContainer från Dyld Api"
           }
         }
       }
@@ -4991,6 +7547,12 @@
             "value": "Might help bypass some app’s injection detection."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يمكن ان يعبر بعض مكتشفات التعديلات لدى بعض البرامج."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -5001,6 +7563,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Cela pourrait permettre de contourner la détection d'injection de certaines applications."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kan hjälpa till att kringgå vissa appars injektions detektion."
           }
         }
       }
@@ -5015,6 +7583,12 @@
             "value": "Launch with JIT"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "شغل البرنامَج مع JIT"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -5025,6 +7599,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Lancer avec JIT"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Starta med JIT"
           }
         }
       }
@@ -5039,6 +7619,12 @@
             "value": "LiveContainer will try to acquire JIT permission before launching the app."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "سوف يحاول LiveContainer بالحصول على JIT قبل ان يُشغل التطبيق."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -5049,6 +7635,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "LiveContainer essaiera d'obtenir l'autorisation de JIT avant de lancer l'application."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LiveContainer kommer att försöka skaffa JIT-tillstånd innan appen startas."
           }
         }
       }
@@ -5063,6 +7655,12 @@
             "value": "Lock App"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أقفل التطبيق"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -5073,6 +7671,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Verrouiller l'application"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lås app"
           }
         }
       }
@@ -5087,6 +7691,12 @@
             "value": "New Data Folder"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مِلَفّ بيانات جديد"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -5097,6 +7707,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Nouveau dossier de données"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ny datamapp"
           }
         }
       }
@@ -5111,6 +7727,12 @@
             "value": "Not Created Yet"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ليش منشأ بعد"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -5121,6 +7743,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Pas encore créé"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inte skapad ännu"
           }
         }
       }
@@ -5135,6 +7763,12 @@
             "value": "Rename data folder"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "غير اسم مِلَفّ البيانات"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -5145,6 +7779,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Renommer le dossier de données"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Byt namn på datamapp"
           }
         }
       }
@@ -5159,6 +7799,12 @@
             "value": "Signer"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "المُوقع"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -5169,6 +7815,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Signataire"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Signer"
           }
         }
       }
@@ -5183,6 +7835,12 @@
             "value": "This app is not signed, do you want to sign it anyway?"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هذا البرنامج غير مُوقع، هل تريد ان تُوقعهُ على أي حال؟"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -5193,6 +7851,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Cette application n'est pas signée, voulez-vous quand même la signer ?"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Denna app är inte signerad, vill du signera den ändå?"
           }
         }
       }
@@ -5207,6 +7871,12 @@
             "value": "Convert to Private App"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حولهُ إلى تطبيق خاص"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -5217,6 +7887,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Convertir en application privée"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Konvertera till privat app"
           }
         }
       }
@@ -5231,6 +7907,12 @@
             "value": "Convert to Shared App"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حولهُ إلى تطبيق مشارك"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -5241,6 +7923,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Convertir en application partagée"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Konvertera till delad app"
           }
         }
       }
@@ -5255,6 +7943,12 @@
             "value": "Disabled"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "غير مفعل"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -5265,6 +7959,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Désactivé"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inaktiverad"
           }
         }
       }
@@ -5279,6 +7979,12 @@
             "value": "Moving this app to App Group allows other LiveContainers to run this app with all its data and tweak preserved. If you want to access its data and tweak again from the file app, move it back."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نقل هذا التطبيق إلى مجموعة التطبيقات يسمح للحاويات الأخرى بتشغيل هذا التطبيق مع جميع بياناته وتعديلاتك محفوظة. إذا كنت ترغب في الوصول إلى بياناته وتعديلاتك مرة أخرى من تطبيق الملفات، قم بنقله مرة أخرى."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -5289,6 +7995,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Déplacer cette application vers un groupe d'apps permet à d'autres LiveContainers de lancer cette application en conservant toutes ses données et ses tweaks. Si vous voulez accéder à nouveau à ses données et à ses tweaks à partir de l'application Fichiers, déplacez-la à nouveau."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Genom att flytta denna app till App Group kan andra LiveContainers köra denna app med alla dess data och tweaks bevarade. Om du vill komma åt dess data och justera igen från filappen, flytta den tillbaka."
           }
         }
       }
@@ -5303,6 +8015,12 @@
             "value": "Tweak Folder"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مِلَفّ التعديل"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -5313,6 +8031,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Dossier de tweak"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tweak mapp"
           }
         }
       }
@@ -5327,6 +8051,12 @@
             "value": "Fix File Picker & Local Notification"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أصلح آخذ الملفات و الإشعارات المحلية"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -5337,6 +8067,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Corriger le sélecteur de fichiers et la notification locale"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fixa filväljare och lokal notifikationer"
           }
         }
       }
@@ -5351,6 +8087,12 @@
             "value": "Fixes these issues by using LiveContainer’s bundle identifier when overwriting main bundle."
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أصحّح هذه الأخطاء باستخدام معرف الحزمه الخاص ب LiveContainer ويضعه فوق معرف الحزمة الخاص بالتطبيق."
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -5361,6 +8103,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Corrige ces problèmes en utilisant l'identifiant du bundle de LiveContainer lors de l'écrasement du bundle principal."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fixar dessa problem genom att använda LiveContainers bunt identifierare när du skriver över huvudbuntet."
           }
         }
       }
@@ -5375,6 +8123,12 @@
             "value": "Auto"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "آلي"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -5382,6 +8136,12 @@
           }
         },
         "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Auto"
+          }
+        },
+        "sv": {
           "stringUnit": {
             "state": "translated",
             "value": "Auto"
@@ -5399,6 +8159,12 @@
             "value": "Cancel"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إلغاء"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -5409,6 +8175,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Annuler"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avbryt"
           }
         }
       }
@@ -5423,6 +8195,12 @@
             "value": "Containers"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حاويات"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -5433,6 +8211,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Conteneurs"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Behållare"
           }
         }
       }
@@ -5447,6 +8231,12 @@
             "value": "Continue"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "متابعة"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -5457,6 +8247,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Continuer"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fortsätt"
           }
         }
       }
@@ -5471,6 +8267,12 @@
             "value": "Copy"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نسخ"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -5481,6 +8283,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Copier"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kopiera"
           }
         }
       }
@@ -5495,6 +8303,12 @@
             "value": "Correct"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "صح"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -5505,6 +8319,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Corriger"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Korrekt"
           }
         }
       }
@@ -5519,6 +8339,12 @@
             "value": "Data"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بيانات"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -5529,6 +8355,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Données"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Data"
           }
         }
       }
@@ -5543,6 +8375,12 @@
             "value": "Delete"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مسح"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -5553,6 +8391,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Supprimer"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Radera"
           }
         }
       }
@@ -5567,6 +8411,12 @@
             "value": "Run App"
           }
         },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "شغل التطبيق"
+          }
+        },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
@@ -5577,6 +8427,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Lancer l'application"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kör app"
           }
         }
       }

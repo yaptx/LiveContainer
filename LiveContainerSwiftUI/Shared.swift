@@ -863,7 +863,7 @@ extension LCUtils {
                 
             } else {
                 launchURL = URL(string: launchURLStr)!
-                onServerMessage?("JIT acquisition will continue in StkiJIT.")
+                onServerMessage?("JIT acquisition will continue in StikJIT.")
             }
             await UIApplication.shared.open(launchURL)
         }

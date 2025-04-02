@@ -14,7 +14,7 @@
 #include <sys/mman.h>
 #include <stdlib.h>
 #include "TPRO.h"
-#import "fishhook/fishhook.h"
+#import "../fishhook/fishhook.h"
 #import "Tweaks/Tweaks.h"
 #include <mach-o/ldsyms.h>
 
@@ -639,6 +639,12 @@ int LiveContainerMain(int argc, char *argv[]) {
 
 // fake main() used for dlsym(RTLD_DEFAULT, main)
 int main(int argc, char *argv[]) {
+#ifdef DEBUG
+    if(appMain == NULL) {
+        return LiveContainerMain(argc, argv);
+    }
+#else
     assert(appMain != NULL);
+#endif
     return appMain(argc, argv);
 }
