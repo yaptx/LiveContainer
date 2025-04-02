@@ -105,7 +105,7 @@
 		1741409B2D9C0EDD00F3F928 /* AltStoreTweak.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = AltStoreTweak.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		174140AD2D9C0F4100F3F928 /* TestJITLess.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = TestJITLess.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		174140D52D9C176700F3F928 /* libarchive.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libarchive.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/lib/libarchive.tbd; sourceTree = DEVELOPER_DIR; };
-		17DCE99D2C7067EC00731D42 /* LiveContainer_PleaseDoNotShortenTheExecutableNameBecauseItIsUsedToReserveSpaceForOverwritingThankYou.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LiveContainer_PleaseDoNotShortenTheExecutableNameBecauseItIsUsedToReserveSpaceForOverwritingThankYou.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		17DCE99D2C7067EC00731D42 /* LiveContainer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LiveContainer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -298,7 +298,7 @@
 		17DCE99E2C7067EC00731D42 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				17DCE99D2C7067EC00731D42 /* LiveContainer_PleaseDoNotShortenTheExecutableNameBecauseItIsUsedToReserveSpaceForOverwritingThankYou.app */,
+				17DCE99D2C7067EC00731D42 /* LiveContainer.app */,
 				17413FB52D9C0BAE00F3F928 /* LiveContainerSwiftUI.framework */,
 				1741403A2D9C0D0000F3F928 /* TweakLoader.dylib */,
 				174140542D9C0D6D00F3F928 /* ZSign.dylib */,
@@ -484,7 +484,7 @@
 			);
 			name = LiveContainer;
 			productName = jump;
-			productReference = 17DCE99D2C7067EC00731D42 /* LiveContainer_PleaseDoNotShortenTheExecutableNameBecauseItIsUsedToReserveSpaceForOverwritingThankYou.app */;
+			productReference = 17DCE99D2C7067EC00731D42 /* LiveContainer.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -615,7 +615,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nINFO_PLIST=\"${TARGET_BUILD_DIR}\"/\"${INFOPLIST_PATH}\"\n\n# Get current Git branch and commit hash\nCONFIG_BRANCH=$(git rev-parse --abbrev-ref HEAD)\nCONFIG_COMMIT=$(git log -1 --format=%h)\n\n# Combine values into a version info string\nLCVersionInfo=\"$CONFIGURATION ($CONFIG_BRANCH/$CONFIG_COMMIT)\"\n\n/usr/libexec/PlistBuddy -c \"Add :LCVersionInfo string $LCVersionInfo\" \"${INFO_PLIST}\"\n\ncp -n -r \"$SRCROOT\"/Resources/*.lproj \"$TARGET_BUILD_DIR/$CONTENTS_FOLDER_PATH\"\necho 1\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nINFO_PLIST=\"${TARGET_BUILD_DIR}\"/\"${INFOPLIST_PATH}\"\n\n# Get current Git branch and commit hash\nCONFIG_BRANCH=$(git rev-parse --abbrev-ref HEAD)\nCONFIG_COMMIT=$(git log -1 --format=%h)\n\n# Combine values into a version info string\nLCVersionInfo=\"$CONFIGURATION ($CONFIG_BRANCH/$CONFIG_COMMIT)\"\n\n/usr/libexec/PlistBuddy -c \"Add :LCVersionInfo string $LCVersionInfo\" \"${INFO_PLIST}\"\ncp \"$TARGET_BUILD_DIR/$CONTENTS_FOLDER_PATH/LiveContainer\" \"$TARGET_BUILD_DIR/$CONTENTS_FOLDER_PATH/LiveContainer_PleaseDoNotShortenTheExecutableNameBecauseItIsUsedToReserveSpaceForOverwritingThankYou\"\ncp -n -r \"$SRCROOT\"/Resources/*.lproj \"$TARGET_BUILD_DIR/$CONTENTS_FOLDER_PATH\"\necho 1\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1096,7 +1096,7 @@
 					_LiveContainerMain,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.kdt.livecontainer;
-				PRODUCT_NAME = LiveContainer_PleaseDoNotShortenTheExecutableNameBecauseItIsUsedToReserveSpaceForOverwritingThankYou;
+				PRODUCT_NAME = LiveContainer;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -1140,7 +1140,7 @@
 					_LiveContainerMain,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.kdt.livecontainer;
-				PRODUCT_NAME = LiveContainer_PleaseDoNotShortenTheExecutableNameBecauseItIsUsedToReserveSpaceForOverwritingThankYou;
+				PRODUCT_NAME = LiveContainer;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;

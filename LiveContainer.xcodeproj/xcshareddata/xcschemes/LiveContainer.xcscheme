@@ -16,7 +16,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "17DCE99C2C7067EC00731D42"
-               BuildableName = "LiveContainer_PleaseDoNotShortenTheExecutableNameBecauseItIsUsedToReserveSpaceForOverwritingThankYou.app"
+               BuildableName = "LiveContainer.app"
                BlueprintName = "LiveContainer"
                ReferencedContainer = "container:LiveContainer.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "17DCE99C2C7067EC00731D42"
-            BuildableName = "LiveContainer_PleaseDoNotShortenTheExecutableNameBecauseItIsUsedToReserveSpaceForOverwritingThankYou.app"
+            BuildableName = "LiveContainer.app"
             BlueprintName = "LiveContainer"
             ReferencedContainer = "container:LiveContainer.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "17DCE99C2C7067EC00731D42"
-            BuildableName = "LiveContainer_PleaseDoNotShortenTheExecutableNameBecauseItIsUsedToReserveSpaceForOverwritingThankYou.app"
+            BuildableName = "LiveContainer.app"
             BlueprintName = "LiveContainer"
             ReferencedContainer = "container:LiveContainer.xcodeproj">
          </BuildableReference>
