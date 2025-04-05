@@ -49,6 +49,11 @@ NSDictionary* guestAppInfo;
 @end
 
 static BOOL checkJITEnabled() {
+    // check if running on macOS
+    if (access("/Users", R_OK) == 0) {
+        return YES;
+    }
+    
     if([lcUserDefaults boolForKey:@"LCIgnoreJITOnLaunch"]) {
         return NO;
     }
@@ -413,7 +418,7 @@ static NSString* invokeAppMain(NSString *selectedApp, NSString *selectedContaine
     uint32_t appIndex = _dyld_image_count();
     appMainImageIndex = appIndex;
     
-    DyldHooksInit([guestAppInfo[@"hideLiveContainer"] boolValue]);
+    DyldHooksInit([guestAppInfo[@"hideLiveContainer"] boolValue], [guestAppInfo[@"spoofSDKVersion"] unsignedIntValue]);
     
     bool is32bit = [guestAppInfo[@"is32bit"] boolValue];
     if(is32bit) {

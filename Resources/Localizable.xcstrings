@@ -37,152 +37,38 @@
         }
       }
     },
-    "lc.settings.cleanDataFolderConfirm %lld": {
-      "comment": null,
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "variations": {
-            "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Do you want to delete %lld unused data folder?"
-                }
-              },
-              "other": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Do you want to delete %lld unused data folders?"
-                }
-              }
-            }
-          }
-        },
-        "ar": {
-          "variations": {
-            "plural": {
-              "zero": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "هل تريد أن تحذف %lld الملفات الغير مستخدمة؟"
-                }
-              },
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "هل تريد أن تحذف %lld المِلَف الغير مستخدم؟"
-                }
-              },
-              "two": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "هل تريد أن تحذف %lld الملفان الغير مستخدمان؟"
-                }
-              },
-              "few": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "هل تريد أن تحذف %lld الملفات الغير مستخدمة؟"
-                }
-              },
-              "many": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "هل تريد أن تحذف %lld الملفات الغير مستخدمة؟"
-                }
-              },
-              "other": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "هل تريد أن تحذف %lld الملفات الغير مستخدمة؟"
-                }
-              }
-            }
-          }
-        },
-        "zh-Hans": {
-          "variations": {
-            "plural": {
-              "other": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "你确定要删除%lld个未使用的文件夹吗?"
-                }
-              }
-            }
-          }
-        },
-        "fr": {
-          "variations": {
-            "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Voulez-vous supprimer %lld dossier de données inutilisé ?"
-                }
-              },
-              "other": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Voulez-vous supprimer %lld dossiers de données inutilisés ?"
-                }
-              }
-            }
-          }
-        },
-        "sv": {
-          "variations": {
-            "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Vill du ta bort %lld oanvänd datamapp?"
-                }
-              },
-              "other": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Vill du ta bort %lld oanvända datamappar?"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "lc.jitlessSetup.error.testFailed": {
+    "lc.jitlessSetup.error.passwordNotFound": {
       "comment": null,
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Error while performing signing test"
+            "value": "Failed to find certificate password"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "حدث خطأ عند اختبار التوقيع"
+            "value": "فضل البحث عن رمز الشهادة"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "执行签名测试时出现问题。"
+            "value": "无获取到证书密码。"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Erreur lors de l'exécution du test de signature"
+            "value": "Échec de la recherche du mot de passe du certificat"
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Fel vid signeringstest"
+            "value": "Det gick inte att hitta certifikatets lösenord"
           }
         }
       }
@@ -547,42 +433,6 @@
         }
       }
     },
-    "lc.settings.cleanKeychain": {
-      "comment": null,
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Clean Up Keychain"
-          }
-        },
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "تنظيف سلسله المفاتيح"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "清理钥匙串"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Nettoyer le trousseau"
-          }
-        },
-        "sv": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Rensa upp nyckelring"
-          }
-        }
-      }
-    },
     "lc.jitlessSetup.error.certDataNotFound": {
       "comment": null,
       "extractionState": "manual",
@@ -651,6 +501,42 @@
           "stringUnit": {
             "state": "translated",
             "value": "Om vissa appars konto inte kan synkroniseras mellan LiveContainers kan det bero på att det fortfarande är lagrat i nuvarande LiveContainers privata nyckelring. Rensa upp nyckelring kan lösa detta problem, men det kan logga ut dig från några av dina konton. Fortsätt?"
+          }
+        }
+      }
+    },
+    "lc.settings.cleanKeychain": {
+      "comment": null,
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clean Up Keychain"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تنظيف سلسله المفاتيح"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "清理钥匙串"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nettoyer le trousseau"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rensa upp nyckelring"
           }
         }
       }
@@ -1051,74 +937,146 @@
         }
       }
     },
-    "lc.jitlessSetup.error.passwordNotFound": {
+    "lc.settings.injectLCItself": {
       "comment": null,
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Failed to find certificate password"
+            "value": "Load Tweaks to LiveContainer Itself"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "فضل البحث عن رمز الشهادة"
+            "value": "حمل التعديلات ألى LiveContainer ذات نفسه"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "无获取到证书密码。"
+            "value": "向LiveContainer加载模块"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Échec de la recherche du mot de passe du certificat"
+            "value": "Charger les tweaks dans LiveContainer lui-même"
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Det gick inte att hitta certifikatets lösenord"
+            "value": "Ladda Tweaks till LiveContainer själv"
           }
         }
       }
     },
-    "lc.jitlessDiag.teamId": {
+    "lc.jitlessSetup.error.testFailed": {
       "comment": null,
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Team ID"
+            "value": "Error while performing signing test"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "معرف الفريق"
+            "value": "حدث خطأ عند اختبار التوقيع"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "团队名"
+            "value": "执行签名测试时出现问题。"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "ID de l'équipe"
+            "value": "Erreur lors de l'exécution du test de signature"
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Team ID"
+            "value": "Fel vid signeringstest"
+          }
+        }
+      }
+    },
+    "lc.settings.interface": {
+      "comment": null,
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "interface"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "الواجهة"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "外观"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "interface"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "gränssnitt"
+          }
+        }
+      }
+    },
+    "lc.container.selectUnused.unknownApp": {
+      "comment": null,
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unknown app"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تطبيق غير معروف"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未知App"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Application inconnue"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Okänd app"
           }
         }
       }
@@ -1155,78 +1113,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Placera din tweaks i den globala “Tweaks” mappen och LiveContainer kommer att plocka upp dem."
-          }
-        }
-      }
-    },
-    "lc.guestTweak.restartToInstall": {
-      "comment": null,
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Please restart LiveContainer to install apps."
-          }
-        },
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "الرجاء أعادة تشغيل LiveContainer لتثبيت التطبيقات."
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "请重启LiveContainer以安装App。"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Veuillez redémarrer LiveContainer pour installer les applications."
-          }
-        },
-        "sv": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Starta om LiveContainer för att installera appar."
-          }
-        }
-      }
-    },
-    "lc.container.setDefaultContainer": {
-      "comment": null,
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Set As Default Container"
-          }
-        },
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ضعة كالحاوية الأساسية"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "设置为默认容器"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Définir comme conteneur par défaut"
-          }
-        },
-        "sv": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ställ in som standard behållare"
           }
         }
       }
@@ -1591,42 +1477,6 @@
         }
       }
     },
-    "lc.helpView.text1": {
-      "comment": null,
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Setup JITLess mode (Patch Store) in settings to use LiveContainer without JIT.\n\n**Check JITLess Diagnose page in settings if you have trouble enabling JITLess mode.**\n\nPress plus button to install apps.\n\nLong press app for app-specific settings, fixes and adding apps to homescreen."
-          }
-        },
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "إعداد وضع بدون-JIT (متجر التصحيحات) في الإعدادات لاستخدام LiveContainer بدون JIT.\nتحقق من صفحة تشخيص بدون-JIT في الإعدادات إذا واجهت مشكلة في تفعيل وضع بدون-JIT.\nاضغط على زر الإضافة لتثبيت التطبيقات.\nاضغط مطولاً على التطبيق للوصول إلى إعدادات المحددة للتطبيق، وإصلاحات، وإضافة التطبيقات إلى الشاشة الرئيسية."
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "在设置中配置免JIT模式(打补丁)来使得LiveContainer无需JIT权限即可使用。\n\n**如果配置免JIT模式时遇到问题，请查看免JIT模式诊断页面。**\n\n点击加号按钮来安装App。\n\n长按App可查看App设置，修复App问题，以及将App添加到主屏幕。"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Configurer le mode sans JIT (patch du store) dans les paramètres pour utiliser LiveContainer sans le JIT.\n\n**Consultez la page Diagnostic du mode sans JIT dans les paramètres si vous avez des difficultés à activer le mode sans JIT.\n\nAppuyez sur le bouton Plus pour installer des applications.\n\nAppuyez longuement sur une application pour accéder aux paramètres spécifiques à l'application, aux correctifs et pour ajouter l'application à l'écran d'accueil."
-          }
-        },
-        "sv": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Konfigurera JITLess (Patch Store) i inställningar för att använda LiveContainer utan JIT.\n\n**Kontrollera JITLess diagnostisera sidan i inställningar om du har problem med att aktivera JITLess läge. **\n\nTryck på plusknappen för att installera appar.\n\nTryck länge på appen för appspecifika inställningar, fixar och lägger till appar på startskärmen."
-          }
-        }
-      }
-    },
     "lc.jitlessDiag.store": {
       "comment": null,
       "extractionState": "manual",
@@ -1695,6 +1545,42 @@
           "stringUnit": {
             "state": "translated",
             "value": "**Kontrollera [Vanliga frågor om LiveContainer](https://github.com/khanhduytran0/LiveContainer/issues/265) för vanliga problem.**\n                         \nOm du stöter på ett fel eller kompatibilitetsproblem vänligen skicka in [GitHub-problem](https://github.com/khanhduytran0/LiveContainer/issues)."
+          }
+        }
+      }
+    },
+    "lc.jitlessDiag.teamId": {
+      "comment": null,
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Team ID"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "معرف الفريق"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "团队名"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ID de l'équipe"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Team ID"
           }
         }
       }
@@ -2095,74 +1981,38 @@
         }
       }
     },
-    "lc.settings.injectLCItself": {
+    "lc.guestTweak.restartToInstall": {
       "comment": null,
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Load Tweaks to LiveContainer Itself"
+            "value": "Please restart LiveContainer to install apps."
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "حمل التعديلات ألى LiveContainer ذات نفسه"
+            "value": "الرجاء أعادة تشغيل LiveContainer لتثبيت التطبيقات."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "向LiveContainer加载模块"
+            "value": "请重启LiveContainer以安装App。"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Charger les tweaks dans LiveContainer lui-même"
+            "value": "Veuillez redémarrer LiveContainer pour installer les applications."
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ladda Tweaks till LiveContainer själv"
-          }
-        }
-      }
-    },
-    "lc.settings.interface": {
-      "comment": null,
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "interface"
-          }
-        },
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "الواجهة"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "外观"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "interface"
-          }
-        },
-        "sv": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "gränssnitt"
+            "value": "Starta om LiveContainer för att installera appar."
           }
         }
       }
@@ -2203,74 +2053,110 @@
         }
       }
     },
-    "lc.signer.noCertificateFoundErr": {
+    "lc.settings.multiLCInstall": {
       "comment": null,
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Failed to find signing certificate. Please check JIT-Less Diagnose page and see if there's something with your JIT-Less setup."
+            "value": "Install Another LiveContainer"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "فشل في البحث عن شهادة توقيع. الرجاء النظر في قائمه تشخيص بدون-JIT والتأكد من عدم وجود أي خطأ."
+            "value": "ثبت LiveContainer أخر"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "无法找到证书用于签名。请查看“免JIT诊断”页面以检查免JIT模式设置存在问题。"
+            "value": "安装第二个LiveContainer"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Impossible de trouver le certificat de signature. Veuillez vérifier la page du Diagnostic du mode sans JIT et vérifier s'il y a quelque chose avec votre configuration du mode sans JIT."
+            "value": "Installer un autre LiveContainer"
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Det gick inte att hitta signeringscertifikatet. Kontrollera JIT-Less diagnostik sida och se om det finns något med din JIT-less setup."
+            "value": "Installera ytterligare en LiveContainer"
           }
         }
       }
     },
-    "lc.settings.silentSwitchApp": {
+    "lc.helpView.text1": {
       "comment": null,
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Switch App Without Asking"
+            "value": "Setup JITLess mode (Patch Store) in settings to use LiveContainer without JIT.\n\n**Check JITLess Diagnose page in settings if you have trouble enabling JITLess mode.**\n\nPress plus button to install apps.\n\nLong press app for app-specific settings, fixes and adding apps to homescreen."
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "غير البرنامَج دون سؤال"
+            "value": "إعداد وضع بدون-JIT (متجر التصحيحات) في الإعدادات لاستخدام LiveContainer بدون JIT.\nتحقق من صفحة تشخيص بدون-JIT في الإعدادات إذا واجهت مشكلة في تفعيل وضع بدون-JIT.\nاضغط على زر الإضافة لتثبيت التطبيقات.\nاضغط مطولاً على التطبيق للوصول إلى إعدادات المحددة للتطبيق، وإصلاحات، وإضافة التطبيقات إلى الشاشة الرئيسية."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "静默切换App"
+            "value": "在设置中配置免JIT模式(打补丁)来使得LiveContainer无需JIT权限即可使用。\n\n**如果配置免JIT模式时遇到问题，请查看免JIT模式诊断页面。**\n\n点击加号按钮来安装App。\n\n长按App可查看App设置，修复App问题，以及将App添加到主屏幕。"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Changer d'application sans demander"
+            "value": "Configurer le mode sans JIT (patch du store) dans les paramètres pour utiliser LiveContainer sans le JIT.\n\n**Consultez la page Diagnostic du mode sans JIT dans les paramètres si vous avez des difficultés à activer le mode sans JIT.\n\nAppuyez sur le bouton Plus pour installer des applications.\n\nAppuyez longuement sur une application pour accéder aux paramètres spécifiques à l'application, aux correctifs et pour ajouter l'application à l'écran d'accueil."
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Byt app utan att fråga"
+            "value": "Konfigurera JITLess (Patch Store) i inställningar för att använda LiveContainer utan JIT.\n\n**Kontrollera JITLess diagnostisera sidan i inställningar om du har problem med att aktivera JITLess läge. **\n\nTryck på plusknappen för att installera appar.\n\nTryck länge på appen för appspecifika inställningar, fixar och lägger till appar på startskärmen."
+          }
+        }
+      }
+    },
+    "lc.settings.silentOpenWebPageDesc": {
+      "comment": null,
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "By default, LiveContainer asks you how to open an URL. Enable this to automatically open URL in current app."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بالأساس، LiveContainer يسألك كيف تفتح رابط. فهل هذا الخِيار وسوف يفتح LiveContainer الروابط تِلْقائيًا في التطبيق الحالي."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LiveContainer在打开链接时会询问你如何打开。启用此选项来自动在当前App中打开。"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Par défaut, LiveContainer vous demande comment ouvrir une URL. Activez cette option pour ouvrir automatiquement l'URL dans l'application en cours."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Som standard frågar LiveContainer dig hur du öppnar en URL. Aktivera detta för att automatiskt öppna URL i aktuell app."
           }
         }
       }
@@ -2294,7 +2180,7 @@
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "LiveContainer在切换App时默认会向你确认。启用此选项来静默切换，所有未保存的数将会丢失。"
+            "value": "LiveContainer在切换App时默认会向你确认。启用此选项来静默切换，所有未保存的数据将会丢失。"
           }
         },
         "fr": {
@@ -2635,42 +2521,6 @@
         }
       }
     },
-    "lc.tabView.apps": {
-      "comment": null,
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Apps"
-          }
-        },
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "التطبيقات"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "App"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Applications"
-          }
-        },
-        "sv": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Appar"
-          }
-        }
-      }
-    },
     "lc.settings.silentOpenWebPage": {
       "comment": null,
       "extractionState": "manual",
@@ -2739,6 +2589,42 @@
           "stringUnit": {
             "state": "translated",
             "value": "Inställningar"
+          }
+        }
+      }
+    },
+    "lc.tabView.apps": {
+      "comment": null,
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apps"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "التطبيقات"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Applications"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Appar"
           }
         }
       }
@@ -3139,146 +3025,110 @@
         }
       }
     },
-    "lc.settings.silentOpenWebPageDesc": {
+    "lc.webView.runApp": {
       "comment": null,
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "By default, LiveContainer asks you how to open an URL. Enable this to automatically open URL in current app."
+            "value": "Run App"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "بالأساس، LiveContainer يسألك كيف تفتح رابط. فهل هذا الخِيار وسوف يفتح LiveContainer الروابط تِلْقائيًا في التطبيق الحالي."
+            "value": "شغل التطبيق"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "LiveContainer在打开链接时会询问你如何打开。启用此选项来自动在当前App中打开。"
+            "value": "启动App"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Par défaut, LiveContainer vous demande comment ouvrir une URL. Activez cette option pour ouvrir automatiquement l'URL dans l'application en cours."
+            "value": "Lancer l'application"
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Som standard frågar LiveContainer dig hur du öppnar en URL. Aktivera detta för att automatiskt öppna URL i aktuell app."
+            "value": "Kör app"
           }
         }
       }
     },
-    "lc.settings.signer.desc": {
+    "lc.settings.silentSwitchApp": {
       "comment": null,
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "If AltSign reports an error, please try ZSign and vice versa. Please restart LiveContainer after switching Signer."
+            "value": "Switch App Without Asking"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "أذا أعطى AltSign خطأ، فحاول أن تستعمل Zsign و العكس صحيح. الرجاء اعادة تشغيل التطبيق LiveContainer بعد تغيير الُموقع."
+            "value": "غير البرنامَج دون سؤال"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "若AltSign签名遇到问题，可尝试使用ZSign，反之亦然。切换签名工具后请重启LiveContainer。"
+            "value": "静默切换App"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Si AltSign signale une erreur, essayez ZSign et vice versa. Veuillez redémarrer LiveContainer après avoir changé de signataire."
+            "value": "Changer d'application sans demander"
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Om AltSign rapporterar ett fel, försök ZSign och vice versa. Starta om LiveContainer efter byte av Signer."
+            "value": "Byt app utan att fråga"
           }
         }
       }
     },
-    "lc.settings.invalidCertError": {
+    "lc.signer.noCertificateFoundErr": {
       "comment": null,
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Failed to validate certificate. Please check the password and if the selected certificate is used to sign LiveContainer."
+            "value": "Failed to find signing certificate. Please check JIT-Less Diagnose page and see if there's something with your JIT-Less setup."
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "خطأ في التأكيد من صحة هذه الشهادة. الرجاء التأكد من صحة الرمز السري و أذا الشهادة الذي تم اختيارها هي نفسها الذي استخدمت لتوقيع LiveContainer."
+            "value": "فشل في البحث عن شهادة توقيع. الرجاء النظر في قائمه تشخيص بدون-JIT والتأكد من عدم وجود أي خطأ."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "验证证书失败，请检查密码并确认该证书是签名LiveContainer所使用的证书"
+            "value": "无法找到证书用于签名。请查看“免JIT诊断”页面以检查免JIT模式设置存在问题。"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Échec de la validation du certificat. Veuillez vérifier le mot de passe et si le certificat sélectionné est utilisé pour signer LiveContainer."
+            "value": "Impossible de trouver le certificat de signature. Veuillez vérifier la page du Diagnostic du mode sans JIT et vérifier s'il y a quelque chose avec votre configuration du mode sans JIT."
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Det gick inte att validera certifikatet. Kontrollera lösenordet och om det valda certifikatet används för att signera LiveContainer."
-          }
-        }
-      }
-    },
-    "lc.settings.multiLCDesc": {
-      "comment": null,
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "By installing multiple LiveContainers, and converting apps to Shared Apps, you can open one app between all LiveContainers with most of its data and settings."
-          }
-        },
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "بتثبيت عده LiveContainers، وتحويل عده تطبيقات الى تطبيقات مُشارَكه، يمكنك فتح تطبيق واحد بين جميع LiveContainers مع جميع ملفاتها وبياناتها وأعداداتها."
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "通过安装多个LiveContainer，并将App变为共享App，你可以在这些LiveContainer间共享安装的App及其数据，并同时运行多个App。"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "En installant plusieurs LiveContainers et en convertissant les applications en apps partagées, vous pouvez ouvrir une application entre tous les LiveContainers avec la plupart de ses données et paramètres."
-          }
-        },
-        "sv": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Genom att installera flera LiveContainers och konvertera appar till delade appar kan du öppna en app mellan alla LiveContainers med de flesta av dess data och inställningar."
+            "value": "Det gick inte att hitta signeringscertifikatet. Kontrollera JIT-Less diagnostik sida och se om det finns något med din JIT-less setup."
           }
         }
       }
@@ -3315,6 +3165,42 @@
           "stringUnit": {
             "state": "translated",
             "value": "Adress"
+          }
+        }
+      }
+    },
+    "lc.settings.invalidCertError": {
+      "comment": null,
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Failed to validate certificate. Please check the password and if the selected certificate is used to sign LiveContainer."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خطأ في التأكيد من صحة هذه الشهادة. الرجاء التأكد من صحة الرمز السري و أذا الشهادة الذي تم اختيارها هي نفسها الذي استخدمت لتوقيع LiveContainer."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "验证证书失败，请检查密码并确认该证书是签名LiveContainer所使用的证书"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Échec de la validation du certificat. Veuillez vérifier le mot de passe et si le certificat sélectionné est utilisé pour signer LiveContainer."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Det gick inte att validera certifikatet. Kontrollera lösenordet och om det valda certifikatet används för att signera LiveContainer."
           }
         }
       }
@@ -3679,42 +3565,6 @@
         }
       }
     },
-    "lc.settings.multiLCInstall": {
-      "comment": null,
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Install Another LiveContainer"
-          }
-        },
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ثبت LiveContainer أخر"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "安装第二个LiveContainer"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Installer un autre LiveContainer"
-          }
-        },
-        "sv": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Installera ytterligare en LiveContainer"
-          }
-        }
-      }
-    },
     "lc.settings.renewJitLess": {
       "comment": null,
       "extractionState": "manual",
@@ -3783,6 +3633,42 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@ kommer att öppnas för att installera den andra LiveContainer, Fortsätt?\n\nVälj ”Archive Only” om du vill göra vissa anpassningar och installera manuellt."
+          }
+        }
+      }
+    },
+    "lc.settings.signer.desc": {
+      "comment": null,
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "If AltSign reports an error, please try ZSign and vice versa. Please restart LiveContainer after switching Signer."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أذا أعطى AltSign خطأ، فحاول أن تستعمل Zsign و العكس صحيح. الرجاء اعادة تشغيل التطبيق LiveContainer بعد تغيير الُموقع."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "若AltSign签名遇到问题，可尝试使用ZSign，反之亦然。切换签名工具后请重启LiveContainer。"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Si AltSign signale une erreur, essayez ZSign et vice versa. Veuillez redémarrer LiveContainer après avoir changé de signataire."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Om AltSign rapporterar ett fel, försök ZSign och vice versa. Starta om LiveContainer efter byte av Signer."
           }
         }
       }
@@ -4183,182 +4069,260 @@
         }
       }
     },
-    "lc.container.selectUnused.unknownApp": {
+    "lc.settings.multiLCDesc": {
       "comment": null,
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Unknown app"
+            "value": "By installing multiple LiveContainers, and converting apps to Shared Apps, you can open one app between all LiveContainers with most of its data and settings."
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "تطبيق غير معروف"
+            "value": "بتثبيت عده LiveContainers، وتحويل عده تطبيقات الى تطبيقات مُشارَكه، يمكنك فتح تطبيق واحد بين جميع LiveContainers مع جميع ملفاتها وبياناتها وأعداداتها."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "未知App"
+            "value": "通过安装多个LiveContainer，并将App变为共享App，你可以在这些LiveContainer间共享安装的App及其数据，并同时运行多个App。"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Application inconnue"
+            "value": "En installant plusieurs LiveContainers et en convertissant les applications en apps partagées, vous pouvez ouvrir une application entre tous les LiveContainers avec la plupart de ses données et paramètres."
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Okänd app"
+            "value": "Genom att installera flera LiveContainers och konvertera appar till delade appar kan du öppna en app mellan alla LiveContainers med de flesta av dess data och inställningar."
           }
         }
       }
     },
-    "lc.container.selectUnused": {
+    "lc.container.setDefaultContainer": {
       "comment": null,
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Select Unused Containers"
+            "value": "Set As Default Container"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "أختر حاويات غير مستعمله"
+            "value": "ضعة كالحاوية الأساسية"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "选择未使用的容器"
+            "value": "设置为默认容器"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Sélectionner les conteneurs inutilisés"
+            "value": "Définir comme conteneur par défaut"
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Välj oanvända behållare"
+            "value": "Ställ in som standard behållare"
           }
         }
       }
     },
-    "lc.appBanner.confirmUninstallMsg %@": {
+    "lc.settings.cleanDataFolderConfirm %lld": {
       "comment": null,
       "extractionState": "manual",
       "localizations": {
         "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Are you sure you want to uninstall %@?"
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Do you want to delete %lld unused data folder?"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Do you want to delete %lld unused data folders?"
+                }
+              }
+            }
           }
         },
         "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "هل أنت متأكد من الغاء تثبيت %@؟"
+          "variations": {
+            "plural": {
+              "zero": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "هل تريد أن تحذف %lld الملفات الغير مستخدمة؟"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "هل تريد أن تحذف %lld المِلَف الغير مستخدم؟"
+                }
+              },
+              "two": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "هل تريد أن تحذف %lld الملفان الغير مستخدمان؟"
+                }
+              },
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "هل تريد أن تحذف %lld الملفات الغير مستخدمة؟"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "هل تريد أن تحذف %lld الملفات الغير مستخدمة؟"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "هل تريد أن تحذف %lld الملفات الغير مستخدمة؟"
+                }
+              }
+            }
           }
         },
         "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "你确定要卸载%@吗？"
+          "variations": {
+            "plural": {
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "你确定要删除%lld个未使用的文件夹吗?"
+                }
+              }
+            }
           }
         },
         "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Voulez-vous vraiment désinstaller %@ ?"
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Voulez-vous supprimer %lld dossier de données inutilisé ?"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Voulez-vous supprimer %lld dossiers de données inutilisés ?"
+                }
+              }
+            }
           }
         },
         "sv": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Är du säker på att du vill avinstallera %@?"
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Vill du ta bort %lld oanvänd datamapp?"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Vill du ta bort %lld oanvända datamappar?"
+                }
+              }
+            }
           }
         }
       }
     },
-    "lc.apppSettings.orientationLock.landscape": {
+    "lc.appList.installation": {
       "comment": null,
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Landscape"
+            "value": "Installation"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "افقي"
+            "value": "التثبيت"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "横屏"
+            "value": "安装"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Paysage"
+            "value": "Installation"
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Liggande"
+            "value": "Installation"
           }
         }
       }
     },
-    "lc.appList.installTip": {
+    "lc.appList.installReplaceTip": {
       "comment": null,
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Press the Plus Button to Install Apps."
+            "value": "There is an existing application with the same bundle identifier. Replace one or install as new."
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "اضغط على علامه + لتثبيت التطبيقات."
+            "value": "هنالك تطبيق موجود بالفعل بهذا معرف الحزمه. بدل هذا المعرف او ثبت كجديد."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "点击加号按钮安装App"
+            "value": "已有相同包名的App存在。请从下列App中选择一个替换或安装为新App。"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Appuyez sur le bouton Plus pour installer des applications."
+            "value": "Il existe une application existante avec le même identifiant de paquet. Remplacez-la ou installez-la en tant que nouvelle application."
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tryck på Plus-knappen för att installera appar."
+            "value": "Det finns ett befintligt app med samma bundle identifierare. Ersätt en eller installera som ny."
           }
         }
       }
@@ -4723,42 +4687,6 @@
         }
       }
     },
-    "lc.apppSettings.orientationLock.portrait": {
-      "comment": null,
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Portrait"
-          }
-        },
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "صوره عموديه"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "竖屏"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Portrait"
-          }
-        },
-        "sv": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Stående"
-          }
-        }
-      }
-    },
     "lc.appList.installFromUrl": {
       "comment": null,
       "extractionState": "manual",
@@ -4827,6 +4755,42 @@
           "stringUnit": {
             "state": "translated",
             "value": "Data för denna app finns för närvarande i %@. Öppna %@ och starta den till \"Mina appar\" skärmen och försök igen."
+          }
+        }
+      }
+    },
+    "lc.apppSettings.orientationLock.portrait": {
+      "comment": null,
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Portrait"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "صوره عموديه"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "竖屏"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Portrait"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stående"
           }
         }
       }
@@ -5227,146 +5191,182 @@
         }
       }
     },
-    "lc.appList.installReplaceTip": {
+    "lc.appSettings.forceSign": {
       "comment": null,
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "There is an existing application with the same bundle identifier. Replace one or install as new."
+            "value": "Force Sign"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "هنالك تطبيق موجود بالفعل بهذا معرف الحزمه. بدل هذا المعرف او ثبت كجديد."
+            "value": "توقيع أجباري"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "已有相同包名的App存在。请从下列App中选择一个替换或安装为新App。"
+            "value": "强制重新签名"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Il existe une application existante avec le même identifiant de paquet. Remplacez-la ou installez-la en tant que nouvelle application."
+            "value": "Forcer la signature"
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Det finns ett befintligt app med samma bundle identifierare. Ersätt en eller installera som ny."
+            "value": "Tvinga signering"
           }
         }
       }
     },
-    "lc.appList.installFromIpa": {
+    "lc.appList.installTip": {
       "comment": null,
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Install IPA File"
+            "value": "Press the Plus Button to Install Apps."
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "ثبت مِلَفّ IPA"
+            "value": "اضغط على علامه + لتثبيت التطبيقات."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "通过IPA文件安装"
+            "value": "点击加号按钮安装App"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Installer un fichier IPA"
+            "value": "Appuyez sur le bouton Plus pour installer des applications."
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Installera IPA-fil"
+            "value": "Tryck på Plus-knappen för att installera appar."
           }
         }
       }
     },
-    "lc.appSettings.forceSignDesc": {
+    "lc.appSettings.hideApp": {
       "comment": null,
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Try to sign again if this app failed to launch with error like 'Invalid Signature'. If this still don't work, renew JIT-Less certificate."
+            "value": "Hide App"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "حاول التوقيع مره أخرى أذا التطبيق فشل فالتشغيل ويظهر خطأ مثل 'توقيع غير صالح' أذا هذا لم يعمل، حاول أن تعيد شهاده بدون-JIT."
+            "value": "اخفي التطبيق"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "如果App启动时的报错包含“Invalid Signature”，则可以尝试强制重新签名。如果仍然报错，则可能需要刷新免JIT证书。"
+            "value": "隐藏App"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Essayez de signer à nouveau si l'application ne s'est pas lancée avec une erreur telle que \"Signature invalide\". Si cela ne fonctionne toujours pas, renouvelez le certificat sans JIT."
+            "value": "Masquer l'application"
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Försök att signera om appen misslyckades med att starta med fel som \"Ogiltig signatur\". Om detta fortfarande inte fungerar, förnya JIT-Mindre certifikat."
+            "value": "Dölj app"
           }
         }
       }
     },
-    "lc.appBanner.uninstall": {
+    "lc.appBanner.confirmUninstallMsg %@": {
       "comment": null,
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Uninstall"
+            "value": "Are you sure you want to uninstall %@?"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "حذف"
+            "value": "هل أنت متأكد من الغاء تثبيت %@؟"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "卸载"
+            "value": "你确定要卸载%@吗？"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Désinstaller"
+            "value": "Voulez-vous vraiment désinstaller %@ ?"
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Avinstallera"
+            "value": "Är du säker på att du vill avinstallera %@?"
+          }
+        }
+      }
+    },
+    "lc.appBanner.waitForJitTitle": {
+      "comment": null,
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waiting for JIT"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "انتظار الحصول على JIT"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "等待JIT"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En attente du JIT"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Väntar på JIT"
           }
         }
       }
@@ -5767,74 +5767,74 @@
         }
       }
     },
-    "lc.appList.installation": {
+    "lc.appSettings.forceSignDesc": {
       "comment": null,
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Installation"
+            "value": "Try to sign again if this app failed to launch with error like 'Invalid Signature'. If this still don't work, renew JIT-Less certificate."
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "التثبيت"
+            "value": "حاول التوقيع مره أخرى أذا التطبيق فشل فالتشغيل ويظهر خطأ مثل 'توقيع غير صالح' أذا هذا لم يعمل، حاول أن تعيد شهاده بدون-JIT."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "安装"
+            "value": "如果App启动时的报错包含“Invalid Signature”，则可以尝试强制重新签名。如果仍然报错，则可能需要刷新免JIT证书。"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Installation"
+            "value": "Essayez de signer à nouveau si l'application ne s'est pas lancée avec une erreur telle que \"Signature invalide\". Si cela ne fonctionne toujours pas, renouvelez le certificat sans JIT."
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Installation"
+            "value": "Försök att signera om appen misslyckades med att starta med fel som \"Ogiltig signatur\". Om detta fortfarande inte fungerar, förnya JIT-Less certifikat."
           }
         }
       }
     },
-    "lc.appBanner.waitForJitTitle": {
+    "lc.appList.installFromIpa": {
       "comment": null,
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Waiting for JIT"
+            "value": "Install IPA File"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "انتظار الحصول على JIT"
+            "value": "ثبت مِلَفّ IPA"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "等待JIT"
+            "value": "通过IPA文件安装"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "En attente du JIT"
+            "value": "Installer un fichier IPA"
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Väntar på JIT"
+            "value": "Installera IPA-fil"
           }
         }
       }
@@ -6313,74 +6313,38 @@
         }
       }
     },
-    "lc.appSettings.forceSign": {
+    "lc.appBanner.uninstall": {
       "comment": null,
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Force Sign"
+            "value": "Uninstall"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "توقيع أجباري"
+            "value": "حذف"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "强制重新签名"
+            "value": "卸载"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Forcer la signature"
+            "value": "Désinstaller"
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tvinga signering"
-          }
-        }
-      }
-    },
-    "lc.appSettings.hideApp": {
-      "comment": null,
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Hide App"
-          }
-        },
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "اخفي التطبيق"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "隐藏App"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Masquer l'application"
-          }
-        },
-        "sv": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Dölj app"
+            "value": "Avinstallera"
           }
         }
       }
@@ -6421,74 +6385,110 @@
         }
       }
     },
-    "lc.common.yes": {
+    "lc.appSettings.toSharedApp": {
       "comment": null,
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Yes"
+            "value": "Convert to Shared App"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "نعم"
+            "value": "حولهُ إلى تطبيق مشارك"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "是"
+            "value": "转换为共享App"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Oui"
+            "value": "Convertir en application partagée"
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ja"
+            "value": "Konvertera till delad app"
           }
         }
       }
     },
-    "lc.common.error": {
+    "lc.container.selectUnused": {
       "comment": null,
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Error"
+            "value": "Select Unused Containers"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "خطأ"
+            "value": "أختر حاويات غير مستعمله"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "错误"
+            "value": "选择未使用的容器"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Erreur"
+            "value": "Sélectionner les conteneurs inutilisés"
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Fel"
+            "value": "Välj oanvända behållare"
+          }
+        }
+      }
+    },
+    "lc.common.enterNewName": {
+      "comment": null,
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enter New Name"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أدخل اسم جديد"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "输入新名称"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saisir un nouveau nom"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ange ett nytt namn"
           }
         }
       }
@@ -6853,42 +6853,6 @@
         }
       }
     },
-    "lc.container.alreadyDefaultContainer": {
-      "comment": null,
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "This is the default container"
-          }
-        },
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "هذه هي الحاوية الأساسية"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "该容器为默认容器"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Il s'agit du conteneur par défaut"
-          }
-        },
-        "sv": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Detta är standard behållaren"
-          }
-        }
-      }
-    },
     "lc.common.enterNewFolderName": {
       "comment": null,
       "extractionState": "manual",
@@ -6957,6 +6921,42 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mappnamn för behållare"
+          }
+        }
+      }
+    },
+    "lc.container.alreadyDefaultContainer": {
+      "comment": null,
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This is the default container"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هذه هي الحاوية الأساسية"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "该容器为默认容器"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Il s'agit du conteneur par défaut"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Detta är standard behållaren"
           }
         }
       }
@@ -7357,146 +7357,110 @@
         }
       }
     },
-    "lc.common.enterNewName": {
+    "lc.apppSettings.orientationLock.landscape": {
       "comment": null,
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Enter New Name"
+            "value": "Landscape"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "أدخل اسم جديد"
+            "value": "افقي"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "输入新名称"
+            "value": "横屏"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Saisir un nouveau nom"
+            "value": "Paysage"
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ange ett nytt namn"
+            "value": "Liggande"
           }
         }
       }
     },
-    "lc.common.done": {
+    "lc.common.error": {
       "comment": null,
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Done"
+            "value": "Error"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "تم"
+            "value": "خطأ"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "完成"
+            "value": "错误"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Terminé"
+            "value": "Erreur"
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Klar"
+            "value": "Fel"
           }
         }
       }
     },
-    "lc.appSettings.hideAppDesc": {
+    "lc.common.yes": {
       "comment": null,
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "To completely hide apps, enable Strict Hiding mode in settings."
+            "value": "Yes"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "لأخفاء البرامج بالكامل، فعل ميزة الاخفاء بالاعدادات."
+            "value": "نعم"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "要完全隐藏App，请在设置中启用严格隐藏模式。"
+            "value": "是"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Pour masquer complètement les applications, activez le mode de masquage strict dans les paramètres."
+            "value": "Oui"
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "För att helt dölja appar, aktivera Strict Hiding mode i inställningar."
-          }
-        }
-      }
-    },
-    "lc.appSettings.toPrivateAppDesc": {
-      "comment": null,
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Moving this app to Private Document Folder allows you to access its data and tweaks in the Files app, but it can not be run by other LiveContainers."
-          }
-        },
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "بنقل هذا البرنامَج إلى ملفات مستندات خاصة سوف يمنحك هذا صلاحية أضافه التعديلات والتحكم بملفات البرنامَج في برنامَج الملفات، لكن لا يمكن تشغيله من تطبيقات LiveContainers  الاخرى."
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "将App此转换为私有App允许您在文件App中访问其数据和模块，但它不能由其他LiveContainers运行。"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "En déplaçant cette application vers le dossier de documents privés, vous pouvez accéder à ses données et à ses tweaks dans l'application Fichiers, mais elle ne peut pas être lancée par d'autres LiveContainers."
-          }
-        },
-        "sv": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Genom att flytta denna app till privat dokumentmapp kan du komma åt dess data och tweaks i appen Filer, men det kan inte köras av andra LiveContainers."
+            "value": "Ja"
           }
         }
       }
@@ -7533,6 +7497,42 @@
           "stringUnit": {
             "state": "translated",
             "value": "Dölj LiveContainer från Dyld Api"
+          }
+        }
+      }
+    },
+    "lc.appSettings.hideAppDesc": {
+      "comment": null,
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "To completely hide apps, enable Strict Hiding mode in settings."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لأخفاء البرامج بالكامل، فعل ميزة الاخفاء بالاعدادات."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "要完全隐藏App，请在设置中启用严格隐藏模式。"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pour masquer complètement les applications, activez le mode de masquage strict dans les paramètres."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "För att helt dölja appar, aktivera Strict Hiding mode i inställningar."
           }
         }
       }
@@ -7897,42 +7897,6 @@
         }
       }
     },
-    "lc.appSettings.toSharedApp": {
-      "comment": null,
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Convert to Shared App"
-          }
-        },
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "حولهُ إلى تطبيق مشارك"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "转换为共享App"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Convertir en application partagée"
-          }
-        },
-        "sv": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Konvertera till delad app"
-          }
-        }
-      }
-    },
     "lc.common.disabled": {
       "comment": null,
       "extractionState": "manual",
@@ -8001,6 +7965,42 @@
           "stringUnit": {
             "state": "translated",
             "value": "Genom att flytta denna app till App Group kan andra LiveContainers köra denna app med alla dess data och tweaks bevarade. Om du vill komma åt dess data och justera igen från filappen, flytta den tillbaka."
+          }
+        }
+      }
+    },
+    "lc.common.done": {
+      "comment": null,
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Done"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تم"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "完成"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Terminé"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klar"
           }
         }
       }
@@ -8401,38 +8401,74 @@
         }
       }
     },
-    "lc.webView.runApp": {
+    "lc.appSettings.toPrivateAppDesc": {
       "comment": null,
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Run App"
+            "value": "Moving this app to Private Document Folder allows you to access its data and tweaks in the Files app, but it can not be run by other LiveContainers."
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "شغل التطبيق"
+            "value": "بنقل هذا البرنامَج إلى ملفات مستندات خاصة سوف يمنحك هذا صلاحية أضافه التعديلات والتحكم بملفات البرنامَج في برنامَج الملفات، لكن لا يمكن تشغيله من تطبيقات LiveContainers  الاخرى."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "启动App"
+            "value": "将App此转换为私有App允许您在文件App中访问其数据和模块，但它不能由其他LiveContainers运行。"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Lancer l'application"
+            "value": "En déplaçant cette application vers le dossier de documents privés, vous pouvez accéder à ses données et à ses tweaks dans l'application Fichiers, mais elle ne peut pas être lancée par d'autres LiveContainers."
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Kör app"
+            "value": "Genom att flytta denna app till privat dokumentmapp kan du komma åt dess data och tweaks i appen Filer, men det kan inte köras av andra LiveContainers."
+          }
+        }
+      }
+    },
+    "lc.appSettings.spoofSDKVersion": {
+      "comment": "lc.appSettings.spoofSDKVersion",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spoof SDK Version"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "强制指定SDK版本"
+          }
+        }
+      }
+    },
+    "lc.appSettings.fspoofSDKVersionDesc": {
+      "comment": "lc.appSettings.fspoofSDKVersionDesc",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spoofing SDK version forces system libraries to operate in the SDK version the app is built with."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "强制指定SDK版本会使得系统库拥有App构建的SDK版本的行为。"
           }
         }
       }

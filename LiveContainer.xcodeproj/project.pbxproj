@@ -12,14 +12,14 @@
 		172CA8622D9D721700CF6989 /* LCSharedUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 172CA8572D9D721700CF6989 /* LCSharedUtils.m */; };
 		172CA8632D9D721700CF6989 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 172CA85A2D9D721700CF6989 /* main.m */; };
 		172CA8642D9D721700CF6989 /* utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 172CA85E2D9D721700CF6989 /* utils.m */; };
-		172CA8C02D9D766D00CF6989 /* OpenSSL in Frameworks */ = {isa = PBXBuildFile; productRef = 172CA8BF2D9D766D00CF6989 /* OpenSSL */; };
 		17413FBC2D9C0BAE00F3F928 /* LiveContainerSwiftUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 17413FB52D9C0BAE00F3F928 /* LiveContainerSwiftUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		174140902D9C0E8200F3F928 /* TweakLoader.dylib in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1741403A2D9C0D0000F3F928 /* TweakLoader.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		174140942D9C0E8200F3F928 /* ZSign.dylib in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 174140542D9C0D6D00F3F928 /* ZSign.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		174140BA2D9C0F9100F3F928 /* TestJITLess.dylib in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 174140AD2D9C0F4100F3F928 /* TestJITLess.dylib */; };
-		174140CE2D9C159300F3F928 /* OpenSSL in Frameworks */ = {isa = PBXBuildFile; productRef = 174140CD2D9C159300F3F928 /* OpenSSL */; };
 		174140D62D9C176F00F3F928 /* libarchive.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 174140D52D9C176700F3F928 /* libarchive.tbd */; };
 		1741410D2D9C35F100F3F928 /* AltStoreTweak.dylib in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1741409B2D9C0EDD00F3F928 /* AltStoreTweak.dylib */; };
+		17554B732DA16988004C6D90 /* OpenSSL.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 17554B712DA16988004C6D90 /* OpenSSL.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		17554B742DA169AA004C6D90 /* OpenSSL.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17554B712DA16988004C6D90 /* OpenSSL.xcframework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,15 +56,26 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		17413FC12D9C0BAE00F3F928 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
 				174140902D9C0E8200F3F928 /* TweakLoader.dylib in Embed Frameworks */,
 				174140BA2D9C0F9100F3F928 /* TestJITLess.dylib in Embed Frameworks */,
+				17554B732DA16988004C6D90 /* OpenSSL.xcframework in Embed Frameworks */,
 				17413FBC2D9C0BAE00F3F928 /* LiveContainerSwiftUI.framework in Embed Frameworks */,
 				1741410D2D9C35F100F3F928 /* AltStoreTweak.dylib in Embed Frameworks */,
 				174140942D9C0E8200F3F928 /* ZSign.dylib in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		17554B762DA169AA004C6D90 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -105,6 +116,7 @@
 		1741409B2D9C0EDD00F3F928 /* AltStoreTweak.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = AltStoreTweak.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		174140AD2D9C0F4100F3F928 /* TestJITLess.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = TestJITLess.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		174140D52D9C176700F3F928 /* libarchive.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libarchive.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/lib/libarchive.tbd; sourceTree = DEVELOPER_DIR; };
+		17554B712DA16988004C6D90 /* OpenSSL.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:67RAULRX93:Marcin Krzyzanowski"; lastKnownFileType = wrapper.xcframework; name = OpenSSL.xcframework; path = OpenSSL/Frameworks/OpenSSL.xcframework; sourceTree = "<group>"; };
 		17DCE99D2C7067EC00731D42 /* LiveContainer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LiveContainer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -129,7 +141,6 @@
 				AppIcon76x76.png,
 				Assets.xcassets,
 				DefaultIcon.png,
-				Frameworks/CydiaSubstrate.framework,
 				Localizable.xcstrings,
 				Settings.bundle,
 			);
@@ -209,7 +220,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				174140CE2D9C159300F3F928 /* OpenSSL in Frameworks */,
+				17554B742DA169AA004C6D90 /* OpenSSL.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,11 +238,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		17DCE99A2C7067EC00731D42 /* Frameworks */ = {
+		17554B6A2DA165D8004C6D90 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				172CA8C02D9D766D00CF6989 /* OpenSSL in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,6 +283,7 @@
 		174140B82D9C0F9100F3F928 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				17554B712DA16988004C6D90 /* OpenSSL.xcframework */,
 				174140D52D9C176700F3F928 /* libarchive.tbd */,
 			);
 			name = Frameworks;
@@ -398,18 +409,17 @@
 				174140502D9C0D6D00F3F928 /* Headers */,
 				174140512D9C0D6D00F3F928 /* Sources */,
 				174140522D9C0D6D00F3F928 /* Frameworks */,
+				17554B762DA169AA004C6D90 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				174141022D9C1EE500F3F928 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				174140552D9C0D6D00F3F928 /* ZSign */,
 			);
 			name = ZSign;
 			packageProductDependencies = (
-				174140CD2D9C159300F3F928 /* OpenSSL */,
 			);
 			productName = ZSign;
 			productReference = 174140542D9C0D6D00F3F928 /* ZSign.dylib */;
@@ -464,7 +474,7 @@
 			buildConfigurationList = 17DCE9DA2C7067ED00731D42 /* Build configuration list for PBXNativeTarget "LiveContainer" */;
 			buildPhases = (
 				17DCE9992C7067EC00731D42 /* Sources */,
-				17DCE99A2C7067EC00731D42 /* Frameworks */,
+				17554B6A2DA165D8004C6D90 /* Frameworks */,
 				17DCE99B2C7067EC00731D42 /* Resources */,
 				17DCE9D92C7067ED00731D42 /* Embed Foundation Extensions */,
 				17413FC12D9C0BAE00F3F928 /* Embed Frameworks */,
@@ -564,7 +574,6 @@
 			);
 			mainGroup = 17DCE9942C7067EC00731D42;
 			packageReferences = (
-				174140CC2D9C159300F3F928 /* XCRemoteSwiftPackageReference "OpenSSL" */,
 			);
 			preferredProjectObjectVersion = 56;
 			productRefGroup = 17DCE99E2C7067EC00731D42 /* Products */;
@@ -684,10 +693,6 @@
 			isa = PBXTargetDependency;
 			target = 174140532D9C0D6D00F3F928 /* ZSign */;
 			targetProxy = 174140FF2D9C1EDA00F3F928 /* PBXContainerItemProxy */;
-		};
-		174141022D9C1EE500F3F928 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 174141012D9C1EE500F3F928 /* OpenSSL */;
 		};
 		1741410F2D9C35F200F3F928 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -833,10 +838,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = OpenSSL/Frameworks/iphoneos/OpenSSL.framework;
 				DEVELOPMENT_TEAM = 3C3YHUUV75;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_PREFIX = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/OpenSSL/Frameworks/iphoneos",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZED_STRING_SWIFTUI_SUPPORT = NO;
 				MACOSX_DEPLOYMENT_TARGET = 15.2;
@@ -853,10 +863,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = OpenSSL/Frameworks/iphoneos/OpenSSL.framework;
 				DEVELOPMENT_TEAM = 3C3YHUUV75;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_PREFIX = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/OpenSSL/Frameworks/iphoneos",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZED_STRING_SWIFTUI_SUPPORT = NO;
 				MACOSX_DEPLOYMENT_TARGET = 15.2;
@@ -1075,6 +1090,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Resources/Frameworks",
+					"$(PROJECT_DIR)/OpenSSL/Frameworks/iphoneos",
 				);
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
@@ -1089,7 +1105,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.3.52;
+				MARKETING_VERSION = 3.3.53;
 				NEW_SETTING = "";
 				OTHER_LDFLAGS = (
 					"-e",
@@ -1119,6 +1135,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Resources/Frameworks",
+					"$(PROJECT_DIR)/OpenSSL/Frameworks/iphoneos",
 				);
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Resources/Info.plist;
@@ -1133,7 +1150,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.3.52;
+				MARKETING_VERSION = 3.3.53;
 				NEW_SETTING = "";
 				OTHER_LDFLAGS = (
 					"-e",
@@ -1215,35 +1232,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		174140CC2D9C159300F3F928 /* XCRemoteSwiftPackageReference "OpenSSL" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/krzyzanowskim/OpenSSL.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.3.3000;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		172CA8BF2D9D766D00CF6989 /* OpenSSL */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 174140CC2D9C159300F3F928 /* XCRemoteSwiftPackageReference "OpenSSL" */;
-			productName = OpenSSL;
-		};
-		174140CD2D9C159300F3F928 /* OpenSSL */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 174140CC2D9C159300F3F928 /* XCRemoteSwiftPackageReference "OpenSSL" */;
-			productName = OpenSSL;
-		};
-		174141012D9C1EE500F3F928 /* OpenSSL */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 174140CC2D9C159300F3F928 /* XCRemoteSwiftPackageReference "OpenSSL" */;
-			productName = OpenSSL;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 17DCE9952C7067EC00731D42 /* Project object */;
 }
