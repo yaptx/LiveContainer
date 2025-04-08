@@ -38,6 +38,8 @@ uint32_t guestAppSdkVersionSet = 0;
 bool (*orig_dyld_program_sdk_at_least)(void* dyldPtr, dyld_build_version_t version);
 uint32_t (*orig_dyld_get_program_sdk_version)(void* dyldPtr);
 
+bool _dyld_get_image_uuid(const struct mach_header* mh, uuid_t uuid);
+
 static void overwriteAppExecutableFileType(void) {
     struct mach_header_64* appImageMachOHeader = (struct mach_header_64*) orig_dyld_get_image_header(appMainImageIndex);
     kern_return_t kret = builtin_vm_protect(mach_task_self(), (vm_address_t)appImageMachOHeader, sizeof(appImageMachOHeader), false, PROT_READ | PROT_WRITE | VM_PROT_COPY);
@@ -156,7 +158,7 @@ void *findPrivateSymbol(struct mach_header_64 *header, const char *name) {
     return NULL;
 }
 
-bool hook_dyld_program_sdk_at_least(void* dyldApiInstanccePtr, dyld_build_version_t version) {
+bool hook_dyld_program_sdk_at_least(void* dyldApiInstancePtr, dyld_build_version_t version) {
     if(version.platform == 0xffffffff){
         return version.version <= guestAppSdkVersionSet;
     } else {
@@ -164,14 +166,13 @@ bool hook_dyld_program_sdk_at_least(void* dyldApiInstanccePtr, dyld_build_versio
     }
 }
 
-uint32_t hook_dyld_get_program_sdk_version(void* dyldApiInstanccePtr) {
+uint32_t hook_dyld_get_program_sdk_version(void* dyldApiInstancePtr) {
     return guestAppSdkVersion;
 }
 
 
 bool performHookDyldApi(const char* functionName, uint32_t adrpOffset, void** origFunction, void* hookFunction) {
     
-//    uint32_t* baseAddr = dlsym(RTLD_DEFAULT, "dyld_program_sdk_at_least");
     uint32_t* baseAddr = dlsym(RTLD_DEFAULT, functionName);
     /*
     1ad450b90  e10300aa   mov     x1, x0
@@ -224,6 +225,7 @@ bool initGuestSDKVersionInfo(void) {
     void *map = mmap(NULL, s.st_size, PROT_READ , MAP_PRIVATE, fd, 0);
     void* findVersionSetPtr = findPrivateSymbol(map, "__ZNK5dyld413ProcessConfig7Process24findVersionSetEquivalentEN5dyld38PlatformEj");
     munmap(map, s.st_size);
+    close(fd);
     if(!findVersionSetPtr) {
         NSLog(@"[LC] failed to find findVersionSetEquivalent");
         return false;
