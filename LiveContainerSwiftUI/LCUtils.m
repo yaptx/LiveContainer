@@ -3,9 +3,8 @@
 @import UIKit;
 @import UniformTypeIdentifiers;
 
-#import "../AltStoreCore/ALTSigner.h"
+#import "../LiveContainer/AltStoreCore/ALTSigner.h"
 #import "LCUtils.h"
-#import "LCVersionInfo.h"
 #import "../ZSign/zsigner.h"
 
 Class LCSharedUtilsClass = nil;
@@ -102,7 +101,17 @@ Class LCSharedUtilsClass = nil;
     static BOOL loaded = NO;
     if (loaded) return;
 
-    dlopen("@executable_path/Frameworks/ZSign.dylib", RTLD_GLOBAL);
+    void* handle = dlopen("@executable_path/Frameworks/ZSign.dylib", RTLD_GLOBAL);
+    const char* dlerr = dlerror();
+    if (!handle || (uint64_t)handle > 0xf00000000000) {
+        if (dlerr) {
+            *error = [NSError errorWithDomain:NSBundle.mainBundle.bundleIdentifier code:1 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Failed to load ZSign: %s", dlerr]}];
+        } else {
+            *error = [NSError errorWithDomain:NSBundle.mainBundle.bundleIdentifier code:1 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Failed to load ZSign: An unknown error occurred."]}];
+        }
+        NSLog(@"[LC] %s", dlerr);
+        return;
+    }
     
     loaded = YES;
 }
@@ -149,7 +158,7 @@ Class LCSharedUtilsClass = nil;
         }
 
         // Remove LC_CODE_SIGNATURE
-        NSString *error = LCParseMachO(fileURL.path.UTF8String, ^(const char *path, struct mach_header_64 *header) {
+        NSString *error = LCParseMachO(fileURL.path.UTF8String, false, ^(const char *path, struct mach_header_64 *header, int fd, void* filePtr) {
             uint8_t *imageHeaderPtr = (uint8_t *)header + sizeof(struct mach_header_64);
             struct load_command *command = (struct load_command *)imageHeaderPtr;
             for(int i = 0; i < header->ncmds > 0; i++) {
@@ -170,7 +179,7 @@ Class LCSharedUtilsClass = nil;
     }
 }
 
-+ (NSProgress *)signAppBundle:(NSURL *)path completionHandler:(void (^)(BOOL success, NSDate* expirationDate, NSString* teamId, NSError *error))completionHandler {
++ (NSProgress *)signAppBundle:(NSURL *)path completionHandler:(void (^)(BOOL success, NSError *error))completionHandler {
     NSError *error;
 
     // I'm too lazy to reimplement signer, so let's borrow everything from SideStore
@@ -180,20 +189,20 @@ Class LCSharedUtilsClass = nil;
     // Load libraries from Documents, yeah
     [self loadStoreFrameworksWithError:&error];
     if (error) {
-        completionHandler(NO, nil, nil, error);
+        completionHandler(NO, error);
         return nil;
     }
 
     ALTCertificate *cert = [[NSClassFromString(@"ALTCertificate") alloc] initWithP12Data:self.certificateData password:self.certificatePassword];
     if (!cert) {
-        error = [NSError errorWithDomain:NSBundle.mainBundle.bundleIdentifier code:1 userInfo:@{NSLocalizedDescriptionKey: @"Failed to create ALTCertificate. Please try: 1. make sure your store is patched 2. reopen your store 3. refresh all apps"}];
-        completionHandler(NO, nil, nil, error);
+        error = [NSError errorWithDomain:NSBundle.mainBundle.bundleIdentifier code:1 userInfo:@{NSLocalizedDescriptionKey: @"lc.signer.failedToCreateAltCertErr"}];
+        completionHandler(NO, error);
         return nil;
     }
     ALTProvisioningProfile *profile = [[NSClassFromString(@"ALTProvisioningProfile") alloc] initWithURL:profilePath];
     if (!profile) {
-        error = [NSError errorWithDomain:NSBundle.mainBundle.bundleIdentifier code:2 userInfo:@{NSLocalizedDescriptionKey: @"Failed to create ALTProvisioningProfile. Please try: 1. make sure your store is patched 2. reopen your store 3. refresh all apps"}];
-        completionHandler(NO, nil, nil, error);
+        error = [NSError errorWithDomain:NSBundle.mainBundle.bundleIdentifier code:2 userInfo:@{NSLocalizedDescriptionKey: @"lc.signer.failedToCreateAltProvisionCertErr"}];
+        completionHandler(NO, error);
         return nil;
     }
 
@@ -202,13 +211,13 @@ Class LCSharedUtilsClass = nil;
     ALTSigner *signer = [[NSClassFromString(@"ALTSigner") alloc] initWithTeam:team certificate:cert];
     
     void (^signCompletionHandler)(BOOL success, NSError *error)  = ^(BOOL success, NSError *_Nullable error) {
-        completionHandler(success, [profile expirationDate], [profile teamIdentifier], error);
+        completionHandler(success, error);
     };
 
     return [signer signAppAtURL:path provisioningProfiles:@[(id)profile] completionHandler:signCompletionHandler];
 }
 
-+ (NSProgress *)signAppBundleWithZSign:(NSURL *)path completionHandler:(void (^)(BOOL success, NSDate* expirationDate, NSString* teamId, NSError *error))completionHandler {
++ (NSProgress *)signAppBundleWithZSign:(NSURL *)path completionHandler:(void (^)(BOOL success, NSError *error))completionHandler {
     NSError *error;
 
     // use zsign as our signer~
@@ -218,7 +227,7 @@ Class LCSharedUtilsClass = nil;
     [self loadStoreFrameworksWithError2:&error];
 
     if (error) {
-        completionHandler(NO, nil, nil, error);
+        completionHandler(NO, error);
         return nil;
     }
 
@@ -252,6 +261,18 @@ Class LCSharedUtilsClass = nil;
             ans = SideStore;
         } else if ([UTType typeWithIdentifier:[NSString stringWithFormat:@"io.altstore.Installed.%@", NSBundle.mainBundle.bundleIdentifier]]) {
             ans = AltStore;
+        } else {
+            ans = Unknown;
+        }
+        
+        if(ans != Unknown) {
+            return;
+        }
+        
+        if([[self appGroupID] containsString:@"AltStore"]) {
+            ans = AltStore;
+        } else if ([[self appGroupID] containsString:@"SideStore"]) {
+            ans = SideStore;
         } else {
             ans = Unknown;
         }
@@ -314,22 +335,38 @@ Class LCSharedUtilsClass = nil;
     info[@"CFBundleExecutable"] = @"LiveContainer.tmp";
     [info writeToFile:tmpInfoPath atomically:YES];
 
+    dispatch_semaphore_t sema = dispatch_semaphore_create(0);
+    __block bool signSuccess = false;
+    __block NSError* signError = nil;
+    
     // Sign the test app bundle
     if(signer == AltSign && ![NSUserDefaults.standardUserDefaults boolForKey:@"LCCertificateImported"]) {
         [LCUtils signAppBundle:[NSURL fileURLWithPath:path]
-        completionHandler:^(BOOL success, NSDate* expirationDate, NSString* teamId, NSError *_Nullable error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completionHandler(success, error);
-            });
+        completionHandler:^(BOOL success, NSError *_Nullable error) {
+            signSuccess = success;
+            signError = error;
+            dispatch_semaphore_signal(sema);
         }];
     } else {
         [LCUtils signAppBundleWithZSign:[NSURL fileURLWithPath:path]
-        completionHandler:^(BOOL success, NSDate* expirationDate, NSString* teamId, NSError *_Nullable error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completionHandler(success, error);
-            });
+        completionHandler:^(BOOL success, NSError *_Nullable error) {
+            signSuccess = success;
+            signError = error;
+            dispatch_semaphore_signal(sema);
         }];
     }
+    dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if(!signSuccess) {
+            completionHandler(NO, signError);
+        } else if (checkCodeSignature([tmpLibPath UTF8String])) {
+            completionHandler(YES, signError);
+        } else {
+            completionHandler(NO, [NSError errorWithDomain:NSBundle.mainBundle.bundleIdentifier code:2 userInfo:@{NSLocalizedDescriptionKey: @"lc.signer.latestCertificateInvalidErr"}]);
+        }
+        
+    });
     
 
 }
@@ -378,7 +415,7 @@ Class LCSharedUtilsClass = nil;
     }
     
     // We have to change executable's UUID so iOS won't consider 2 executables the same
-    NSString* errorChangeUUID = LCParseMachO([execToPath.path UTF8String], ^(const char *path, struct mach_header_64 *header) {
+    NSString* errorChangeUUID = LCParseMachO([execToPath.path UTF8String], false, ^(const char *path, struct mach_header_64 *header, int fd, void* filePtr) {
         LCChangeExecUUID(header);
     });
     if (errorChangeUUID) {
@@ -398,6 +435,11 @@ Class LCSharedUtilsClass = nil;
 
     [manager removeItemAtURL:tmpPath error:error];
     if (*error) return nil;
+    
+    if([manager fileExistsAtPath:tmpIPAPath.path]) {
+        [manager removeItemAtURL:tmpIPAPath error:error];
+        if (*error) return nil;
+    }
 
     [zipData writeToURL:tmpIPAPath options:0 error:error];
     if (*error) return nil;
@@ -432,6 +474,10 @@ Class LCSharedUtilsClass = nil;
     NSURL *tmpPayloadPath = [tmpPath URLByAppendingPathComponent:@"Payload"];
     NSURL *tmpIPAPath = [appGroupPath URLByAppendingPathComponent:@"tmp.ipa"];
 
+    if([manager fileExistsAtPath:tmpPath.path]) {
+        [manager removeItemAtURL:tmpPath error:error];
+        if (*error) return nil;
+    }
     [manager createDirectoryAtURL:tmpPath withIntermediateDirectories:YES attributes:nil error:error];
     if (*error) return nil;
 
@@ -452,7 +498,7 @@ Class LCSharedUtilsClass = nil;
         execToPatch = [tmpPayloadPath URLByAppendingPathComponent:@"App.app/AltStore"];;
     }
     
-    NSString* errorPatchAltStore = LCParseMachO([execToPatch.path UTF8String], ^(const char *path, struct mach_header_64 *header) {
+    NSString* errorPatchAltStore = LCParseMachO([execToPatch.path UTF8String], false, ^(const char *path, struct mach_header_64 *header, int fd, void* filePtr) {
         LCPatchAltStore(execToPatch.path.UTF8String, header);
     });
     if (errorPatchAltStore) {
@@ -472,6 +518,10 @@ Class LCSharedUtilsClass = nil;
     [manager removeItemAtURL:tmpPath error:error];
     if (*error) return nil;
 
+    if([manager fileExistsAtPath:tmpIPAPath.path]) {
+        [manager removeItemAtURL:tmpIPAPath error:error];
+        if (*error) return nil;
+    }
     [zipData writeToURL:tmpIPAPath options:0 error:error];
     if (*error) return nil;
 
@@ -479,7 +529,9 @@ Class LCSharedUtilsClass = nil;
 }
 
 + (NSString *)getVersionInfo {
-    return [NSClassFromString(@"LCVersionInfo") getVersionStr];
+    return [NSString stringWithFormat:@"Version %@-%@",
+            NSBundle.mainBundle.infoDictionary[@"CFBundleShortVersionString"],
+            NSBundle.mainBundle.infoDictionary[@"LCVersionInfo"]];
 }
 
 @end
