@@ -3,7 +3,6 @@
 @import UIKit;
 @import UniformTypeIdentifiers;
 
-#import "../LiveContainer/AltStoreCore/ALTSigner.h"
 #import "LCUtils.h"
 #import "../ZSign/zsigner.h"
 
@@ -68,33 +67,6 @@ Class LCSharedUtilsClass = nil;
 
 #pragma mark Code signing
 
-+ (void)loadStoreFrameworksWithError:(NSError **)error {
-    // too lazy to use dispatch_once
-    static BOOL loaded = NO;
-    if (loaded) return;
-
-    NSArray *signerFrameworks;
-    
-    if([NSFileManager.defaultManager fileExistsAtPath:[self.storeBundlePath URLByAppendingPathComponent:@"Frameworks/KeychainAccess.framework"].path]) {
-        // AltStore requires 1 more framework than sidestore
-        signerFrameworks = @[@"OpenSSL.framework", @"Roxas.framework", @"KeychainAccess.framework", @"AltStoreCore.framework"];
-    } else {
-        signerFrameworks = @[@"OpenSSL.framework", @"Roxas.framework", @"AltStoreCore.framework"];
-    }
-    
-    
-    NSURL *storeFrameworksPath = [self.storeBundlePath URLByAppendingPathComponent:@"Frameworks"];
-    for (NSString *framework in signerFrameworks) {
-        NSBundle *frameworkBundle = [NSBundle bundleWithURL:[storeFrameworksPath URLByAppendingPathComponent:framework]];
-        if (!frameworkBundle) {
-            //completionHandler(NO, error);
-            abort();
-        }
-        [frameworkBundle loadAndReturnError:error];
-        if (error && *error) return;
-    }
-    loaded = YES;
-}
 
 + (void)loadStoreFrameworksWithError2:(NSError **)error {
     // too lazy to use dispatch_once
@@ -130,91 +102,6 @@ Class LCSharedUtilsClass = nil;
     } else {
         return @"altstore://install?url=%@";
     }
-}
-
-+ (void)removeCodeSignatureFromBundleURL:(NSURL *)appURL {
-    int32_t cpusubtype;
-    sysctlbyname("hw.cpusubtype", &cpusubtype, NULL, NULL, 0);
-
-    NSDirectoryEnumerator *countEnumerator = [[NSFileManager defaultManager] enumeratorAtURL:appURL includingPropertiesForKeys:@[NSURLIsRegularFileKey, NSURLFileSizeKey]
-    options:0 errorHandler:^BOOL(NSURL * _Nonnull url, NSError * _Nonnull error) {
-        if (error) {
-            NSLog(@"[Error] %@ (%@)", error, url);
-            return NO;
-        }
-        return YES;
-    }];
-
-    for (NSURL *fileURL in countEnumerator) {
-        NSNumber *isFile = nil;
-        if (![fileURL getResourceValue:&isFile forKey:NSURLIsRegularFileKey error:nil] || !isFile.boolValue) {
-            continue;
-        }
-
-        NSNumber *fileSize = nil;
-        [fileURL getResourceValue:&fileSize forKey:NSURLFileSizeKey error:nil];
-        if (fileSize.unsignedLongLongValue < 0x4000) {
-            continue;
-        }
-
-        // Remove LC_CODE_SIGNATURE
-        NSString *error = LCParseMachO(fileURL.path.UTF8String, false, ^(const char *path, struct mach_header_64 *header, int fd, void* filePtr) {
-            uint8_t *imageHeaderPtr = (uint8_t *)header + sizeof(struct mach_header_64);
-            struct load_command *command = (struct load_command *)imageHeaderPtr;
-            for(int i = 0; i < header->ncmds > 0; i++) {
-                if (command->cmd == LC_CODE_SIGNATURE) {
-                    struct linkedit_data_command *csCommand = (struct linkedit_data_command *)command;
-                    void *csData = (void *)((uint8_t *)header + csCommand->dataoff);
-                    // Nuke it.
-                    NSLog(@"Removing code signature of %@", fileURL);
-                    bzero(csData, csCommand->datasize);
-                    break;
-                }
-                command = (struct load_command *)((void *)command + command->cmdsize);
-            }
-        });
-        if (error) {
-            NSLog(@"[Error] %@ (%@)", error, fileURL);
-        }
-    }
-}
-
-+ (NSProgress *)signAppBundle:(NSURL *)path completionHandler:(void (^)(BOOL success, NSError *error))completionHandler {
-    NSError *error;
-
-    // I'm too lazy to reimplement signer, so let's borrow everything from SideStore
-    // For sure this will break in the future as SideStore team planned to rewrite it
-    NSURL *profilePath = [NSBundle.mainBundle URLForResource:@"embedded" withExtension:@"mobileprovision"];
-
-    // Load libraries from Documents, yeah
-    [self loadStoreFrameworksWithError:&error];
-    if (error) {
-        completionHandler(NO, error);
-        return nil;
-    }
-
-    ALTCertificate *cert = [[NSClassFromString(@"ALTCertificate") alloc] initWithP12Data:self.certificateData password:self.certificatePassword];
-    if (!cert) {
-        error = [NSError errorWithDomain:NSBundle.mainBundle.bundleIdentifier code:1 userInfo:@{NSLocalizedDescriptionKey: @"lc.signer.failedToCreateAltCertErr"}];
-        completionHandler(NO, error);
-        return nil;
-    }
-    ALTProvisioningProfile *profile = [[NSClassFromString(@"ALTProvisioningProfile") alloc] initWithURL:profilePath];
-    if (!profile) {
-        error = [NSError errorWithDomain:NSBundle.mainBundle.bundleIdentifier code:2 userInfo:@{NSLocalizedDescriptionKey: @"lc.signer.failedToCreateAltProvisionCertErr"}];
-        completionHandler(NO, error);
-        return nil;
-    }
-
-    ALTAccount *account = [NSClassFromString(@"ALTAccount") new];
-    ALTTeam *team = [[NSClassFromString(@"ALTTeam") alloc] initWithName:@"" identifier:@"" /*profile.teamIdentifier*/ type:ALTTeamTypeUnknown account:account];
-    ALTSigner *signer = [[NSClassFromString(@"ALTSigner") alloc] initWithTeam:team certificate:cert];
-    
-    void (^signCompletionHandler)(BOOL success, NSError *error)  = ^(BOOL success, NSError *_Nullable error) {
-        completionHandler(success, error);
-    };
-
-    return [signer signAppAtURL:path provisioningProfiles:@[(id)profile] completionHandler:signCompletionHandler];
 }
 
 + (NSProgress *)signAppBundleWithZSign:(NSURL *)path completionHandler:(void (^)(BOOL success, NSError *error))completionHandler {
@@ -298,30 +185,7 @@ Class LCSharedUtilsClass = nil;
     [infoDict writeToURL:infoPath error:error];
 }
 
-+ (void)writeStoreIDToSetupExecutableWithError:(NSError **)error {
-    NSURL *execPath = [self.appGroupPath URLByAppendingPathComponent:@"Apps/com.kdt.livecontainer/App.app/JITLessSetup"];
-    NSMutableData *data = [NSMutableData dataWithContentsOfURL:execPath options:0 error:error];
-    if (!data) return;
-
-    // We must get SideStore's exact application-identifier, otherwise JIT-less setup will bug out to hell for using the wrong, expired certificate
-    [self loadStoreFrameworksWithError:nil];
-    NSURL *profilePath = [self.storeBundlePath URLByAppendingPathComponent:@"embedded.mobileprovision"];
-    ALTProvisioningProfile *profile = [[NSClassFromString(@"ALTProvisioningProfile") alloc] initWithURL:profilePath];
-    NSString *storeKeychainID = profile.entitlements[@"application-identifier"];
-    assert(storeKeychainID);
-
-    NSData *findPattern = [@"KeychainAccessGroupWillBeWrittenByLiveContainerAAAAAAAAAAAAAAAAAAAA</string>" dataUsingEncoding:NSUTF8StringEncoding];
-    NSRange range = [data rangeOfData:findPattern options:0 range:NSMakeRange(0, data.length)];
-    if (range.location == NSNotFound) return;
-
-    memset((char *)data.mutableBytes + range.location, ' ', range.length);
-    NSString *replacement = [NSString stringWithFormat:@"%@</string>", storeKeychainID];
-    assert(replacement.length < range.length);
-    memcpy((char *)data.mutableBytes + range.location, replacement.UTF8String, replacement.length);
-    [data writeToURL:execPath options:0 error:error];
-}
-
-+ (void)validateJITLessSetupWithSigner:(Signer)signer completionHandler:(void (^)(BOOL success, NSError *error))completionHandler {
++ (void)validateJITLessWithCompletionHandler:(void (^)(BOOL success, NSError *error))completionHandler {
     // Verify that the certificate is usable
     // Create a test app bundle
     NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:@"CertificateValidation.app"];
@@ -340,21 +204,14 @@ Class LCSharedUtilsClass = nil;
     __block NSError* signError = nil;
     
     // Sign the test app bundle
-    if(signer == AltSign && ![NSUserDefaults.standardUserDefaults boolForKey:@"LCCertificateImported"]) {
-        [LCUtils signAppBundle:[NSURL fileURLWithPath:path]
-        completionHandler:^(BOOL success, NSError *_Nullable error) {
-            signSuccess = success;
-            signError = error;
-            dispatch_semaphore_signal(sema);
-        }];
-    } else {
-        [LCUtils signAppBundleWithZSign:[NSURL fileURLWithPath:path]
-        completionHandler:^(BOOL success, NSError *_Nullable error) {
-            signSuccess = success;
-            signError = error;
-            dispatch_semaphore_signal(sema);
-        }];
-    }
+
+    [LCUtils signAppBundleWithZSign:[NSURL fileURLWithPath:path]
+                  completionHandler:^(BOOL success, NSError *_Nullable error) {
+        signSuccess = success;
+        signError = error;
+        dispatch_semaphore_signal(sema);
+    }];
+
     dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
     
     dispatch_async(dispatch_get_main_queue(), ^{

@@ -72,7 +72,6 @@ import SwiftUI
         window.makeKeyAndVisible()
         application.shortcutItems = nil
         UserDefaults.standard.removeObject(forKey: "LCNeedToAcquireJIT")
-        UserDefaults.standard.register(defaults: ["LCDefaultSigner": Signer.ZSign.rawValue])
         return true
     }
     

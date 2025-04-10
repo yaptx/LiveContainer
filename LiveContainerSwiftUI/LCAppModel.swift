@@ -43,16 +43,6 @@ class LCAppModel: ObservableObject, Hashable {
             appInfo.doUseLCBundleId = uiUseLCBundleId
         }
     }
-    @Published var uiBypassAssertBarrierOnQueue : Bool {
-        didSet {
-            appInfo.bypassAssertBarrierOnQueue = uiBypassAssertBarrierOnQueue
-        }
-    }
-    @Published var uiSigner : Signer {
-        didSet {
-            appInfo.signer = uiSigner
-        }
-    }
     
     @Published var uiHideLiveContainer : Bool {
         didSet {
@@ -121,8 +111,6 @@ class LCAppModel: ObservableObject, Hashable {
         self.uiContainers = appInfo.containers
         self.uiTweakFolder = appInfo.tweakFolder
         self.uiDoSymlinkInbox = appInfo.doSymlinkInbox
-        self.uiBypassAssertBarrierOnQueue = appInfo.bypassAssertBarrierOnQueue
-        self.uiSigner = appInfo.signer
         self.uiOrientationLock = appInfo.orientationLock
         self.uiUseLCBundleId = appInfo.doUseLCBundleId
         self.uiHideLiveContainer = appInfo.hideLiveContainer
@@ -270,14 +258,14 @@ class LCAppModel: ObservableObject, Hashable {
         } else {
             tweakFolderUrl = LCPath.tweakPath.appendingPathComponent(tweakFolder)
         }
-        try await LCUtils.signTweaks(tweakFolderUrl: tweakFolderUrl, force: force, signer: self.appInfo.signer) { p in
+        try await LCUtils.signTweaks(tweakFolderUrl: tweakFolderUrl, force: force) { p in
             Task{ await MainActor.run {
                 self.isSigningInProgress = true
             }}
         }
         
         // sign global tweak
-        try await LCUtils.signTweaks(tweakFolderUrl: LCPath.tweakPath, force: force, signer: self.appInfo.signer) { p in
+        try await LCUtils.signTweaks(tweakFolderUrl: LCPath.tweakPath, force: force) { p in
             Task{ await MainActor.run {
                 self.isSigningInProgress = true
             }}

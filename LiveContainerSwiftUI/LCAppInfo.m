@@ -262,22 +262,6 @@ uint32_t dyld_get_sdk_version(const struct mach_header* mh);
 
 }
 
-- (void)preprocessBundleBeforeSiging:(NSURL *)bundleURL completion:(dispatch_block_t)completion {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        // Remove faulty file
-        [NSFileManager.defaultManager removeItemAtURL:[bundleURL URLByAppendingPathComponent:@"LiveContainer"] error:nil];
-        // we keep the Plugins folder in case some apps need resources in it
-        // Remove PlugIns folder
-        // [NSFileManager.defaultManager removeItemAtURL:[bundleURL URLByAppendingPathComponent:@"PlugIns"] error:nil];
-        // Remove code signature from all library files
-        if([self signer] == AltSign) {
-            [LCUtils removeCodeSignatureFromBundleURL:bundleURL];
-        }
-
-        dispatch_async(dispatch_get_main_queue(), completion);
-    });
-}
-
 - (void)patchExecAndSignIfNeedWithCompletionHandler:(void(^)(bool success, NSString* errorInfo))completetionHandler progressHandler:(void(^)(NSProgress* progress))progressHandler forceSign:(BOOL)forceSign {
     [NSUserDefaults.standardUserDefaults setObject:@(YES) forKey:@"SigningInProgress"];
     NSString *appPath = self.bundlePath;
@@ -359,7 +343,6 @@ uint32_t dyld_get_sdk_version(const struct mach_header* mh);
     
     // Sign app if JIT-less is set up
         NSURL *appPathURL = [NSURL fileURLWithPath:appPath];
-        [self preprocessBundleBeforeSiging:appPathURL completion:^{
             // We need to temporarily fake bundle ID and main executable to sign properly
             NSString *tmpExecPath = [appPath stringByAppendingPathComponent:@"LiveContainer.tmp"];
             if (!info[@"LCBundleIdentifier"]) {
@@ -401,27 +384,11 @@ uint32_t dyld_get_sdk_version(const struct mach_header* mh);
                 });
             };
             
-            __block NSProgress *progress;
-            
-            Signer currentSigner = [NSUserDefaults.standardUserDefaults boolForKey:@"LCCertificateImported"] ? ZSign : [self signer];
-            switch (currentSigner) {
-                case ZSign:
-                    progress = [LCUtils signAppBundleWithZSign:appPathURL completionHandler:signCompletionHandler];
-                    break;
-                case AltSign:
-                    progress = [LCUtils signAppBundle:appPathURL completionHandler:signCompletionHandler];
-                    break;
-                    
-                default:
-                    [NSUserDefaults.standardUserDefaults removeObjectForKey:@"SigningInProgress"];
-                    completetionHandler(NO, @"Signer Not Found");
-                    break;
-            }
+            __block NSProgress *progress = [LCUtils signAppBundleWithZSign:appPathURL completionHandler:signCompletionHandler];
 
             if (progress) {
                 progressHandler(progress);
             }
-        }];
 
 }
 
@@ -550,29 +517,6 @@ uint32_t dyld_get_sdk_version(const struct mach_header* mh);
     }
     [_infoPlist writeToFile:infoPath atomically:YES];
     [self save];
-}
-
-- (bool)bypassAssertBarrierOnQueue {
-    if(_info[@"bypassAssertBarrierOnQueue"] != nil) {
-        return [_info[@"bypassAssertBarrierOnQueue"] boolValue];
-    } else {
-        return NO;
-    }
-}
-- (void)setBypassAssertBarrierOnQueue:(bool)enabled {
-    _info[@"bypassAssertBarrierOnQueue"] = [NSNumber numberWithBool:enabled];
-    [self save];
-    
-}
-
-- (Signer)signer {
-    return (Signer) [((NSNumber*) _info[@"signer"]) intValue];
-
-}
-- (void)setSigner:(Signer)newSigner {
-    _info[@"signer"] = [NSNumber numberWithInt:(int) newSigner];
-    [self save];
-    
 }
 
 - (LCOrientationLock)orientationLock {

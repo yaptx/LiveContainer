@@ -23,9 +23,7 @@ typedef NS_ENUM(NSInteger, LCOrientationLock){
 @property bool fixBlackScreen;
 @property bool dontLoadTweakLoader;
 @property bool dontInjectTweakLoader;
-@property bool bypassAssertBarrierOnQueue;
 @property UIColor* cachedColor;
-@property Signer signer;
 @property LCOrientationLock orientationLock;
 @property bool doUseLCBundleId;
 @property NSString* selectedLanguage;

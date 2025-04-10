@@ -153,16 +153,6 @@ struct LCAppSettingsView : View{
                 }
             }
             
-            if !sharedModel.certificateImported {
-                Picker(selection: $model.uiSigner) {
-                    Text("AltSign").tag(Signer.AltSign)
-                    Text("ZSign").tag(Signer.ZSign)
-                } label: {
-                    Text("lc.appSettings.signer".loc)
-                }
-            }
-
-            
             Section {
                 NavigationLink {
                     if let supportedLanguage = model.supportedLanaguages {
@@ -278,15 +268,6 @@ struct LCAppSettingsView : View{
             } footer: {
                 Text("lc.appSettings.fixFilePickerDesc".loc)
             }
-            
-            Section {
-                Toggle(isOn: $model.uiBypassAssertBarrierOnQueue) {
-                    Text("lc.appSettings.bypassAssert".loc)
-                }
-            } footer: {
-                Text("lc.appSettings.bypassAssertDesc".loc)
-            }
-            
             
             Section {
                 Button("lc.appSettings.forceSign".loc) {

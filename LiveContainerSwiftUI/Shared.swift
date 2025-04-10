@@ -448,7 +448,7 @@ struct SiteAssociation : Codable {
 extension LCUtils {
     public static let appGroupUserDefault = UserDefaults.init(suiteName: LCUtils.appGroupID()) ?? UserDefaults.standard
     
-    public static func signFilesInFolder(url: URL, signer:Signer, onProgressCreated: (Progress) -> Void) async -> String? {
+    public static func signFilesInFolder(url: URL, onProgressCreated: (Progress) -> Void) async -> String? {
         let fm = FileManager()
         var ans : String? = nil
         let codesignPath = url.appendingPathComponent("_CodeSignature")
@@ -484,12 +484,8 @@ extension LCUtils {
                 }
                 c.resume()
             }
-            let progress : Progress?
-            if signer == .AltSign {
-                progress = LCUtils.signAppBundle(url, completionHandler: compeletionHandler)
-            } else {
-                progress = LCUtils.signAppBundle(withZSign: url, completionHandler: compeletionHandler)
-            }
+            let progress = LCUtils.signAppBundle(withZSign: url, completionHandler: compeletionHandler)
+            
             guard let progress = progress else {
                 ans = "lc.utils.initSigningError".loc
                 c.resume()
@@ -501,7 +497,7 @@ extension LCUtils {
 
     }
     
-    public static func signTweaks(tweakFolderUrl: URL, force : Bool = false, signer:Signer, progressHandler : ((Progress) -> Void)? = nil) async throws {
+    public static func signTweaks(tweakFolderUrl: URL, force : Bool = false, progressHandler : ((Progress) -> Void)? = nil) async throws {
         guard LCUtils.certificatePassword() != nil else {
             return
         }
@@ -589,7 +585,7 @@ extension LCUtils {
             return
         }
         
-        let error = await LCUtils.signFilesInFolder(url: tmpDir, signer: signer) { p in
+        let error = await LCUtils.signFilesInFolder(url: tmpDir) { p in
             if let progressHandler {
                 progressHandler(p)
             }

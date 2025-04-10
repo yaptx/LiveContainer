@@ -488,7 +488,6 @@ struct LCAppListView : View, LCAppBannerDelegate, LCAppModelDelegate {
             if appToReplace?.uiDontSign ?? false || LCUtils.appGroupUserDefault.bool(forKey: "LCDontSignApp") {
                 finalNewApp.dontSign = true
             }
-            finalNewApp.signer = Signer(rawValue: LCUtils.appGroupUserDefault.integer(forKey: "LCDefaultSigner"))!
             finalNewApp.patchExecAndSignIfNeed(completionHandler: { success, error in
                 signError = error
                 signSuccess = success
@@ -515,11 +514,10 @@ struct LCAppListView : View, LCAppBannerDelegate, LCAppModelDelegate {
             finalNewApp.isHidden = appToReplace.appInfo.isHidden
             finalNewApp.isJITNeeded = appToReplace.appInfo.isJITNeeded
             finalNewApp.isShared = appToReplace.appInfo.isShared
-            finalNewApp.bypassAssertBarrierOnQueue = appToReplace.appInfo.bypassAssertBarrierOnQueue
+            finalNewApp.spoofSDKVersion = appToReplace.appInfo.spoofSDKVersion
             finalNewApp.doSymlinkInbox = appToReplace.appInfo.doSymlinkInbox
             finalNewApp.containerInfo = appToReplace.appInfo.containerInfo
             finalNewApp.tweakFolder = appToReplace.appInfo.tweakFolder
-            finalNewApp.signer = appToReplace.appInfo.signer
             finalNewApp.selectedLanguage = appToReplace.appInfo.selectedLanguage
             finalNewApp.dataUUID = appToReplace.appInfo.dataUUID
             finalNewApp.orientationLock = appToReplace.appInfo.orientationLock
@@ -530,6 +528,9 @@ struct LCAppListView : View, LCAppBannerDelegate, LCAppModelDelegate {
             finalNewApp.doUseLCBundleId = appToReplace.appInfo.doUseLCBundleId
             finalNewApp.autoSaveDisabled = false
             finalNewApp.save()
+        } else {
+            // enable SDK version spoof by defalut
+            finalNewApp.spoofSDKVersion = true
         }
         DispatchQueue.main.async {
             if let appToReplace {

@@ -291,7 +291,7 @@ struct LCTweakFolderView : View {
                 isTweakSigning = false
             }
             
-            try await LCUtils.signTweaks(tweakFolderUrl: self.baseUrl, force: true, signer:Signer(rawValue: LCUtils.appGroupUserDefault.integer(forKey: "LCDefaultSigner"))!) { p in
+            try await LCUtils.signTweaks(tweakFolderUrl: self.baseUrl, force: true) { p in
                 isTweakSigning = true
             }
 

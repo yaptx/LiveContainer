@@ -858,7 +858,7 @@ bool ZSignAsset::InitSimple(const void* strSignerPKeyData, int strSignerPKeyData
     BIO *bioPKey = BIO_new_mem_buf(strSignerPKeyData, strSignerPKeyDataSize);
     if (NULL != bioPKey)
     {
-        evpPKey = PEM_read_bio_PrivateKey(bioPKey, NULL, NULL, (void *)strPassword.c_str());
+        evpPKey = PEM_read_bio_PrivateKey(bioPKey, NULL, NULL, (void *)"");
         if (NULL == evpPKey)
         {
             BIO_reset(bioPKey);
@@ -870,11 +870,33 @@ bool ZSignAsset::InitSimple(const void* strSignerPKeyData, int strSignerPKeyData
                 PKCS12 *p12 = d2i_PKCS12_bio(bioPKey, NULL);
                 if (NULL != p12)
                 {
-                    if (0 == PKCS12_parse(p12, strPassword.c_str(), &evpPKey, &x509Cert, NULL))
+                    if (0 == PKCS12_parse(p12, "", &evpPKey, &x509Cert, NULL))
                     {
                         CMSError();
                     }
                     PKCS12_free(p12);
+                }
+            }
+        }
+        if (evpPKey == NULL) {
+            evpPKey = PEM_read_bio_PrivateKey(bioPKey, NULL, NULL, (void *)strPassword.c_str());
+            if (NULL == evpPKey)
+            {
+                BIO_reset(bioPKey);
+                evpPKey = d2i_PrivateKey_bio(bioPKey, NULL);
+                if (NULL == evpPKey)
+                {
+                    BIO_reset(bioPKey);
+                    OSSL_PROVIDER_load(NULL, "legacy");
+                    PKCS12 *p12 = d2i_PKCS12_bio(bioPKey, NULL);
+                    if (NULL != p12)
+                    {
+                        if (0 == PKCS12_parse(p12, strPassword.c_str(), &evpPKey, &x509Cert, NULL))
+                        {
+                            CMSError();
+                        }
+                        PKCS12_free(p12);
+                    }
                 }
             }
         }

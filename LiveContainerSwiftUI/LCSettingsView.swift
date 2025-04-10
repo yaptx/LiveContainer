@@ -43,7 +43,6 @@ struct LCSettingsView: View {
     @StateObject private var certificateImportPasswordAlert = InputHelper()
     
     @State var isJitLessEnabled = false
-    @AppStorage("LCDefaultSigner", store: LCUtils.appGroupUserDefault) var defaultSigner = Signer.ZSign
     @AppStorage("LCFrameShortcutIcons") var frameShortIcon = false
     @AppStorage("LCSwitchAppWithoutAsking") var silentSwitchApp = false
     @AppStorage("LCOpenWebPageWithoutAsking") var silentOpenWebPage = false
@@ -69,11 +68,6 @@ struct LCSettingsView: View {
     init(appDataFolderNames: Binding<[String]>) {
         _isJitLessEnabled = State(initialValue: LCUtils.certificatePassword() != nil)
         _store = State(initialValue: LCUtils.store())
-        
-        if !DataManager.shared.model.certificateImported {
-            // Only ZSign is available to ADP certs
-            defaultSigner = Signer(rawValue: LCUtils.appGroupUserDefault.integer(forKey: "LCDefaultSigner"))!
-        }
         
         _appDataFolderNames = appDataFolderNames
     }
@@ -114,20 +108,11 @@ struct LCSettingsView: View {
                         } label: {
                             Text("lc.settings.jitlessDiagnose".loc)
                         }
-                        
-                        Picker(selection: $defaultSigner) {
-                            if !sharedModel.certificateImported {
-                                Text("AltSign").tag(Signer.AltSign)
-                            }
-                            Text("ZSign").tag(Signer.ZSign)
-                        } label: {
-                            Text("lc.settings.defaultSigner")
-                        }
 
                     } header: {
                         Text("lc.settings.jitLess".loc)
                     } footer: {
-                        Text("lc.settings.jitLessDesc".loc + "\n" + "lc.settings.signer.desc".loc)
+                        Text("lc.settings.jitLessDesc".loc)
                     }
                 }
                 if store != .Unknown {

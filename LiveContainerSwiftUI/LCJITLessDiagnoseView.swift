@@ -339,7 +339,7 @@ struct LCJITLessDiagnoseView : View {
             return;
         }
         isJITLessTestInProgress = true
-        LCUtils.validateJITLessSetup(with: Signer(rawValue: LCUtils.appGroupUserDefault.integer(forKey: "LCDefaultSigner"))!) { success, error in
+        LCUtils.validateJITLessSetup { success, error in
             if success {
                 successInfo = "lc.jitlessSetup.success".loc
                 successShow = true
