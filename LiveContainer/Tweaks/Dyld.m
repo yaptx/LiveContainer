@@ -179,7 +179,7 @@ bool performHookDyldApi(const char* functionName, uint32_t adrpOffset, void** or
      arm64e
      1ad450b90  e10300aa   mov     x1, x0
      1ad450b94  487b2090   adrp    x8, dyld4::gAPIs
-     1ad450b98  000140f9   ldr     x0, [x8]  {dyld4::gAPIs}
+     1ad450b98  000140f9   ldr     x0, [x8]  {dyld4::gAPIs} may contain offset
      1ad450b9c  100040f9   ldr     x16, [x0]
      1ad450ba0  f10300aa   mov     x17, x0
      1ad450ba4  517fecf2   movk    x17, #0x63fa, lsl #0x30
@@ -207,18 +207,22 @@ bool performHookDyldApi(const char* functionName, uint32_t adrpOffset, void** or
     int64_t imm = (((int64_t)((immhi << 2) | immlo)) << 43) >> 31;
     
     void* gdyldPtr = (void*)(((uint64_t)baseAddr & 0xfffffffffffff000) + imm);
-    void* vtablePtr = 0;
+    
+    uint32_t* ldrInstPtr1 = baseAddr + adrpOffset + 1;
+    // check if the instruction is ldr Unsigned offset
+    assert((*ldrInstPtr1 & 0xBFC00000) == 0xB9400000);
+    uint32_t size = (*ldrInstPtr1 & 0xC0000000) >> 30;
+    uint32_t imm12 = (*ldrInstPtr1 & 0x3FFC00) >> 10;
+    gdyldPtr += (imm12 << size);
+    
+    assert(gdyldPtr != 0);
+    assert(*(void**)gdyldPtr != 0);
+    void* vtablePtr = **(void***)gdyldPtr;
+    
     void* vtableFunctionPtr = 0;
     uint32_t* movInstPtr = baseAddr + adrpOffset + 6;
     if ((*movInstPtr & 0x7F800000) != 0x52800000) {
         // check if it's arm64
-        uint32_t* ldrInstPtr1 = baseAddr + adrpOffset + 1;
-        assert((*ldrInstPtr1 & 0xBFC00000) == 0xB9400000);
-        uint32_t size = (*ldrInstPtr1 & 0xC0000000) >> 30;
-        uint32_t imm12 = (*ldrInstPtr1 & 0x3FFC00) >> 10;
-        gdyldPtr += (imm12 << size);
-        vtablePtr = **(void***)gdyldPtr;
-        
         uint32_t* ldrInstPtr2 = baseAddr + adrpOffset + 3;
         assert((*ldrInstPtr2 & 0xBFC00000) == 0xB9400000);
         uint32_t size2 = (*ldrInstPtr2 & 0xC0000000) >> 30;
@@ -226,9 +230,6 @@ bool performHookDyldApi(const char* functionName, uint32_t adrpOffset, void** or
         vtableFunctionPtr = vtablePtr + (imm12_2 << size2);
     } else {
         // arm64e
-        assert(gdyldPtr != 0);
-        assert(*(void**)gdyldPtr != 0);
-        vtablePtr = **(void***)gdyldPtr;
         uint32_t imm16 = (*movInstPtr & 0x1FFFE0) >> 5;
         vtableFunctionPtr = vtablePtr + imm16;
     }

@@ -185,7 +185,7 @@ Class LCSharedUtilsClass = nil;
     [infoDict writeToURL:infoPath error:error];
 }
 
-+ (void)validateJITLessWithCompletionHandler:(void (^)(BOOL success, NSError *error))completionHandler {
++ (void)validateJITLessSetupWithCompletionHandler:(void (^)(BOOL success, NSError *error))completionHandler {
     // Verify that the certificate is usable
     // Create a test app bundle
     NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:@"CertificateValidation.app"];
