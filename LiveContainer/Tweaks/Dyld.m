@@ -244,19 +244,6 @@ bool performHookDyldApi(const char* functionName, uint32_t adrpOffset, void** or
     return true;
 }
 
-struct VersionMapItem {
-    uint32_t set; // 00
-    uint32_t macos; // 04
-    uint32_t ios; // 08
-    uint32_t watchos; // 0c
-    uint32_t tvos; // 10
-    uint32_t bridgeos; // 14
-    uint32_t var1; // 18
-    uint32_t visionos; // 1c
-    uint32_t var2; // 20
-    uint32_t var3; // 24
-};
-
 bool initGuestSDKVersionInfo(void) {
     int fd = open("/usr/lib/dyld", O_RDONLY, 0400);
     struct stat s;
@@ -264,22 +251,36 @@ bool initGuestSDKVersionInfo(void) {
     void *map = mmap(NULL, s.st_size, PROT_READ , MAP_PRIVATE, fd, 0);
     
     // it seems Apple is constantly changing findVersionSetEquivalent's signature so we directly search sVersionMap instead
-    struct VersionMapItem* versionMapPtr = findPrivateSymbol(map, "__ZN5dyld3L11sVersionMapE");
+    // however sVersionMap's struct size is also unknown, but we can figure it out
+    uint32_t* versionMapPtr = findPrivateSymbol(map, "__ZN5dyld3L11sVersionMapE");
     assert(versionMapPtr);
 
-    // search 256 version items so we won't need to change this line until iOS 40 maybe
-    void* versionMapEnd = versionMapPtr + 0x1C00;
+    // we assume the size is 10K so we won't need to change this line until maybe iOS 40
+    uint32_t* versionMapEnd = versionMapPtr + 2560;
+    // ensure the first is versionSet and the third is iOS version (5.0.0)
+    assert(versionMapPtr[0] == 0x07db0901 && versionMapPtr[2] == 0x00050000);
+    // get struct size. we assume size is smaller then 128. appearently Apple won't have so many platforms
+    uint32_t size = 0;
+    for(int i = 1; i < 128; ++i) {
+        // find the next versionSet (for 6.0.0)
+        if(versionMapPtr[i] == 0x07dc0901) {
+            size = i;
+            break;
+        }
+    }
+    assert(size);
+    
     NSOperatingSystemVersion currentVersion = [[NSProcessInfo processInfo] operatingSystemVersion];
     uint32_t maxVersion = ((uint32_t)currentVersion.majorVersion << 16) | ((uint32_t)currentVersion.minorVersion << 8) | (uint32_t)currentVersion.patchVersion;
     
     uint32_t candidateVersion = 0;
     uint32_t candidateVersionEquivalent = 0;
     uint32_t newVersionSetVersion = 0;
-    for(struct VersionMapItem* nowVersionMapItem = versionMapPtr; (void*)nowVersionMapItem < versionMapEnd; ++nowVersionMapItem) {
-        newVersionSetVersion = nowVersionMapItem->ios;
+    for(uint32_t* nowVersionMapItem = versionMapPtr; nowVersionMapItem < versionMapEnd; nowVersionMapItem += size) {
+        newVersionSetVersion = nowVersionMapItem[2];
         if (newVersionSetVersion > guestAppSdkVersion) { break; }
         candidateVersion = newVersionSetVersion;
-        candidateVersionEquivalent = nowVersionMapItem->set;
+        candidateVersionEquivalent = nowVersionMapItem[0];
         if(newVersionSetVersion >= maxVersion) { break; }
     }
     
