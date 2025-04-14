@@ -314,6 +314,11 @@ struct LCSettingsView: View {
                             Text("Export Cert")
                         }
                         Button {
+                            exportDyld()
+                        } label: {
+                            Text("Export Dyld")
+                        }
+                        Button {
                             Task { await nukeSideStore() }
                         } label: {
                             Text("Nuke SideStore")
@@ -853,6 +858,19 @@ struct LCSettingsView: View {
             try fm.removeItem(at: sidestoreAppGroupURL.appendingPathComponent("Apps"))
         } catch {
             print("wtf \(error)")
+        }
+    }
+    
+    func exportDyld() {
+        let url = URL(fileURLWithPath: "/usr/lib/dyld")
+        let fileManager = FileManager.default
+        let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+        do {
+            let destinationURL = documentsURL.appendingPathComponent(url.lastPathComponent)
+            try fileManager.copyItem(at: url, to: destinationURL)
+            print("Successfully copied dyld to Documents.")
+        } catch {
+            print("Error copying dyld \(error)")
         }
     }
 }

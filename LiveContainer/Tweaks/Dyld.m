@@ -38,8 +38,6 @@ uint32_t guestAppSdkVersionSet = 0;
 bool (*orig_dyld_program_sdk_at_least)(void* dyldPtr, dyld_build_version_t version);
 uint32_t (*orig_dyld_get_program_sdk_version)(void* dyldPtr);
 
-bool _dyld_get_image_uuid(const struct mach_header* mh, uuid_t uuid);
-
 static void overwriteAppExecutableFileType(void) {
     struct mach_header_64* appImageMachOHeader = (struct mach_header_64*) orig_dyld_get_image_header(appMainImageIndex);
     kern_return_t kret = builtin_vm_protect(mach_task_self(), (vm_address_t)appImageMachOHeader, sizeof(appImageMachOHeader), false, PROT_READ | PROT_WRITE | VM_PROT_COPY);
@@ -159,10 +157,13 @@ void *findPrivateSymbol(struct mach_header_64 *header, const char *name) {
 }
 
 bool hook_dyld_program_sdk_at_least(void* dyldApiInstancePtr, dyld_build_version_t version) {
+    // we are targeting ios, so we hard code 2
     if(version.platform == 0xffffffff){
         return version.version <= guestAppSdkVersionSet;
-    } else {
+    } else if (version.platform == 2){
         return version.version <= guestAppSdkVersion;
+    } else {
+        return false;
     }
 }
 
@@ -243,29 +244,58 @@ bool performHookDyldApi(const char* functionName, uint32_t adrpOffset, void** or
     return true;
 }
 
+struct VersionMapItem {
+    uint32_t set; // 00
+    uint32_t macos; // 04
+    uint32_t ios; // 08
+    uint32_t watchos; // 0c
+    uint32_t tvos; // 10
+    uint32_t bridgeos; // 14
+    uint32_t var1; // 18
+    uint32_t visionos; // 1c
+    uint32_t var2; // 20
+    uint32_t var3; // 24
+};
+
 bool initGuestSDKVersionInfo(void) {
-    
     int fd = open("/usr/lib/dyld", O_RDONLY, 0400);
     struct stat s;
     fstat(fd, &s);
     void *map = mmap(NULL, s.st_size, PROT_READ , MAP_PRIVATE, fd, 0);
-    void* findVersionSetPtr = findPrivateSymbol(map, "__ZNK5dyld413ProcessConfig7Process24findVersionSetEquivalentEN5dyld38PlatformEj");
-    munmap(map, s.st_size);
-    close(fd);
-    if(!findVersionSetPtr) {
-        NSLog(@"[LC] failed to find findVersionSetEquivalent");
-        return false;
+    
+    // it seems Apple is constantly changing findVersionSetEquivalent's signature so we directly search sVersionMap instead
+    struct VersionMapItem* versionMapPtr = findPrivateSymbol(map, "__ZN5dyld3L11sVersionMapE");
+    assert(versionMapPtr);
+
+    // search 256 version items so we won't need to change this line until iOS 40 maybe
+    void* versionMapEnd = versionMapPtr + 0x1C00;
+    NSOperatingSystemVersion currentVersion = [[NSProcessInfo processInfo] operatingSystemVersion];
+    uint32_t maxVersion = ((uint32_t)currentVersion.majorVersion << 16) | ((uint32_t)currentVersion.minorVersion << 8) | (uint32_t)currentVersion.patchVersion;
+    
+    uint32_t candidateVersion = 0;
+    uint32_t candidateVersionEquivalent = 0;
+    uint32_t newVersionSetVersion = 0;
+    for(struct VersionMapItem* nowVersionMapItem = versionMapPtr; (void*)nowVersionMapItem < versionMapEnd; ++nowVersionMapItem) {
+        newVersionSetVersion = nowVersionMapItem->ios;
+        if (newVersionSetVersion > guestAppSdkVersion) { break; }
+        candidateVersion = newVersionSetVersion;
+        candidateVersionEquivalent = nowVersionMapItem->set;
+        if(newVersionSetVersion >= maxVersion) { break; }
     }
     
-    
-    uint32_t (*realFindVersionSetPtr)(void* dyldApiInstance, uint32_t versionPlatform, uint32_t version) = getDyldBase() + (findVersionSetPtr - map);
+    if (newVersionSetVersion == 0xffffffff && candidateVersion == 0) {
+        candidateVersionEquivalent = newVersionSetVersion;
+    }
 
-    guestAppSdkVersionSet = realFindVersionSetPtr(0, 2, guestAppSdkVersion);
+    guestAppSdkVersionSet = candidateVersionEquivalent;
+    
+    munmap(map, s.st_size);
+    close(fd);
     
     return true;
 }
 
-void do_hook_loadableIntoProcess() {
+void do_hook_loadableIntoProcess(void) {
 
     uint32_t *patchAddr = (uint32_t *)findPrivateSymbol(getDyldBase(), "__ZNK6mach_o6Header19loadableIntoProcessENS_8PlatformE7CStringb");
     size_t patchSize = sizeof(uint32_t[2]);
@@ -308,9 +338,9 @@ void DyldHooksInit(bool hideLiveContainer, uint32_t spoofSDKVersion) {
     
     if(spoofSDKVersion) {
         guestAppSdkVersion = spoofSDKVersion;
-        if(!performHookDyldApi("dyld_program_sdk_at_least", 1, (void**)&orig_dyld_program_sdk_at_least, hook_dyld_program_sdk_at_least) ||
-           !performHookDyldApi("dyld_get_program_sdk_version", 0, (void**)&orig_dyld_get_program_sdk_version, hook_dyld_get_program_sdk_version) ||
-           !initGuestSDKVersionInfo()) {
+        if(!initGuestSDKVersionInfo() ||
+           !performHookDyldApi("dyld_program_sdk_at_least", 1, (void**)&orig_dyld_program_sdk_at_least, hook_dyld_program_sdk_at_least) ||
+           !performHookDyldApi("dyld_get_program_sdk_version", 0, (void**)&orig_dyld_get_program_sdk_version, hook_dyld_get_program_sdk_version)) {
             return;
         }
     }

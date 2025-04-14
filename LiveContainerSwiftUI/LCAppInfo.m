@@ -307,12 +307,6 @@ uint32_t dyld_get_sdk_version(const struct mach_header* mh);
         }
         info[@"LCPatchRevision"] = @(currentPatchRev);
         forceSign = true;
-        // remove ZSign cache since hash is changed after upgrading patch
-        NSString* cachePath = [appPath stringByAppendingPathComponent:@"zsign_cache.json"];
-        if([fm fileExistsAtPath:cachePath]) {
-            NSError* err;
-            [fm removeItemAtPath:cachePath error:&err];
-        }
         
         [self save];
     }
@@ -339,6 +333,15 @@ uint32_t dyld_get_sdk_version(const struct mach_header* mh);
         [NSUserDefaults.standardUserDefaults removeObjectForKey:@"SigningInProgress"];
         completetionHandler(NO, @"lc.signer.noCertificateFoundErr");
         return;
+    }
+    
+    if(forceSign) {
+        // remove ZSign cache since hash is changed after upgrading patch
+        NSString* cachePath = [appPath stringByAppendingPathComponent:@"zsign_cache.json"];
+        if([fm fileExistsAtPath:cachePath]) {
+            NSError* err;
+            [fm removeItemAtPath:cachePath error:&err];
+        }
     }
     
     // Sign app if JIT-less is set up
