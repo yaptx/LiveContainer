@@ -271,7 +271,7 @@ bool initGuestSDKVersionInfo(void) {
     assert(size);
     
     NSOperatingSystemVersion currentVersion = [[NSProcessInfo processInfo] operatingSystemVersion];
-    uint32_t maxVersion = ((uint32_t)currentVersion.majorVersion << 16) | ((uint32_t)currentVersion.minorVersion << 8) | (uint32_t)currentVersion.patchVersion;
+    uint32_t maxVersion = ((uint32_t)currentVersion.majorVersion << 16) | ((uint32_t)currentVersion.minorVersion << 8);
     
     uint32_t candidateVersion = 0;
     uint32_t candidateVersionEquivalent = 0;
