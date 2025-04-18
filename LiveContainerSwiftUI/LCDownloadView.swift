@@ -14,7 +14,7 @@ public final class DownloadHelper : ObservableObject {
     @Published var isDownloading = false
     @Published var cancelled = false
     private var downloadTask: URLSessionDownloadTask?
-    private var continuation: CheckedContinuation<(), Never>?
+    private var continuation: UnsafeContinuation<(), Never>?
     
     func download(url: URL, to: URL) async throws {
         var ansError: Error? = nil
@@ -24,7 +24,7 @@ public final class DownloadHelper : ObservableObject {
             self.isDownloading = true
         }
         
-        await withCheckedContinuation { c in
+        await withUnsafeContinuation { c in
             continuation = c
             let session = URLSession(configuration: .default, delegate: DownloadDelegate(progressCallback: { progress, downloaded, total in
                 Task{ await MainActor.run {

@@ -91,10 +91,10 @@ class DataManager {
 class AlertHelper<T> : ObservableObject {
     @Published var show = false
     private var result : T?
-    private var c : CheckedContinuation<Void, Never>? = nil
+    private var c : UnsafeContinuation<Void, Never>? = nil
     
     func open() async -> T? {
-        await withCheckedContinuation { c in
+        await withUnsafeContinuation { c in
             self.c = c
             Task { await MainActor.run {
                 self.show = true
@@ -464,7 +464,7 @@ extension LCUtils {
         } catch {
             return nil
         }
-        await withCheckedContinuation { c in
+        await withUnsafeContinuation { c in
             func compeletionHandler(success: Bool, error: Error?){
                 do {
                     if let error = error {
@@ -704,7 +704,7 @@ extension LCUtils {
         
         var success = false
         var error : Error? = nil
-        await withCheckedContinuation { c in
+        await withUnsafeContinuation { c in
             LCUtils.authenticateUser { success1, error1 in
                 success = success1
                 error = error1
@@ -834,9 +834,7 @@ extension LCUtils {
                 onServerMessage?("Failed to contact JitStreamer-EB server: \(error)")
             }
             
-
-
-        } else if jitEnabler == .StkiJIT || jitEnabler == .StikJITLC{
+        } else if jitEnabler == .StkiJIT || jitEnabler == .StikJITLC {
             let launchURLStr = "stikjit://enable-jit?bundle-id=\(Bundle.main.bundleIdentifier!)"
             let launchURL : URL
             if jitEnabler == .StikJITLC {
@@ -861,6 +859,10 @@ extension LCUtils {
                 launchURL = URL(string: launchURLStr)!
                 onServerMessage?("JIT acquisition will continue in StikJIT.")
             }
+            await UIApplication.shared.open(launchURL)
+        } else if jitEnabler == .SideStore {
+            onServerMessage?("JIT acquisition will continue in SideStore.")
+            let launchURL = URL(string: "sidestore://enable-jit?bundle-id=\(Bundle.main.bundleIdentifier!)")!
             await UIApplication.shared.open(launchURL)
         }
         return false

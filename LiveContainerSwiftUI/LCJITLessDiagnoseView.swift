@@ -155,6 +155,8 @@ struct LCJITLessDiagnoseView : View {
     @State var certificatePasswordFound = false
     @State var appGroupAccessible = false
     @State var certLastUpdateDateStr : String? = nil
+    @State var certificateStatus : Int = -1
+    @State var certificateValidateUntil : String? = nil
     
     @State var isJITLessTestInProgress = false
     
@@ -238,6 +240,21 @@ struct LCJITLessDiagnoseView : View {
                             }
 
                         }
+                        
+                        if certificateDataFound {
+                            HStack {
+                                Text("lc.jitlessDiag.certificateStatus".loc)
+                                Spacer()
+                                Text(certificateStatus == -1 ? "lc.jitlessDiag.checking".loc : getStatusText(status: certificateStatus))
+                                    .foregroundStyle(certificateStatus == 0 ? .green : .red)
+                            }
+                            HStack {
+                                Text("lc.jitlessDiag.certificateValidateUntil".loc)
+                                Spacer()
+                                Text(certificateValidateUntil != nil ? certificateValidateUntil! : "lc.common.unknown".loc)
+                                    .foregroundStyle(certificateStatus == 0 ? .green : .red)
+                            }
+                        }
                     }
                     NavigationLink {
                         LCEntitlementView()
@@ -308,7 +325,7 @@ struct LCJITLessDiagnoseView : View {
             formatter1.timeStyle = .medium
             certLastUpdateDateStr = formatter1.string(from: lastUpdateDate)
         }
-
+        validateCertificate()
         loaded = true
     }
     
@@ -354,5 +371,36 @@ struct LCJITLessDiagnoseView : View {
     
     func getHelp() {
         UIApplication.shared.open(URL(string: "https://github.com/khanhduytran0/LiveContainer/issues/265#issuecomment-2558409380")!)
+    }
+    
+    func validateCertificate() {
+        certificateStatus = -1
+        certificateValidateUntil = nil
+        LCUtils.validateCertificate { status, date, error in
+            if let error {
+                errorInfo = error.loc
+                errorShow = true
+                certificateStatus = 2
+                return
+            }
+            certificateStatus = Int(status)
+            if let date {
+                let formatter1 = DateFormatter()
+                formatter1.dateStyle = .short
+                formatter1.timeStyle = .medium
+                certificateValidateUntil = formatter1.string(from: date)
+            }
+        }
+    }
+    
+    func getStatusText(status: Int) -> String {
+        switch status {
+        case 0:
+            return "lc.jitlessDiag.certificateValid".loc
+        case 1:
+            return "lc.jitlessDiag.certificateRevoked".loc
+        default:
+            return "lc.common.unknown".loc
+        }
     }
 }

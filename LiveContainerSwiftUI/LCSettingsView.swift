@@ -19,6 +19,7 @@ enum JITEnablerType : Int {
     case StkiJIT = 1
     case JITStreamerEBLegacy = 2
     case StikJITLC = 3
+    case SideStore = 4
 }
 
 struct LCSettingsView: View {
@@ -60,6 +61,7 @@ struct LCSettingsView: View {
     @AppStorage("LCIgnoreJITOnLaunch") var ignoreJITOnLaunch = false
     @AppStorage("selected32BitLayer") var liveExec32Path : String = ""
     @AppStorage("LCKeepSelectedWhenQuit") var keepSelectedWhenQuit = false
+    @AppStorage("LCWaitForDebugger") var waitForDebugger = false
     
     @EnvironmentObject private var sharedModel : SharedModel
     
@@ -165,6 +167,7 @@ struct LCSettingsView: View {
                         Text("SideJITServer/JITStreamer 2.0").tag(JITEnablerType.SideJITServer)
                         Text("StikJIT (StandAlone)").tag(JITEnablerType.StkiJIT)
                         Text("StikJIT (Another LiveContainer)").tag(JITEnablerType.StikJITLC)
+                        Text("SideStore").tag(JITEnablerType.SideStore)
                         Text("JitStreamer-EB (Relaunch)").tag(JITEnablerType.JITStreamerEBLegacy)
                     } label: {
                         Text("lc.settings.jitEnabler".loc)
@@ -307,6 +310,9 @@ struct LCSettingsView: View {
                         }
                         Toggle(isOn: $keepSelectedWhenQuit) {
                             Text("Keep Selected App when Quit")
+                        }
+                        Toggle(isOn: $waitForDebugger) {
+                            Text("Wait For Debugger")
                         }
                         Button {
                             export()

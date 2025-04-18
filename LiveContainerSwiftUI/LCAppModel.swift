@@ -224,7 +224,7 @@ class LCAppModel: ObservableObject, Hashable {
             }}
         }
         
-        await withCheckedContinuation({ c in
+        await withUnsafeContinuation({ c in
             appInfo.patchExecAndSignIfNeed(completionHandler: { success, error in
                 signError = error;
                 signSuccess = success;

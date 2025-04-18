@@ -167,7 +167,10 @@ static void overwriteExecPath(NSString *bundlePath) {
 
     // Make it RW and overwrite now
     kern_return_t ret = builtin_vm_protect(mach_task_self(), (mach_vm_address_t)path, maxLen, false, PROT_READ | PROT_WRITE);
-    assert(ret == KERN_SUCCESS);
+    if(ret != KERN_SUCCESS) {
+        BOOL tpro_ret = os_thread_self_restrict_tpro_to_rw();
+        assert(tpro_ret);
+    }
     bzero(path, maxLen);
     strncpy(path, newPath, newLen);
 
@@ -513,6 +516,11 @@ int LiveContainerMain(int argc, char *argv[]) {
 
     lcMainBundle = [NSBundle mainBundle];
     lcUserDefaults = NSUserDefaults.standardUserDefaults;
+    
+    if([[lcUserDefaults objectForKey:@"LCWaitForDebugger"] boolValue] && !checkJITEnabled()) {
+        sleep(100);
+    }
+    
     lcSharedDefaults = [[NSUserDefaults alloc] initWithSuiteName: [LCSharedUtils appGroupID]];
     lcAppUrlScheme = NSBundle.mainBundle.infoDictionary[@"CFBundleURLTypes"][0][@"CFBundleURLSchemes"][0];
     lcAppGroupPath = [[NSFileManager.defaultManager containerURLForSecurityApplicationGroupIdentifier:[NSClassFromString(@"LCSharedUtils") appGroupID]] path];

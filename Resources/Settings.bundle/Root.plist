@@ -6,9 +6,19 @@
 	<array>
 		<dict>
 			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Wait For Debugger</string>
+			<key>Key</key>
+			<string>LCWaitForDebugger</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>Type</key>
 			<string>PSTextFieldSpecifier</string>
 			<key>Title</key>
-			<string>selected</string>
+			<string>Selected Bundle</string>
 			<key>Key</key>
 			<string>selected</string>
 		</dict>

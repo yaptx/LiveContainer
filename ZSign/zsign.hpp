@@ -37,7 +37,10 @@ void zsign(NSString *appPath,
 NSString* getTeamId(NSData *prov,
                     NSData *key,
                     NSString *pass);
-
+int checkCert(NSData *prov,
+              NSData *key,
+              NSString *pass,
+              void(^completionHandler)(int status, NSDate* expirationDate, NSString *error));
 #ifdef __cplusplus
 }
 #endif

@@ -310,7 +310,7 @@ class WebViewDelegate : NSObject,WKNavigationDelegate {
         await withTaskGroup(of: Void.self) { group in
             for siteAssociationURL in appleAppSiteAssociationURLs {
                 group.addTask {
-                    await withCheckedContinuation { c in
+                    await withUnsafeContinuation { c in
                         let task = URLSession.shared.dataTask(with: siteAssociationURL) { data, response, error in
                             do {
                                 guard let data = data else {

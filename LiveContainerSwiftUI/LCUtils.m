@@ -137,6 +137,19 @@ Class LCSharedUtilsClass = nil;
     return ans;
 }
 
++ (int)validateCertificateWithCompletionHandler:(void(^)(int status, NSDate *expirationDate, NSString *error))completionHandler {
+    NSError *error;
+    NSURL *profilePath = [NSBundle.mainBundle URLForResource:@"embedded" withExtension:@"mobileprovision"];
+    NSData *profileData = [NSData dataWithContentsOfURL:profilePath];
+    NSData *certData = [LCUtils certificateData];
+    if (error) {
+        return -6;
+    }
+    [self loadStoreFrameworksWithError2:&error];
+    int ans = [NSClassFromString(@"ZSigner") checkCertWithProv:profileData key:certData pass:[LCUtils certificatePassword] completionHandler:completionHandler];
+    return ans;
+}
+
 #pragma mark Setup
 
 + (Store) store {
