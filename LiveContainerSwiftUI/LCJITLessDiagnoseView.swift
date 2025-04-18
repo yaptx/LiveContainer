@@ -325,7 +325,9 @@ struct LCJITLessDiagnoseView : View {
             formatter1.timeStyle = .medium
             certLastUpdateDateStr = formatter1.string(from: lastUpdateDate)
         }
-        validateCertificate()
+        if certificateDataFound {
+            validateCertificate()
+        }
         loaded = true
     }
     
