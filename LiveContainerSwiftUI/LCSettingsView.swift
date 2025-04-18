@@ -29,11 +29,7 @@ struct LCSettingsView: View {
     @State var successInfo = ""
     
     @Binding var appDataFolderNames: [String]
-    
-    @StateObject private var appFolderRemovalAlert = YesNoHelper()
-    @State private var folderRemoveCount = 0
-    
-    @StateObject private var keyChainRemovalAlert = YesNoHelper()
+
     @StateObject private var patchAltStoreAlert = AlertHelper<PatchChoice>()
     @StateObject private var installLC2Alert = AlertHelper<PatchChoice>()
     @State private var isAltStorePatched = false
@@ -233,34 +229,10 @@ struct LCSettingsView: View {
                 }
                     
                 Section {
-                    if sharedModel.multiLCStatus != 2 {
-                        Button {
-                            moveAppGroupFolderFromPrivateToAppGroup()
-                        } label: {
-                            Text("lc.settings.appGroupPrivateToShare".loc)
-                        }
-                        Button {
-                            moveAppGroupFolderFromAppGroupToPrivate()
-                        } label: {
-                            Text("lc.settings.appGroupShareToPrivate".loc)
-                        }
-
-                        Button {
-                            Task { await moveDanglingFolders() }
-                        } label: {
-                            Text("lc.settings.moveDanglingFolderOut".loc)
-                        }
-                        Button(role:.destructive) {
-                            Task { await cleanUpUnusedFolders() }
-                        } label: {
-                            Text("lc.settings.cleanDataFolder".loc)
-                        }
-                    }
-
-                    Button(role:.destructive) {
-                        Task { await removeKeyChain() }
+                    NavigationLink {
+                        LCDataManagementView(appDataFolderNames: $appDataFolderNames)
                     } label: {
-                        Text("lc.settings.cleanKeychain".loc)
+                        Text("lc.settings.dataManagement".loc)
                     }
                 }
                 
@@ -363,39 +335,7 @@ struct LCSettingsView: View {
             } message: {
                 Text(successInfo)
             }
-            .alert("lc.settings.cleanDataFolder".loc, isPresented: $appFolderRemovalAlert.show) {
-                if folderRemoveCount > 0 {
-                    Button(role: .destructive) {
-                        appFolderRemovalAlert.close(result: true)
-                    } label: {
-                        Text("lc.common.delete".loc)
-                    }
-                }
 
-                Button("lc.common.cancel".loc, role: .cancel) {
-                    appFolderRemovalAlert.close(result: false)
-                }
-            } message: {
-                if folderRemoveCount > 0 {
-                    Text("lc.settings.cleanDataFolderConfirm %lld".localizeWithFormat(folderRemoveCount))
-                } else {
-                    Text("lc.settings.noDataFolderToClean".loc)
-                }
-
-            }
-            .alert("lc.settings.cleanKeychain".loc, isPresented: $keyChainRemovalAlert.show) {
-                Button(role: .destructive) {
-                    keyChainRemovalAlert.close(result: true)
-                } label: {
-                    Text("lc.common.delete".loc)
-                }
-
-                Button("lc.common.cancel".loc, role: .cancel) {
-                    keyChainRemovalAlert.close(result: false)
-                }
-            } message: {
-                Text("lc.settings.cleanKeychainDesc".loc)
-            }
             .alert("lc.settings.patchStore %@".localizeWithFormat(LCUtils.getStoreName()), isPresented: $patchAltStoreAlert.show) {
                 Button(role: .destructive) {
                     patchAltStoreAlert.close(result: .autoPath)
@@ -512,184 +452,6 @@ struct LCSettingsView: View {
                 let storeInstallUrl = String(format: LCUtils.storeInstallURLScheme(), packedIpaUrl.absoluteString)
                 await UIApplication.shared.open(URL(string: storeInstallUrl)!)
             }
-        } catch {
-            errorInfo = error.localizedDescription
-            errorShow = true
-        }
-    }
-    
-    func cleanUpUnusedFolders() async {
-        
-        var folderNameToAppDict : [String:LCAppModel] = [:]
-        for app in sharedModel.apps {
-            for container in app.appInfo.containers {
-                folderNameToAppDict[container.folderName] = app;
-            }
-        }
-        for app in sharedModel.hiddenApps {
-            for container in app.appInfo.containers {
-                folderNameToAppDict[container.folderName] = app;
-            }
-        }
-        
-        var foldersToDelete : [String]  = []
-        for appDataFolderName in appDataFolderNames {
-            if folderNameToAppDict[appDataFolderName] == nil {
-                foldersToDelete.append(appDataFolderName)
-            }
-        }
-        folderRemoveCount = foldersToDelete.count
-        
-        guard let result = await appFolderRemovalAlert.open(), result else {
-            return
-        }
-        do {
-            let fm = FileManager()
-            for folder in foldersToDelete {
-                try fm.removeItem(at: LCPath.dataPath.appendingPathComponent(folder))
-                LCUtils.removeAppKeychain(dataUUID: folder)
-                self.appDataFolderNames.removeAll(where: { s in
-                    return s == folder
-                })
-            }
-        } catch {
-            errorInfo = error.localizedDescription
-            errorShow = true
-        }
-        
-    }
-    
-    func removeKeyChain() async {
-        guard let result = await keyChainRemovalAlert.open(), result else {
-            return
-        }
-        
-        [kSecClassGenericPassword, kSecClassInternetPassword, kSecClassCertificate, kSecClassKey, kSecClassIdentity].forEach {
-          let status = SecItemDelete([
-            kSecClass: $0,
-            kSecAttrSynchronizable: kSecAttrSynchronizableAny
-          ] as CFDictionary)
-          if status != errSecSuccess && status != errSecItemNotFound {
-              //Error while removing class $0
-              errorInfo = status.description
-              errorShow = true
-          }
-        }
-    }
-    
-    func moveDanglingFolders() async {
-        let fm = FileManager()
-        do {
-            var appDataFoldersInUse : Set<String> = Set();
-            var tweakFoldersInUse : Set<String> = Set();
-            for app in sharedModel.apps {
-                if !app.appInfo.isShared {
-                    continue
-                }
-                for container in app.appInfo.containers {
-                    appDataFoldersInUse.update(with: container.folderName);
-                }
-
-                
-                if let folder = app.appInfo.tweakFolder {
-                    tweakFoldersInUse.update(with: folder);
-                }
-
-            }
-            
-            for app in sharedModel.hiddenApps {
-                if !app.appInfo.isShared {
-                    continue
-                }
-                for container in app.appInfo.containers {
-                    appDataFoldersInUse.update(with: container.folderName);
-                }
-                if let folder = app.appInfo.tweakFolder {
-                    tweakFoldersInUse.update(with: folder);
-                }
-
-            }
-            
-            var movedDataFolderCount = 0
-            let sharedDataFolders = try fm.contentsOfDirectory(atPath: LCPath.lcGroupDataPath.path)
-            for sharedDataFolder in sharedDataFolders {
-                if appDataFoldersInUse.contains(sharedDataFolder) {
-                    continue
-                }
-                try fm.moveItem(at: LCPath.lcGroupDataPath.appendingPathComponent(sharedDataFolder), to: LCPath.dataPath.appendingPathComponent(sharedDataFolder))
-                movedDataFolderCount += 1
-            }
-            
-            var movedTweakFolderCount = 0
-            let sharedTweakFolders = try fm.contentsOfDirectory(atPath: LCPath.lcGroupTweakPath.path)
-            for tweakFolderInUse in sharedTweakFolders {
-                if tweakFoldersInUse.contains(tweakFolderInUse) || tweakFolderInUse == "TweakLoader.dylib" {
-                    continue
-                }
-                try fm.moveItem(at: LCPath.lcGroupTweakPath.appendingPathComponent(tweakFolderInUse), to: LCPath.tweakPath.appendingPathComponent(tweakFolderInUse))
-                movedTweakFolderCount += 1
-            }
-            successInfo = "lc.settings.moveDanglingFolderComplete %lld %lld".localizeWithFormat(movedDataFolderCount,movedTweakFolderCount)
-            successShow = true
-            
-        } catch {
-            errorInfo = error.localizedDescription
-            errorShow = true
-        }
-    }
-    
-    func moveAppGroupFolderFromAppGroupToPrivate() {
-        let fm = FileManager()
-        do {
-            if !fm.fileExists(atPath: LCPath.appGroupPath.path) {
-                try fm.createDirectory(atPath: LCPath.appGroupPath.path, withIntermediateDirectories: true)
-            }
-            if !fm.fileExists(atPath: LCPath.lcGroupAppGroupPath.path) {
-                try fm.createDirectory(atPath: LCPath.lcGroupAppGroupPath.path, withIntermediateDirectories: true)
-            }
-            
-            let privateFolderContents = try fm.contentsOfDirectory(at: LCPath.appGroupPath, includingPropertiesForKeys: nil)
-            let sharedFolderContents = try fm.contentsOfDirectory(at: LCPath.lcGroupAppGroupPath, includingPropertiesForKeys: nil)
-            if privateFolderContents.count > 0 {
-                errorInfo = "lc.settings.appGroupExistPrivate".loc
-                errorShow = true
-                return
-            }
-            for file in sharedFolderContents {
-                try fm.moveItem(at: file, to: LCPath.appGroupPath.appendingPathComponent(file.lastPathComponent))
-            }
-            successInfo = "lc.settings.appGroup.moveSuccess".loc
-            successShow = true
-            
-        } catch {
-            errorInfo = error.localizedDescription
-            errorShow = true
-        }
-    }
-    
-    func moveAppGroupFolderFromPrivateToAppGroup() {
-        let fm = FileManager()
-        do {
-            if !fm.fileExists(atPath: LCPath.appGroupPath.path) {
-                try fm.createDirectory(atPath: LCPath.appGroupPath.path, withIntermediateDirectories: true)
-            }
-            if !fm.fileExists(atPath: LCPath.lcGroupAppGroupPath.path) {
-                try fm.createDirectory(atPath: LCPath.lcGroupAppGroupPath.path, withIntermediateDirectories: true)
-            }
-            
-            let privateFolderContents = try fm.contentsOfDirectory(at: LCPath.appGroupPath, includingPropertiesForKeys: nil)
-            let sharedFolderContents = try fm.contentsOfDirectory(at: LCPath.lcGroupAppGroupPath, includingPropertiesForKeys: nil)
-            if sharedFolderContents.count > 0 {
-                errorInfo = "lc.settings.appGroupExist Shared".loc
-                errorShow = true
-                return
-            }
-            for file in privateFolderContents {
-                try fm.moveItem(at: file, to: LCPath.lcGroupAppGroupPath.appendingPathComponent(file.lastPathComponent))
-            }
-            successInfo = "lc.settings.appGroup.moveSuccess".loc
-            successShow = true
-            
         } catch {
             errorInfo = error.localizedDescription
             errorShow = true

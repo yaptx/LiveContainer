@@ -7862,6 +7862,23 @@
         }
       }
     },
+    "lc.settings.dataManagement" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data Management"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "数据管理"
+          }
+        }
+      }
+    },
     "lc.settings.defaultSigner" : {
       "extractionState" : "manual",
       "localizations" : {
