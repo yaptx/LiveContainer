@@ -142,17 +142,23 @@ struct LCTabView: View {
     }
     
     func checkTeamId() {
-        if DataManager.shared.model.multiLCStatus != 2 {
+        if let certificateTeamId = UserDefaults.standard.string(forKey: "LCCertificateTeamId") {
+            if DataManager.shared.model.multiLCStatus != 2 {
+                return
+            }
+            
+            guard let primaryLCTeamId = Bundle.main.infoDictionary?["PrimaryLiveContainerTeamId"] as? String else {
+                print("Unable to find PrimaryLiveContainerTeamId")
+                return
+            }
+            if certificateTeamId != primaryLCTeamId {
+                errorInfo = "lc.settings.multiLC.teamIdMismatch".loc
+                errorShow = true
+                return
+            }
             return
         }
-        guard let primaryLCTeamId = Bundle.main.infoDictionary?["PrimaryLiveContainerTeamId"] as? String else {
-            print("Unable to find PrimaryLiveContainerTeamId")
-            return
-        }
-        if let verifiedTeamId = UserDefaults.standard.string(forKey: "VerifiedTeamId"), verifiedTeamId == primaryLCTeamId {
-            return
-        }
-        
+                
         guard let entitlementXML = getLCEntitlementXML() else {
             print("Failed to load entitlement.")
             return
@@ -169,12 +175,18 @@ struct LCTabView: View {
             return
         }
         
-        if currentTeamId != primaryLCTeamId {
-            errorInfo = "lc.settings.multiLC.teamIdMismatch".loc
-            errorShow = true
-        } else {
-            UserDefaults.standard.set(currentTeamId, forKey: "VerifiedTeamId")
-        }
         
+        if DataManager.shared.model.multiLCStatus == 2 {
+            guard let primaryLCTeamId = Bundle.main.infoDictionary?["PrimaryLiveContainerTeamId"] as? String else {
+                print("Unable to find PrimaryLiveContainerTeamId")
+                return
+            }
+            if currentTeamId != primaryLCTeamId {
+                errorInfo = "lc.settings.multiLC.teamIdMismatch".loc
+                errorShow = true
+                return
+            }
+        }
+        UserDefaults.standard.set(currentTeamId, forKey: "LCCertificateTeamId")
     }
 }

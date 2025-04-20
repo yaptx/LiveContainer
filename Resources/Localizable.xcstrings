@@ -7466,6 +7466,12 @@
             "value" : "Révoqué"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "失効"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7493,6 +7499,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Statut du certificat"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "証明書の状態"
           }
         },
         "zh-Hans" : {
@@ -7524,6 +7536,12 @@
             "value" : "Valide"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "有効"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7552,6 +7570,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Certificat non valide après"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "証明書の有効期限"
           }
         },
         "zh-Hans" : {
@@ -7687,6 +7711,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Vérification"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "確認中"
           }
         },
         "zh-Hans" : {
@@ -8886,6 +8916,12 @@
             "value" : "Gestion des données"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "データ管理"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9431,6 +9467,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Import Certificate From %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importer un certificat depuis %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@から証明書をインポート"
           }
         },
         "zh-Hans" : {
@@ -10587,6 +10635,18 @@
             "value" : "LiveContainer2 is signed with a different certificate from LiveContainer, so it will not work. Please install LiveContainer2 with the same account you used to install LiveContainer."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LiveContainer2 est signé avec un certificat différent de LiveContainer, donc il ne fonctionnera pas. Veuillez installer LiveContainer2 avec le même compte que celui utilisé pour installer LiveContainer."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LiveContainer 2はLiveContainerと異なる証明書で署名されているため、動作しません。LiveContainerをインストールしたのと同じアカウントでLiveContainer 2をインストールしてください。"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10761,6 +10821,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "LiveContainer will generate the ipa for another LiveContainer. Please share it to %@ to install it, Continue?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LiveContainer va générer l'IPA pour un autre LiveContainer. Veuillez le partager à %@ pour l'installer. Continuer ?"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LiveContainerは別のLiveContainer用のipaを生成します。インストールするには%@に共有してください。続けますか？"
           }
         },
         "zh-Hans" : {
@@ -11255,6 +11327,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Refresh Certificate from %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rafraîchir le certificat depuis %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@から証明書をリフレッシュ"
           }
         },
         "zh-Hans" : {

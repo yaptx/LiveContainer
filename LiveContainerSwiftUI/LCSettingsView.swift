@@ -601,14 +601,13 @@ struct LCSettingsView: View {
             return
         }
         
-        guard let teamId = LCUtils.getCertTeamId(withKeyData: certificateData, password: certificatePassword) else {
+        guard let _ = LCUtils.getCertTeamId(withKeyData: certificateData, password: certificatePassword) else {
             errorInfo = "lc.settings.invalidCertError".loc
             errorShow = true
             return
         }
         UserDefaults.standard.set(certificatePassword, forKey: "LCCertificatePassword")
         UserDefaults.standard.set(certificateData, forKey: "LCCertificateData")
-        UserDefaults.standard.set(teamId, forKey: "LCCertificateTeamId")
         UserDefaults.standard.set(true, forKey: "LCCertificateImported")
         sharedModel.certificateImported = true
     }
@@ -634,7 +633,6 @@ struct LCSettingsView: View {
         UserDefaults.standard.set(false, forKey: "LCCertificateImported")
         UserDefaults.standard.set(nil, forKey: "LCCertificatePassword")
         UserDefaults.standard.set(nil, forKey: "LCCertificateData")
-        UserDefaults.standard.set(nil, forKey: "LCCertificateTeamId")
         sharedModel.certificateImported = false
     }
     

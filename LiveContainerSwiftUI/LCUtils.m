@@ -169,9 +169,9 @@ Class LCSharedUtilsClass = nil;
             return;
         }
         
-        if([[self appGroupID] containsString:@"AltStore"]) {
+        if([[self appGroupID] containsString:@"AltStore"] && ![[self appGroupID] isEqualToString:@"group.com.rileytestut.AltStore"]) {
             ans = AltStore;
-        } else if ([[self appGroupID] containsString:@"SideStore"]) {
+        } else if ([[self appGroupID] containsString:@"SideStore"] && ![[self appGroupID] isEqualToString:@"group.com.SideStore.SideStore"]) {
             ans = SideStore;
         } else {
             ans = Unknown;
