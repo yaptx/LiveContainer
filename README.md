@@ -9,6 +9,8 @@
 </div>
 <h6 align="center">
 
+[![Crowdin](https://badges.crowdin.net/livecontainer/localized.svg)](https://crowdin.com/project/livecontainer)
+
 # LiveContainer
 
 - LiveContainer is an app launcher (not emulator or hypervisor) that allows you to run app inside it.
