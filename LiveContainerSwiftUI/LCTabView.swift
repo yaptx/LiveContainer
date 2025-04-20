@@ -116,6 +116,7 @@ struct LCTabView: View {
         }
         .onAppear() {
             checkLastLaunchError()
+            checkTeamId()
         }
         .environmentObject(DataManager.shared.model)
     }
@@ -138,5 +139,42 @@ struct LCTabView: View {
     
     func copyError() {
         UIPasteboard.general.string = errorInfo
+    }
+    
+    func checkTeamId() {
+        if DataManager.shared.model.multiLCStatus != 2 {
+            return
+        }
+        guard let primaryLCTeamId = Bundle.main.infoDictionary?["PrimaryLiveContainerTeamId"] as? String else {
+            print("Unable to find PrimaryLiveContainerTeamId")
+            return
+        }
+        if let verifiedTeamId = UserDefaults.standard.string(forKey: "VerifiedTeamId"), verifiedTeamId == primaryLCTeamId {
+            return
+        }
+        
+        guard let entitlementXML = getLCEntitlementXML() else {
+            print("Failed to load entitlement.")
+            return
+        }
+        
+        var format = PropertyListSerialization.PropertyListFormat.xml
+        guard let entitlementDict = try? PropertyListSerialization.propertyList(from: entitlementXML.data(using: .utf8) ?? Data(), format: &format) as? [String : AnyObject] else {
+            print("Failed to parse entitlement.")
+            return
+        }
+        
+        guard let currentTeamId = entitlementDict["com.apple.developer.team-identifier"] as? String else {
+            print("Failed to determine team id.")
+            return
+        }
+        
+        if currentTeamId != primaryLCTeamId {
+            errorInfo = "lc.settings.multiLC.teamIdMismatch".loc
+            errorShow = true
+        } else {
+            UserDefaults.standard.set(currentTeamId, forKey: "VerifiedTeamId")
+        }
+        
     }
 }

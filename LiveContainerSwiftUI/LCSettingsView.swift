@@ -33,11 +33,14 @@ struct LCSettingsView: View {
     @StateObject private var patchAltStoreAlert = AlertHelper<PatchChoice>()
     @StateObject private var installLC2Alert = AlertHelper<PatchChoice>()
     @State private var isAltStorePatched = false
+    @State private var certificateDataFound = false
     
     @StateObject private var certificateImportAlert = YesNoHelper()
     @StateObject private var certificateRemoveAlert = YesNoHelper()
     @StateObject private var certificateImportFileAlert = AlertHelper<URL>()
     @StateObject private var certificateImportPasswordAlert = InputHelper()
+    @State private var showShareSheet = false
+    @State private var shareURL : URL? = nil
     
     @State var isJitLessEnabled = false
     @AppStorage("LCFrameShortcutIcons") var frameShortIcon = false
@@ -90,6 +93,15 @@ struct LCSettingsView: View {
                                 }
                             }
                         } else {
+                            Button {
+                                Task{ await importCertificateFromSideStore() }
+                            } label: {
+                                if certificateDataFound {
+                                    Text("lc.settings.refreshCertificateFromStore %@".localizeWithFormat(storeName))
+                                } else {
+                                    Text("lc.settings.importCertificateFromStore %@".localizeWithFormat(storeName))
+                                }
+                            }
                             Button {
                                 Task { await patchAltStore() }
                             } label: {
@@ -322,6 +334,7 @@ struct LCSettingsView: View {
             .navigationBarTitle("lc.tabView.settings".loc)
             .onAppear {
                 updateSideStorePatchStatus()
+                AppDelegate.setImportSideStoreCertFunc(handler: onSideStoreCertificateCallback)
             }
             .onForeground {
                 updateSideStorePatchStatus()
@@ -368,13 +381,7 @@ struct LCSettingsView: View {
                 } label: {
                     Text("lc.common.continue".loc)
                 }
-                if(store == .SideStore) {
-                    Button {
-                        installLC2Alert.close(result: .archiveOnly)
-                    } label: {
-                        Text("lc.settings.patchStoreArchiveOnly".loc)
-                    }
-                }
+
                 Button("lc.common.cancel".loc, role: .cancel) {
                     patchAltStoreAlert.close(result: .cancel)
                 }
@@ -426,6 +433,11 @@ struct LCSettingsView: View {
                 }
             )
         }
+        .sheet(isPresented: $showShareSheet) {
+            if let shareURL = shareURL {
+                ActivityViewController(activityItems: [shareURL])
+            }
+        }
         .navigationViewStyle(StackNavigationViewStyle())
         
     }
@@ -443,15 +455,10 @@ struct LCSettingsView: View {
         
         do {
             let packedIpaUrl = try LCUtils.archiveIPA(withBundleName: "LiveContainer2")
-            if result == .archiveOnly {
-                let movedAltStoreIpaUrl = LCPath.docPath.appendingPathComponent("LiveContainer2.ipa")
-                try FileManager.default.moveItem(at: packedIpaUrl, to: movedAltStoreIpaUrl)
-                successInfo = "lc.settings.multiLCArchiveSuccess".loc
-                successShow = true
-            } else {
-                let storeInstallUrl = String(format: LCUtils.storeInstallURLScheme(), packedIpaUrl.absoluteString)
-                await UIApplication.shared.open(URL(string: storeInstallUrl)!)
-            }
+            
+            shareURL = packedIpaUrl
+            showShareSheet = true
+            
         } catch {
             errorInfo = error.localizedDescription
             errorShow = true
@@ -472,6 +479,8 @@ struct LCSettingsView: View {
     
     func updateSideStorePatchStatus() {
         let fm = FileManager()
+        
+        certificateDataFound = LCUtils.certificateData() != nil
         
         guard let appGroupPath = LCUtils.appGroupPath() else {
             isAltStorePatched = false
@@ -602,6 +611,20 @@ struct LCSettingsView: View {
         UserDefaults.standard.set(teamId, forKey: "LCCertificateTeamId")
         UserDefaults.standard.set(true, forKey: "LCCertificateImported")
         sharedModel.certificateImported = true
+    }
+    
+    func importCertificateFromSideStore() async {
+        guard let url = URL(string: "\(storeName.lowercased())://certificate?callback_template=livecontainer%3A%2F%2Fcertificate%3Fcert%3D%24%28BASE64_CERT%29%26password%3D%24%28PASSWORD%29") else {
+            errorInfo = "Failed to initialize certificate import URL."
+            errorShow = true
+            return
+        }
+        await UIApplication.shared.open(url)
+    }
+    func onSideStoreCertificateCallback(certificateData: Data, password: String) {
+        LCUtils.appGroupUserDefault.set(certificateData, forKey: "LCCertificateData")
+        LCUtils.appGroupUserDefault.set(password, forKey: "LCCertificatePassword")
+        LCUtils.appGroupUserDefault.set(NSDate.now, forKey: "LCCertificateUpdateDate")
     }
     
     func removeCertificate() async {
