@@ -1,4 +1,5 @@
 import json
+import plistlib
 import re
 import requests
 import os
@@ -36,7 +37,7 @@ def get_file_size(url):
         print(f"Error getting file size: {e}")
         return 194586
 
-def update_json_file(json_file, latest_release):
+def update_json_file_release(json_file, latest_release):
     if isinstance(latest_release, list) and latest_release:
         latest_release = latest_release[0]
     else:
@@ -127,13 +128,89 @@ def update_json_file(json_file, latest_release):
         print(f"Error writing to JSON file: {e}")
         raise
 
+def update_json_file_nightly(json_file, nightly_release):
+    if isinstance(nightly_release, list) and nightly_release:
+        nightly_release = next((item for item in nightly_release if item["tag_name"] == "nightly"), None)
+    else:
+        print("Error getting nightly release")
+        return
+
+    try:
+        with open(json_file, "r") as file:
+            data = json.load(file)
+    except json.JSONDecodeError as e:
+        print(f"Error reading JSON file: {e}")
+        data = {"apps": []}
+        raise
+
+    app = data["apps"][0]
+
+    with open("Resources/Info.plist", 'rb') as infile:
+        info_plist = plistlib.load(infile)
+    full_version = info_plist["CFBundleVersion"]
+    tag = nightly_release["tag_name"]
+    version = re.search(r"(\d+\.\d+\.\d+)", full_version).group(1)
+    version_date = nightly_release["published_at"]
+    date_obj = datetime.strptime(version_date, "%Y-%m-%dT%H:%M:%SZ")
+    version_date = date_obj.strftime("%Y-%m-%d")
+
+    description = nightly_release["body"]
+    description = prepare_description(description)
+
+    assets = nightly_release.get("assets", [])
+    download_url = None
+    size = None
+    for asset in assets:
+        if asset["name"] == f"LiveContainer.ipa":
+            download_url = asset["browser_download_url"]
+            size = asset["size"]
+            break
+
+    if download_url is None or size is None:
+        print("Error: IPA file not found in release assets.")
+        return
+
+    version_entry = {
+        "version": version,
+        "date": version_date,
+        "localizedDescription": description,
+        "downloadURL": download_url,
+        "size": size
+    }
+
+    app["versions"].clear()
+    app["versions"].append(version_entry)
+
+    app.update({
+        "version": version,
+        "versionDate": version_date,
+        "versionDescription": description,
+        "downloadURL": download_url,
+        "size": size
+    })
+
+    data["news"] = []
+
+    try:
+        with open(json_file, "w") as file:
+            json.dump(data, file, indent=2)
+        print("JSON file updated successfully.")
+    except IOError as e:
+        print(f"Error writing to JSON file: {e}")
+        raise
+
 def main():
     repo_url = "LiveContainer/LiveContainer"
-    json_file = "apps.json"
+    is_nightly = "NIGHTLY_BUILD" in os.environ
 
     try:
         fetched_data_latest = fetch_latest_release(repo_url)
-        update_json_file(json_file, fetched_data_latest)
+        if is_nightly:
+            json_file = "apps_nightly.json"
+            update_json_file_nightly(json_file, fetched_data_latest)
+        else:
+            json_file = "apps.json"
+            update_json_file_release(json_file, fetched_data_latest)
     except Exception as e:
         print(f"An error occurred: {e}")
         raise
