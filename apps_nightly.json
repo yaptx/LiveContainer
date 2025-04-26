@@ -1,16 +1,16 @@
 {
-  "name": "LiveContainer Nightly",
+  "name": "LiveContainer (nightly)",
   "identifier": "com.livecontainer.source.nightly",
   "website": "https://github.com/LiveContainer/LiveContainer",
-  "subtitle": "LiveContainer Nightly official AltStore Source.",
-  "description": "This is the official AltStore Source for LiveContainer Nightly.\n\n Run iOS apps without actually installing them!",
+  "subtitle": "LiveContainer (nightly) official AltStore Source.",
+  "description": "This is the official AltStore Source for LiveContainer (nightly).\n\n Run iOS apps without actually installing them!",
   "tintColor": "#0784FC",
   "iconURL": "https://raw.githubusercontent.com/LiveContainer/LiveContainer/main/Resources/AppIcon76x76.png",
   "headerURL": "https://raw.githubusercontent.com/LiveContainer/LiveContainer/main/screenshots/header.png",
   "apps": [
     {
       "beta": false,
-      "name": "LiveContainer",
+      "name": "LiveContainer (nightly)",
       "bundleIdentifier": "com.kdt.livecontainer",
       "developerName": "LiveContainer Team",
       "subtitle": "Run iOS apps without actually installing them!",
