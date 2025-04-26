@@ -154,7 +154,8 @@ def update_json_file_nightly(json_file, nightly_release):
     date_obj = datetime.strptime(version_date, "%Y-%m-%dT%H:%M:%SZ")
     version_date = date_obj.strftime("%Y-%m-%d")
 
-    description = nightly_release["body"]
+    nightly_link = environ.get("NIGHTLY_BUILD")
+    description = "This is a nightly release [created automatically with GitHub Actions workflow]({nightly_link})"
     description = prepare_description(description)
 
     assets = nightly_release.get("assets", [])
@@ -201,7 +202,7 @@ def update_json_file_nightly(json_file, nightly_release):
 
 def main():
     repo_url = "LiveContainer/LiveContainer"
-    is_nightly = "NIGHTLY_BUILD" in os.environ
+    is_nightly = "NIGHTLY_BUILD" in environ
 
     try:
         fetched_data_latest = fetch_latest_release(repo_url)
