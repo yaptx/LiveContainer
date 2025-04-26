@@ -1,6 +1,6 @@
 {
-  "name": "LiveContainer",
-  "identifier": "com.livecontainer.source",
+  "name": "LiveContainer Nightly",
+  "identifier": "com.livecontainer.source.nightly",
   "website": "https://github.com/LiveContainer/LiveContainer",
   "subtitle": "LiveContainer Nightly official AltStore Source.",
   "description": "This is the official AltStore Source for LiveContainer Nightly.\n\n Run iOS apps without actually installing them!",
