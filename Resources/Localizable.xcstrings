@@ -102,7 +102,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "缷載%@？"
+            "value" : "解除安裝%@？"
           }
         }
       }
@@ -685,7 +685,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "缷載"
+            "value" : "解除安裝"
           }
         }
       }
@@ -1471,6 +1471,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "安装为新App"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "安裝為新的App"
           }
         }
       }
@@ -2265,7 +2271,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "方向鎖"
+            "value" : "方向鎖定"
           }
         }
       }
@@ -2318,7 +2324,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "橫向"
+            "value" : "橫向螢幕"
           }
         }
       }
@@ -2371,7 +2377,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "緃向"
+            "value" : "垂直螢幕"
           }
         }
       }
@@ -2665,7 +2671,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "不要加載補訂"
+            "value" : "不要加載補丁"
           }
         }
       }
@@ -2824,7 +2830,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "如應用程式黑屏並在10秒後崩潰，請啟用。"
+            "value" : "如應用程式黑屏並在10秒後崩潰，請啟用此選項。"
           }
         }
       }
@@ -3131,6 +3137,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "强制指定SDK版本会使得系统库拥有App构建的SDK版本的行为。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "偽裝 SDK 版本使系統庫以應用程式建置時的 SDK 版本運行。"
           }
         }
       }
@@ -3797,6 +3809,12 @@
             "state" : "translated",
             "value" : "强制指定SDK版本"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "偽裝SDK版本"
+          }
         }
       }
     },
@@ -4060,7 +4078,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "補訂資料夾"
+            "value" : "補丁資料夾"
           }
         }
       }
@@ -5226,7 +5244,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "好"
+            "value" : "OK"
           }
         }
       }
@@ -5968,7 +5986,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "沒有足夠的鑰匙圈訪問組。"
+            "value" : "沒有足夠的的鑰匙串存取群組。"
           }
         }
       }
@@ -7817,7 +7835,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "獲取協助"
+            "value" : "尋求幫助"
           }
         }
       }
@@ -8217,7 +8235,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "無JIT模式測試通過"
+            "value" : "免JIT模式測試通過"
           }
         }
       }
@@ -9949,7 +9967,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "無JIT"
+            "value" : "免JIT"
           }
         }
       }
@@ -10002,7 +10020,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "無JIT模式能讓您在無JIT的情況下使用LiveContainer。啟動時需補訂AltStore或SideStore。"
+            "value" : "免JIT模式能讓您在沒有JIT的情況下使用LiveContainer。啟動時需補訂AltStore或SideStore。"
           }
         }
       }
@@ -10055,7 +10073,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "無JIT模式診斷"
+            "value" : "免JIT模式診斷"
           }
         }
       }
@@ -10504,7 +10522,7 @@
                   "other" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%arg 補訂資料夾"
+                      "value" : "%arg 補丁資料夾"
                     }
                   }
                 }
@@ -10557,6 +10575,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "将未使用的文件夹移出AppGroup"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "將未使用的資料夾移出AppGroup"
           }
         }
       }
@@ -10745,6 +10769,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "通过安装多个LiveContainer，并将App变为共享App，你可以在这些LiveContainer间共享安装的App及其数据，并同时运行多个App。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "透過安裝多個LiveContainer，並將App變成共享App，你可以在這些LiveContainer間共享安裝的App和其數據，並同時執行多個App。"
           }
         }
       }
@@ -11050,7 +11080,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "補訂%@"
+            "value" : "補丁%@"
           }
         }
       }
@@ -11103,7 +11133,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "再次補訂%@"
+            "value" : "再次補丁%@"
           }
         }
       }
@@ -11262,7 +11292,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "要使用%@的無JIT模式，請補訂%@。%@的功能將不受影響。請確認%@可以刷新。"
+            "value" : "要使用%@的無JIT模式，請補丁%@。%@的功能將不受影響。請確認%@可以刷新。"
           }
         }
       }
@@ -11351,6 +11381,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "刷新来自%@的证书"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "從%@重新整理證書"
           }
         }
       }
@@ -11509,7 +11545,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "刷新無JIT模式證書"
+            "value" : "刷新免JIT模式證書"
           }
         }
       }
@@ -11662,7 +11698,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LiveContainer 默認詢問如何打開連結。開啟後會自動從前台開啟連結。"
+            "value" : "LiveContainer 默認詢問如何打開連結。開啟後會自動在當前app開啟連結。"
           }
         }
       }
@@ -12433,7 +12469,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "補訂"
+            "value" : "補丁"
           }
         }
       }
@@ -12486,7 +12522,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "這是特定於應用程式的資料夾。 設定補訂資料夾，來賓應用程式將遞迴地拾取它們。"
+            "value" : "這是特定於應用程式的資料夾。 設定補丁資料夾，來賓應用程式將遞迴地拾取它們。"
           }
         }
       }
@@ -12539,7 +12575,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "這是全域性資料夾。 這裡的所有補訂都將注入到所有來賓應用程式中。 如果您使用特定於應用程式的補訂，請建立一個新資料夾。"
+            "value" : "這是全域性資料夾。 這裡的所有補丁都將注入到所有來賓應用程式中。 如果您使用特定於應用程式的補訂，請建立一個新資料夾。"
           }
         }
       }
@@ -12592,7 +12628,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "載入補訂"
+            "value" : "載入補丁"
           }
         }
       }
@@ -12645,7 +12681,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "新文件夾"
+            "value" : "新增文件夾"
           }
         }
       }

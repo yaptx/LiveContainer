@@ -27,7 +27,6 @@ struct LCAppBanner : View {
     
     @StateObject private var appRemovalAlert = YesNoHelper()
     @StateObject private var appFolderRemovalAlert = YesNoHelper()
-    @StateObject private var jitAlert = YesNoHelper()
     
     @State private var saveIconExporterShow = false
     @State private var saveIconFile : ImageDocument?
@@ -146,9 +145,6 @@ struct LCAppBanner : View {
         .padding()
         .frame(height: 88)
         .background(RoundedRectangle(cornerSize: CGSize(width:22, height: 22)).fill(dynamicColors ? mainColor.opacity(0.5) : Color("AppBannerBG")))
-        .onAppear() {
-            handleOnAppear()
-        }
         
         .fileExporter(
             isPresented: $saveIconExporterShow,
@@ -247,11 +243,6 @@ struct LCAppBanner : View {
         } message: {
             Text("lc.appBanner.deleteDataMsg \(appInfo.displayName()!)")
         }
-        .sheet(isPresented: $jitAlert.show, onDismiss: {
-            jitAlert.close(result: false)
-        }) {
-            JITEnablingModal
-        }
         
         .alert("lc.common.error".loc, isPresented: $errorShow){
             Button("lc.common.ok".loc, action: {
@@ -263,55 +254,6 @@ struct LCAppBanner : View {
             Text(errorInfo)
         }
         
-        .onChange(of: jitAlert.show) { newValue in
-            sharedModel.isJITModalOpen = newValue
-        }
-    }
-    
-    var JITEnablingModal : some View {
-        NavigationView {
-            ScrollViewReader { proxy in
-                ScrollView {
-                    Text("lc.appBanner.waitForJitMsg".loc)
-                        .padding(.vertical)
-                        .id(0)
-                    
-                    HStack {
-                        Text(model.jitLog)
-                            .font(.system(size: 12).monospaced())
-                            .fixedSize(horizontal: false, vertical: false)
-                            .textSelection(.enabled)
-                        Spacer()
-                    }
-                    
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.horizontal)
-                .onAppear {
-                    proxy.scrollTo(0)
-                }
-            }
-            .navigationTitle("lc.appBanner.waitForJitTitle".loc)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button("lc.common.cancel".loc, role: .cancel) {
-                        jitAlert.close(result: false)
-                    }
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        jitAlert.close(result: true)
-                    } label: {
-                        Text("lc.appBanner.jitLaunchNow".loc)
-                    }
-                }
-            }
-        }
-    }
-    
-    func handleOnAppear() {
-        model.jitAlert = jitAlert
     }
     
     func runApp() async {

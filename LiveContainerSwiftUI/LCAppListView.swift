@@ -41,6 +41,9 @@ struct LCAppListView : View, LCAppBannerDelegate, LCAppModelDelegate {
     @ObservedObject var downloadHelper = DownloadHelper()
     @StateObject private var installUrlInput = InputHelper()
     
+    @State private var jitLog = ""
+    @StateObject private var jitAlert = YesNoHelper()
+    
     @State var safariViewOpened = false
     @State var safariViewURL = URL(string: "https://google.com")!
     
@@ -257,6 +260,14 @@ struct LCAppListView : View, LCAppBannerDelegate, LCAppModelDelegate {
             }
         )
         .downloadAlert(helper: downloadHelper)
+        .sheet(isPresented: $jitAlert.show, onDismiss: {
+            jitAlert.close(result: false)
+        }) {
+            JITEnablingModal
+        }
+        .onChange(of: jitAlert.show) { newValue in
+            sharedModel.isJITModalOpen = newValue
+        }
         .fullScreenCover(isPresented: $webViewOpened) {
             LCWebView(url: $webViewURL, isPresent: $webViewOpened)
         }
@@ -267,6 +278,48 @@ struct LCAppListView : View, LCAppBannerDelegate, LCAppModelDelegate {
             LCHelpView(isPresent: $helpPresent)
         }
 
+    }
+    
+    var JITEnablingModal : some View {
+        NavigationView {
+            ScrollViewReader { proxy in
+                ScrollView {
+                    Text("lc.appBanner.waitForJitMsg".loc)
+                        .padding(.vertical)
+                        .id(0)
+                    
+                    HStack {
+                        Text(jitLog)
+                            .font(.system(size: 12).monospaced())
+                            .fixedSize(horizontal: false, vertical: false)
+                            .textSelection(.enabled)
+                        Spacer()
+                    }
+                    
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.horizontal)
+                .onAppear {
+                    proxy.scrollTo(0)
+                }
+            }
+            .navigationTitle("lc.appBanner.waitForJitTitle".loc)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button("lc.common.cancel".loc, role: .cancel) {
+                        jitAlert.close(result: false)
+                    }
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        jitAlert.close(result: true)
+                    } label: {
+                        Text("lc.appBanner.jitLaunchNow".loc)
+                    }
+                }
+            }
+        }
     }
     
     func onOpenWebViewTapped() async {
@@ -739,6 +792,30 @@ struct LCAppListView : View, LCAppBannerDelegate, LCAppModelDelegate {
             errorShow = true
             return
         }
+    }
+    
+    func jitLaunch() async {
+        await MainActor.run {
+            jitLog = ""
+        }
+        let enableJITTask = Task {
+            let _ = await LCUtils.askForJIT { newMsg in
+                Task { await MainActor.run {
+                    self.jitLog += "\(newMsg)\n"
+                }}
+            }
+            guard
+                  let _ = JITEnablerType(rawValue: LCUtils.appGroupUserDefault.integer(forKey: "LCJITEnablerType")) else {
+                return
+            }
+        }
+        guard let result = await jitAlert.open(), result else {
+            UserDefaults.standard.removeObject(forKey: "selected")
+            enableJITTask.cancel()
+            return
+        }
+        LCUtils.launchToGuestApp()
+
     }
     
     func installMdm(data: Data) {

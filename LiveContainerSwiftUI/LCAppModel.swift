@@ -3,6 +3,7 @@ import Foundation
 protocol LCAppModelDelegate {
     func closeNavigationView()
     func changeAppVisibility(app : LCAppModel)
+    func jitLaunch() async
 }
 
 class LCAppModel: ObservableObject, Hashable {
@@ -191,7 +192,7 @@ class LCAppModel: ObservableObject, Hashable {
         }
         
         if appInfo.isJITNeeded || appInfo.is32bit {
-            await self.jitLaunch()
+            await delegate?.jitLaunch()
         } else {
             LCUtils.launchToGuestApp()
         }
@@ -270,32 +271,6 @@ class LCAppModel: ObservableObject, Hashable {
                 self.isSigningInProgress = true
             }}
         }
-        
-        
-    }
-    
-    func jitLaunch() async {
-        await MainActor.run {
-            jitLog = ""
-        }
-        let enableJITTask = Task {
-            let _ = await LCUtils.askForJIT { newMsg in
-                Task { await MainActor.run {
-                    self.jitLog += "\(newMsg)\n"
-                }}
-            }
-            guard let groupUserDefaults = UserDefaults(suiteName: LCUtils.appGroupID()),
-                  let _ = JITEnablerType(rawValue: groupUserDefaults.integer(forKey: "LCJITEnablerType")) else {
-                return
-            }
-        }
-        guard let result = await jitAlert?.open(), result else {
-            UserDefaults.standard.removeObject(forKey: "selected")
-            enableJITTask.cancel()
-            return
-        }
-        LCUtils.launchToGuestApp()
-
     }
 
     func setLocked(newLockState: Bool) async {
