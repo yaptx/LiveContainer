@@ -128,10 +128,16 @@ jobs:
       cancel-in-progress: true
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
       - name: Download a Build Artifact
         uses: actions/download-artifact@v4
         with:
           name: ${{ needs.package.outputs.artifact }}
+      - name: Update AltStore source
+        id: update_source
+        run: |
+          NIGHTLY_LINK="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/attempts/${{ github.run_attempt }}" python update_json.py
       - name: Nightly Release
         uses: andelf/nightly-release@v1
         env:
@@ -141,3 +147,4 @@ jobs:
             This is a nightly release [created automatically with GitHub Actions workflow](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/attempts/${{ github.run_attempt }}).
           files: |
             ${{ needs.package.outputs.artifact }}
+            apps_nightly.json
