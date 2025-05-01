@@ -23,10 +23,10 @@ static char patch[] = {0x88,0x00,0x00,0x58,0x00,0x01,0x1f,0xd6,0x1f,0x20,0x03,0x
 static char mmapSig[] = {0xB0, 0x18, 0x80, 0xD2, 0x01, 0x10, 0x00, 0xD4};
 static char fcntlSig[] = {0x90, 0x0B, 0x80, 0xD2, 0x01, 0x10, 0x00, 0xD4};
 static char syscallSig[] = {0x01, 0x10, 0x00, 0xD4};
-static int (*dopamineFcntlHookAddr)(int fildes, int cmd, void *arg1, void *arg2, void *arg3, void *arg4, void *arg5, void *arg6, void *arg7, void *arg8) = 0;
+static int (*dopamineFcntlHookAddr)(int fildes, int cmd, void *param) = 0;
 
 extern void* __mmap(void *addr, size_t len, int prot, int flags, int fd, off_t offset);
-extern int __fcntl(int fildes, int cmd, void *arg1, void *arg2, void *arg3, void *arg4, void *arg5, void *arg6, void *arg7, void *arg8);
+extern int __fcntl(int fildes, int cmd, void* param);
 
 // Since we're patching libsystem_kernel, we must avoid calling to its functions
 static void builtin_memcpy(char *target, char *source, size_t size) {
@@ -119,9 +119,9 @@ static void* hooked_mmap(void *addr, size_t len, int prot, int flags, int fd, of
     return map;
 }
 
-static int hooked___fcntl(int fildes, int cmd, void *arg1, void *arg2, void *arg3, void *arg4, void *arg5, void *arg6, void *arg7, void *arg8) {
+static int hooked___fcntl(int fildes, int cmd, void *param) {
     if (cmd == F_ADDFILESIGS_RETURN) {
-        fsignatures_t *fsig = (fsignatures_t *)arg1;
+        fsignatures_t *fsig = (fsignatures_t*)param;
         // called to check that cert covers file.. so we'll make it cover everything ;)
         fsig->fs_file_start = 0xFFFFFFFF;
         return 0;
@@ -135,9 +135,9 @@ static int hooked___fcntl(int fildes, int cmd, void *arg1, void *arg2, void *arg
     
     // If for another command or file, we pass through
     if(dopamineFcntlHookAddr) {
-        return dopamineFcntlHookAddr(fildes, cmd, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+        return dopamineFcntlHookAddr(fildes, cmd, param);
     } else {
-        return __fcntl(fildes, cmd, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+        return __fcntl(fildes, cmd, param);
     }
 }
 
