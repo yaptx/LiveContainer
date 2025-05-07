@@ -425,6 +425,17 @@
         }
       }
     },
+    "lc.appBanner.multitask" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Multitask"
+          }
+        }
+      }
+    },
     "lc.appBanner.noDataFolder" : {
       "extractionState" : "manual",
       "localizations" : {
