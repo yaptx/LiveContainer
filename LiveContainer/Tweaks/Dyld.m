@@ -222,17 +222,22 @@ bool performHookDyldApi(const char* functionName, uint32_t adrpOffset, void** or
     
     void* vtableFunctionPtr = 0;
     uint32_t* movInstPtr = baseAddr + adrpOffset + 6;
-    if ((*movInstPtr & 0x7F800000) != 0x52800000) {
-        // check if it's arm64
+
+    if((*movInstPtr & 0x7F800000) == 0x52800000) {
+        // arm64e, mov imm + add + ldr
+        uint32_t imm16 = (*movInstPtr & 0x1FFFE0) >> 5;
+        vtableFunctionPtr = vtablePtr + imm16;
+    } else if ((*movInstPtr & 0xFFE00C00) == 0xF8400C00) {
+        // arm64e, ldr immediate Pre-index 64bit
+        uint32_t imm9 = (*movInstPtr & 0x1FF000) >> 12;
+        vtableFunctionPtr = vtablePtr + imm9;
+    } else {
+        // arm64
         uint32_t* ldrInstPtr2 = baseAddr + adrpOffset + 3;
         assert((*ldrInstPtr2 & 0xBFC00000) == 0xB9400000);
         uint32_t size2 = (*ldrInstPtr2 & 0xC0000000) >> 30;
         uint32_t imm12_2 = (*ldrInstPtr2 & 0x3FFC00) >> 10;
         vtableFunctionPtr = vtablePtr + (imm12_2 << size2);
-    } else {
-        // arm64e
-        uint32_t imm16 = (*movInstPtr & 0x1FFFE0) >> 5;
-        vtableFunctionPtr = vtablePtr + imm16;
     }
 
     

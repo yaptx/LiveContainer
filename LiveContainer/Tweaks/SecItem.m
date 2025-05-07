@@ -9,6 +9,7 @@
 #import "utils.h"
 #import <CommonCrypto/CommonDigest.h>
 #import "../../fishhook/fishhook.h"
+#import "LCSharedUtils.h"
 
 extern void* (*msHookFunction)(void *symbol, void *hook, void **old);
 OSStatus (*orig_SecItemAdd)(CFDictionaryRef attributes, CFTypeRef *result);
@@ -78,12 +79,7 @@ void SecItemGuestHooksInit()  {
     NSString* containerInfoPath = [[NSString stringWithUTF8String:getenv("HOME")] stringByAppendingPathComponent:@"LCContainerInfo.plist"];
     NSDictionary* infoDict = [NSDictionary dictionaryWithContentsOfFile:containerInfoPath];
     int keychainGroupId = [infoDict[@"keychainGroupId"] intValue];
-    NSString* groupId;
-    if([NSUserDefaults.lcUserDefaults stringForKey:@"LCCertificateTeamId"]) {
-        groupId = [NSUserDefaults.lcUserDefaults stringForKey:@"LCCertificateTeamId"];
-    } else {
-        groupId = [[NSUserDefaults.lcMainBundle.bundleIdentifier componentsSeparatedByString:@"."] lastObject];
-    }
+    NSString* groupId = [LCSharedUtils teamIdentifier];
     if(keychainGroupId == 0) {
         accessGroup = [NSString stringWithFormat:@"%@.com.kdt.livecontainer.shared", groupId];
     } else {

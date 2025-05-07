@@ -158,23 +158,11 @@ struct LCTabView: View {
             }
             return
         }
-                
-        guard let entitlementXML = getLCEntitlementXML() else {
-            print("Failed to load entitlement.")
-            return
-        }
         
-        var format = PropertyListSerialization.PropertyListFormat.xml
-        guard let entitlementDict = try? PropertyListSerialization.propertyList(from: entitlementXML.data(using: .utf8) ?? Data(), format: &format) as? [String : AnyObject] else {
-            print("Failed to parse entitlement.")
-            return
-        }
-        
-        guard let currentTeamId = entitlementDict["com.apple.developer.team-identifier"] as? String else {
+        guard let currentTeamId = LCUtils.teamIdentifier() else {
             print("Failed to determine team id.")
             return
         }
-        
         
         if DataManager.shared.model.multiLCStatus == 2 {
             guard let primaryLCTeamId = Bundle.main.infoDictionary?["PrimaryLiveContainerTeamId"] as? String else {

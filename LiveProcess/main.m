@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "../LiveContainer/utils.h"
 #import "../fishhook/fishhook.h"
+#import <mach-o/dyld.h>
+#import "../LiveContainer/Tweaks/Tweaks.h"
 
 @interface LiveProcessHandler : NSObject<NSExtensionRequestHandling>
 @end
@@ -49,27 +51,23 @@ int UIApplicationMain(int argc, char * argv[], NSString * principalClassName, NS
 }
 
 // NSExtensionMain will load UIKit and call UIApplicationMain, so we need to redirect it to our fake one
-static void* (*orig_dlopen)(const char* path, int mode);
-static void* hook_dlopen(const char* path, int mode) {
+static void* (*orig_dlopen)(void* dyldApiInstancePtr, const char* path, int mode);
+static void* hook_dlopen(void* dyldApiInstancePtr, const char* path, int mode) {
     const char *UIKitFrameworkPath = "/System/Library/Frameworks/UIKit.framework/UIKit";
     if(!strncmp(path, UIKitFrameworkPath, strlen(UIKitFrameworkPath))) {
         // switch back to original dlopen
-        rebind_symbols((struct rebinding[1]){
-            {"dlopen", (void *)orig_dlopen, NULL}
-        }, 1);
+        performHookDyldApi("dlopen", 2, (void**)&orig_dlopen, orig_dlopen);
         // FIXME: may be incompatible with jailbreak tweaks?
         return RTLD_MAIN_ONLY;
     } else {
-        return orig_dlopen(path, mode);
+        __attribute__((musttail)) return orig_dlopen(dyldApiInstancePtr, path, mode);
     }
 }
 
 // Extension entry point
 int NSExtensionMain(int argc, char * argv[]) {
     // hook dlopen UIKit
-    rebind_symbols((struct rebinding[1]){
-        {"dlopen", (void *)hook_dlopen, (void **)&orig_dlopen}
-    }, 1);
+    performHookDyldApi("dlopen", 2, (void**)&orig_dlopen, hook_dlopen);
     // call the real one
     int (*orig_NSExtensionMain)(int argc, char * argv[]) = dlsym(RTLD_NEXT, "NSExtensionMain");
     return orig_NSExtensionMain(argc, argv);
