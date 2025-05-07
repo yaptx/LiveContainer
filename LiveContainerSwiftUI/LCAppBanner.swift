@@ -106,7 +106,7 @@ struct LCAppBanner : View {
             }
             Spacer()
             Button {
-                Task{ await runApp() }
+                Task{ await runApp(multitask: false) }
             } label: {
                 if !model.isSigningInProgress {
                     Text("lc.appBanner.run".loc).bold().foregroundColor(.white)
@@ -178,6 +178,12 @@ struct LCAppBanner : View {
                             Label("lc.appBanner.openDataFolder".loc, systemImage: "folder")
                         }
                     }
+                }
+                
+                Button {
+                    Task{ await runApp(multitask: true) }
+                } label: {
+                    Label("lc.appBanner.multitask".loc, systemImage: "macwindow.badge.plus")
                 }
                 
                 Menu {
@@ -256,7 +262,7 @@ struct LCAppBanner : View {
         
     }
     
-    func runApp() async {
+    func runApp(multitask: Bool) async {
         if appInfo.isLocked && !sharedModel.isHiddenAppUnlocked {
             do {
                 if !(try await LCUtils.authenticateUser()) {
@@ -270,7 +276,7 @@ struct LCAppBanner : View {
         }
 
         do {
-            try await model.runApp()
+            try await model.runApp(multitask: multitask)
         } catch {
             errorInfo = error.localizedDescription
             errorShow = true

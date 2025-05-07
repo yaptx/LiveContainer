@@ -35,6 +35,7 @@ void refreshFile(NSString* execPath);
 
 + (BOOL)launchToGuestApp;
 + (BOOL)launchToGuestAppWithURL:(NSURL *)url;
++ (void)launchMultitaskGuestApp:(NSString *)displayName completionHandler:(void (^)(NSError *error))completionHandler;
 
 + (NSProgress *)signAppBundleWithZSign:(NSURL *)path completionHandler:(void (^)(BOOL success, NSError *error))completionHandler;
 + (NSString*)getCertTeamIdWithKeyData:(NSData*)keyData password:(NSString*)password;

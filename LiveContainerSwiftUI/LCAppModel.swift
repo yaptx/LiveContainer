@@ -139,7 +139,7 @@ class LCAppModel: ObservableObject, Hashable {
         hasher.combine(ObjectIdentifier(self))
     }
     
-    func runApp(containerFolderName : String? = nil) async throws{
+    func runApp(multitask: Bool = false, containerFolderName : String? = nil) async throws{
         if isAppRunning {
             return
         }
@@ -165,7 +165,7 @@ class LCAppModel: ObservableObject, Hashable {
             }
         }
         
-        if let fn = uiSelectedContainer?.folderName, let runningLC = LCUtils.getContainerUsingLCScheme(containerName: fn) {
+        if let fn = uiSelectedContainer?.folderName, let runningLC = LCUtils.getContainerUsingLCScheme(containerName: fn), !multitask {
             let openURL = URL(string: "\(runningLC)://livecontainer-launch?bundle-name=\(self.appInfo.relativeBundlePath!)&container-folder-name=\(fn)")!
             if await UIApplication.shared.canOpenURL(openURL) {
                 await UIApplication.shared.open(openURL)
@@ -193,6 +193,8 @@ class LCAppModel: ObservableObject, Hashable {
         
         if appInfo.isJITNeeded || appInfo.is32bit {
             await delegate?.jitLaunch()
+        } else if multitask {
+            try await LCUtils.launchMultitaskGuestApp(appInfo.displayName())
         } else {
             LCUtils.launchToGuestApp()
         }

@@ -1,4 +1,5 @@
 #import "LCSharedUtils.h"
+#import "FoundationPrivate.h"
 #import "UIKitPrivate.h"
 
 extern NSUserDefaults *lcUserDefaults;
@@ -11,7 +12,9 @@ extern NSBundle *lcMainBundle;
     static NSString* ans = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        ans = [[lcMainBundle.bundleIdentifier componentsSeparatedByString:@"."] lastObject];
+        ans = SecTaskCopyTeamIdentifier(SecTaskCreateFromSelf(NULL), nil);
+        if(!ans)
+            ans = [[lcMainBundle.bundleIdentifier componentsSeparatedByString:@"."] lastObject];
     });
     return ans;
 }

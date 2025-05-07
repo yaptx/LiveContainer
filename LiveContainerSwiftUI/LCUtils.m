@@ -4,6 +4,7 @@
 @import UniformTypeIdentifiers;
 
 #import "LCUtils.h"
+#import "../MultitaskSupport/DecoratedAppSceneView.h"
 #import "../ZSign/zsigner.h"
 
 Class LCSharedUtilsClass = nil;
@@ -63,6 +64,51 @@ Class LCSharedUtilsClass = nil;
 
 + (BOOL)launchToGuestAppWithURL:(NSURL *)url {
     return [LCSharedUtilsClass launchToGuestAppWithURL:url];
+}
+
+#pragma mark Multitasking (WIP, PoC only)
++ (void)launchMultitaskGuestApp:(NSString *)displayName completionHandler:(void (^)(NSError *error))completionHandler {
+    NSBundle *liveProcessBundle = [NSBundle bundleWithPath:[NSBundle.mainBundle.builtInPlugInsPath stringByAppendingPathComponent:@"LiveProcess.appex"]];
+    if(!liveProcessBundle) {
+        NSError *error = [NSError errorWithDomain:displayName code:2 userInfo:@{NSLocalizedDescriptionKey: @"LiveProcess extension not found. Please reinstall LiveContainer and select Keep Extensions"}];
+        completionHandler(error);
+        return;
+    }
+    
+    NSError *error;
+    NSExtension *extension = [NSExtension extensionWithIdentifier:liveProcessBundle.bundleIdentifier error:&error];
+    if(error) {
+        completionHandler(error);
+        return;
+    }
+    
+    NSUserDefaults *lcUserDefaults = NSUserDefaults.standardUserDefaults;
+    NSExtensionItem *item = [NSExtensionItem new];
+    item.userInfo = @{
+        @"selected": [lcUserDefaults stringForKey:@"selected"],
+        @"selectedContainer": [lcUserDefaults stringForKey:@"selectedContainer"]
+    };
+    [lcUserDefaults removeObjectForKey:@"selected"];
+    [lcUserDefaults removeObjectForKey:@"selectedContainer"];
+    
+    [extension beginExtensionRequestWithInputItems:@[item] completion:^(NSUUID *identifier) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if(identifier) {
+                // TODO: show windows elsewhere
+                UIView *view = ((UIWindowScene *)UIApplication.sharedApplication.connectedScenes.anyObject).keyWindow.rootViewController.view;
+                
+                DecoratedAppSceneView *launcherView = [[DecoratedAppSceneView alloc] initWithExtension:extension identifier:identifier];
+                launcherView.frame = CGRectMake(0, 0, 400, 400);
+                launcherView.center = view.center;
+                launcherView.navigationItem.title = displayName;
+                [view addSubview:launcherView];
+                completionHandler(nil);
+            } else {
+                NSError *error = [NSError errorWithDomain:displayName code:2 userInfo:@{NSLocalizedDescriptionKey: @"Failed to start app. Child process has unexpectedly crashed"}];
+                completionHandler(error);
+            }
+        });
+    }];
 }
 
 #pragma mark Code signing

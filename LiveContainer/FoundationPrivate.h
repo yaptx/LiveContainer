@@ -8,3 +8,12 @@
 + (void)setStandardUserDefaults:(id)defaults;
 - (NSString*)_identifier;
 @end
+
+@interface NSExtension : NSObject
++ (instancetype)extensionWithIdentifier:(NSString *)identifier error:(NSError **)error;
+- (void)beginExtensionRequestWithInputItems:(NSArray *)items completion:(void(^)(NSUUID *))callback;
+- (int)pidForRequestIdentifier:(NSUUID *)identifier;
+@end
+
+void* SecTaskCreateFromSelf(CFAllocatorRef allocator);
+NSString *SecTaskCopyTeamIdentifier(void *task, NSError **error);

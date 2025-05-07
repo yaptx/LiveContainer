@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CADisableMinimumFrameDurationOnPhone</key>
+    <true/>
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleURLName</key>
+            <string>com.kdt.livecontainer.urlscheme</string>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>livecontainer</string>
+            </array>
+        </dict>
+    </array>
+    <key>GCSupportedGameControllers</key>
+    <array>
+        <dict>
+            <key>ProfileName</key>
+            <string>DirectionalGamepad</string>
+        </dict>
+        <dict>
+            <key>ProfileName</key>
+            <string>ExtendedGamepad</string>
+        </dict>
+        <dict>
+            <key>ProfileName</key>
+            <string>MicroGamepad</string>
+        </dict>
+    </array>
+    <key>GCSupportsControllerUserInteraction</key>
+    <true/>
+    <key>GCSupportsGameMode</key>
+    <true/>
+    <key>NSExtension</key>
+    <dict>
+        <key>NSExtensionAttributes</key>
+        <dict>
+            <key>NSExtensionActivationRule</key>
+            <string>FALSEPREDICATE</string>
+        </dict>
+        <key>NSExtensionPointIdentifier</key>
+        <string>com.apple.app.ui-extension.multiple-instances</string>
+        <key>NSExtensionPrincipalClass</key>
+        <string>LiveProcessHandler</string>
+    </dict>
+    
+    <key>NFCReaderUsageDescription</key>
+    <string>The guest app is requesting for this permission.</string>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+        <key>NSAllowsLocalNetworking</key>
+        <true/>
+    </dict>
+    <key>NSAppleMusicUsageDescription</key>
+    <string>The guest app is requesting for this permission.</string>
+    <key>NSBluetoothAlwaysUsageDescription</key>
+    <string>The guest app is requesting for this permission.</string>
+    <key>NSBluetoothPeripheralUsageDescription</key>
+    <string>The guest app is requesting for this permission.</string>
+    <key>NSBonjourServices</key>
+    <array>
+        <string>_googlecast._tcp</string>
+    </array>
+    <key>NSCalendarsFullAccessUsageDescription</key>
+    <string>The guest app is requesting for this permission.</string>
+    <key>NSCalendarsWriteOnlyAccessUsageDescription</key>
+    <string>The guest app is requesting for this permission.</string>
+    <key>NSCameraUsageDescription</key>
+    <string>The guest app is requesting for this permission.</string>
+    <key>NSContactsUsageDescription</key>
+    <string>The guest app is requesting for this permission.</string>
+    <key>NSFaceIDUsageDescription</key>
+    <string>The guest app is requesting for this permission.</string>
+    <key>NSFallDetectionUsageDescription</key>
+    <string>The guest app is requesting for this permission.</string>
+    <key>NSGKFriendListUsageDescription</key>
+    <string>The guest app is requesting for this permission.</string>
+    <key>NSHealthClinicalHealthRecordsShareUsageDescription</key>
+    <string>The guest app is requesting for this permission.</string>
+    <key>NSHealthRequiredReadAuthorizationTypeIdentifiers</key>
+    <string>The guest app is requesting for this permission.</string>
+    <key>NSHealthShareUsageDescription</key>
+    <string>The guest app is requesting for this permission.</string>
+    <key>NSHealthUpdateUsageDescription</key>
+    <string>The guest app is requesting for this permission.</string>
+    <key>NSHomeKitUsageDescription</key>
+    <string>The guest app is requesting for this permission.</string>
+    <key>NSIdentityUsageDescription</key>
+    <string>The guest app is requesting for this permission.</string>
+    <key>NSLocalNetworkUsageDescription</key>
+    <string>The guest app is requesting for this permission.</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>The guest app is requesting for this permission.</string>
+    <key>NSLocationDefaultAccuracyReduced</key>
+    <string>The guest app is requesting for this permission.</string>
+    <key>NSLocationTemporaryUsageDescriptionDictionary</key>
+    <string>The guest app is requesting for this permission.</string>
+    <key>NSLocationUsageDescription</key>
+    <string>The guest app is requesting for this permission.</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>The guest app is requesting for this permission.</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>The guest app is requesting for this permission.</string>
+    <key>NSMotionUsageDescription</key>
+    <string>The guest app is requesting for this permission.</string>
+    <key>NSNearbyInteractionAllowOnceUsageDescription</key>
+    <string>The guest app is requesting for this permission.</string>
+    <key>NSNearbyInteractionUsageDescription</key>
+    <string>The guest app is requesting for this permission.</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>The guest app is requesting for this permission.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>The guest app is requesting for this permission.</string>
+    <key>NSRemindersFullAccessUsageDescription</key>
+    <string>The guest app is requesting for this permission.</string>
+    <key>NSSensorKitUsageDescription</key>
+    <string>The guest app is requesting for this permission.</string>
+    <key>NSSiriUsageDescription</key>
+    <string>The guest app is requesting for this permission.</string>
+    <key>NSSpeechRecognitionUsageDescription</key>
+    <string>The guest app is requesting for this permission.</string>
+    <key>NSUserTrackingUsageDescription</key>
+    <string>The guest app is requesting for this permission.</string>
+    <key>SBAppUsesLocalNotifications</key>
+    <integer>1</integer>
+    <key>UIApplicationSceneManifest</key>
+    <dict>
+        <key>UIApplicationSupportsMultipleScenes</key>
+        <false/>
+    </dict>
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>audio</string>
+        <string>bluetooth-central</string>
+        <string>external-accessory</string>
+        <string>fetch</string>
+        <string>location</string>
+        <string>nearby-interaction</string>
+        <string>remote-notification</string>
+        <string>voip</string>
+    </array>
+    <key>UIMainStoryboardFile</key>
+    <string>Main</string>
+    <key>UIApplicationSceneManifest</key>
+    <dict>
+        <key>UIApplicationSupportsMultipleScenes</key>
+        <false/>
+    </dict>
+</dict>
+</plist>

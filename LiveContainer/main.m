@@ -259,6 +259,10 @@ static NSString* invokeAppMain(NSString *selectedApp, NSString *selectedContaine
         return @"App not found";
     }
     
+    // attach NSExtension info if we are running from LiveProcess
+    NSDictionary *extensionInfo = NSUserDefaults.lcMainBundle.infoDictionary[@"NSExtension"];
+    ((NSMutableDictionary *)appBundle.infoDictionary)[@"NSExtension"] = extensionInfo;
+    
     // find container in Info.plist
     NSString* dataUUID = selectedContainer;
     if(!dataUUID) {
@@ -513,7 +517,7 @@ static void exceptionHandler(NSException *exception) {
 int LiveContainerMain(int argc, char *argv[]) {
     // This strangely fixes some apps getting stuck on black screen
     NSLog(@"Ignore this: %@", dispatch_get_main_queue());
-
+    
     lcMainBundle = [NSBundle mainBundle];
     lcUserDefaults = NSUserDefaults.standardUserDefaults;
     
