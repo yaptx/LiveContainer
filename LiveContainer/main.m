@@ -259,10 +259,6 @@ static NSString* invokeAppMain(NSString *selectedApp, NSString *selectedContaine
         return @"App not found";
     }
     
-    // attach NSExtension info if we are running from LiveProcess
-    NSDictionary *extensionInfo = NSUserDefaults.lcMainBundle.infoDictionary[@"NSExtension"];
-    ((NSMutableDictionary *)appBundle.infoDictionary)[@"NSExtension"] = extensionInfo;
-    
     // find container in Info.plist
     NSString* dataUUID = selectedContainer;
     if(!dataUUID) {
