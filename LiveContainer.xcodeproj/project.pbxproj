@@ -1267,8 +1267,6 @@
 				OTHER_LDFLAGS = (
 					"-e",
 					_LiveContainerMain,
-					"-reexport_framework",
-					LiveContainerShared,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.kdt.livecontainer;
 				PRODUCT_NAME = LiveContainer;
@@ -1314,8 +1312,6 @@
 				OTHER_LDFLAGS = (
 					"-e",
 					_LiveContainerMain,
-					"-reexport_framework",
-					LiveContainerShared,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.kdt.livecontainer;
 				PRODUCT_NAME = LiveContainer;

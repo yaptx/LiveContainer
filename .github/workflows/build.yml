@@ -106,6 +106,7 @@ jobs:
         run: |
           find "$archive_path.xcarchive/Products/Applications/$scheme.app" -type d -path '*/Frameworks/*.framework' -exec ldid -Sentitlements.xml \{\} \;
           ldid -Sentitlements.xml "$archive_path.xcarchive/Products/Applications/$scheme.app"
+          ldid -SLiveProcess/LiveProcess.entitlements "$archive_path.xcarchive/Products/Applications/$scheme.app/PlugIns/LiveProcess.appex/LiveProcess_*"
       - name: Create IPA
         run: |
           mv "$archive_path.xcarchive/Products/Applications" Payload

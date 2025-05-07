@@ -293,7 +293,12 @@ static NSString* invokeAppMain(NSString *selectedApp, NSString *selectedContaine
     NSString *tweakLoaderPath = [tweakFolder stringByAppendingPathComponent:@"TweakLoader.dylib"];
     if (![fm fileExistsAtPath:tweakLoaderPath]) {
         remove(tweakLoaderPath.UTF8String);
-        NSString *target = [NSBundle.mainBundle.privateFrameworksPath stringByAppendingPathComponent:@"TweakLoader.dylib"];
+        NSString *bundlePath = NSBundle.mainBundle.bundlePath;
+        if([bundlePath hasSuffix:@"PlugIns/LiveProcess.appex"]) {
+            // traverse back to LiveContainer.app
+            bundlePath = bundlePath.stringByDeletingLastPathComponent.stringByDeletingLastPathComponent;
+        }
+        NSString *target = [bundlePath stringByAppendingPathComponent:@"Frameworks/TweakLoader.dylib"];
         symlink(target.UTF8String, tweakLoaderPath.UTF8String);
     }
 
