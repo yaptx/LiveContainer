@@ -629,16 +629,25 @@ extension LCUtils {
         // Retrieve the app group path using the app group ID
         let infoPath = LCPath.lcGroupDocPath.appendingPathComponent("appLock.plist")
         // Read the plist file into a dictionary
-        guard let info = NSDictionary(contentsOf: infoPath) as? [String: String] else {
+        guard let info = NSDictionary(contentsOf: infoPath) as? [String: Any] else {
             return nil
         }
         // Iterate over the dictionary to find the matching bundle ID
         for (key, value) in info {
-            if value == bundleId {
-                if key == LCUtils.appUrlScheme() {
-                    return nil
+            if key == LCUtils.appUrlScheme() {
+                continue
+            }
+            
+            if let value2 = value as? String {
+                if value2 == bundleId {
+                    return key
                 }
-                return key
+            } else if let value2 = value as? [String] {
+                for bundle in value2 {
+                    if bundle == bundleId {
+                        return key
+                    }
+                }
             }
         }
         
@@ -649,16 +658,25 @@ extension LCUtils {
         // Retrieve the app group path using the app group ID
         let infoPath = LCPath.lcGroupDocPath.appendingPathComponent("containerLock.plist")
         // Read the plist file into a dictionary
-        guard let info = NSDictionary(contentsOf: infoPath) as? [String: String] else {
+        guard let info = NSDictionary(contentsOf: infoPath) as? [String: Any] else {
             return nil
         }
         // Iterate over the dictionary to find the matching bundle ID
         for (key, value) in info {
-            if value == containerName {
-                if key == LCUtils.appUrlScheme() {
-                    return nil
+            if key == LCUtils.appUrlScheme() {
+                continue
+            }
+            
+            if let value2 = value as? String {
+                if value2 == containerName {
+                    return key
                 }
-                return key
+            } else if let value2 = value as? [String] {
+                for container in value2 {
+                    if containerName == containerName {
+                        return key
+                    }
+                }
             }
         }
         

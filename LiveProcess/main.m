@@ -40,7 +40,9 @@ int LiveProcessMain(int argc, char *argv[]) {
     NSUserDefaults *lcUserDefaults = NSUserDefaults.standardUserDefaults;
     [lcUserDefaults setObject:appInfo[@"selected"] forKey:@"selected"];
     [lcUserDefaults setObject:appInfo[@"selectedContainer"] forKey:@"selectedContainer"];
-    
+    if(appInfo[@"liveprocessRetrieveData"]){
+        [lcUserDefaults setObject:appInfo[@"liveprocessRetrieveData"] forKey:@"liveprocessRetrieveData"];
+    }
     return LiveContainerMain(argc, argv);
 }
 

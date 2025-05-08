@@ -26,6 +26,7 @@ NSString *lcAppGroupPath;
 NSString* lcAppUrlScheme;
 NSBundle* lcMainBundle;
 NSDictionary* guestAppInfo;
+bool isLiveProcess = false;
 
 @implementation NSUserDefaults(LiveContainer)
 + (instancetype)lcUserDefaults {
@@ -45,6 +46,10 @@ NSDictionary* guestAppInfo;
 }
 + (NSDictionary *)guestAppInfo {
     return guestAppInfo;
+}
+
++ (bool)isLiveProcess {
+    return isLiveProcess;
 }
 @end
 
@@ -270,8 +275,8 @@ static NSString* invokeAppMain(NSString *selectedApp, NSString *selectedContaine
     }
     
     if(isSharedBundle) {
-        [LCSharedUtils setAppRunningByThisLC:selectedApp];
-        [LCSharedUtils setContainerUsingByThisLC:dataUUID];
+        [LCSharedUtils setAppRunningByThisLC:selectedApp remove:NO];
+        [LCSharedUtils setContainerUsingByThisLC:dataUUID remove:NO];
     }
     
     NSError *error;
@@ -529,32 +534,49 @@ int LiveContainerMain(int argc, char *argv[]) {
     lcSharedDefaults = [[NSUserDefaults alloc] initWithSuiteName: [LCSharedUtils appGroupID]];
     lcAppUrlScheme = NSBundle.mainBundle.infoDictionary[@"CFBundleURLTypes"][0][@"CFBundleURLSchemes"][0];
     lcAppGroupPath = [[NSFileManager.defaultManager containerURLForSecurityApplicationGroupIdentifier:[NSClassFromString(@"LCSharedUtils") appGroupID]] path];
+    isLiveProcess = [lcAppUrlScheme isEqualToString:@"liveprocess"];
     
-    NSString* lastLaunchDataUUID = [lcUserDefaults objectForKey:@"lastLaunchDataUUID"];
-    if(lastLaunchDataUUID) {
-        NSString* lastLaunchType = [lcUserDefaults objectForKey:@"lastLaunchType"];
-        NSString* preferencesTo;
-        NSURL *libraryPathUrl = [NSFileManager.defaultManager URLsForDirectory:NSLibraryDirectory inDomains:NSUserDomainMask].lastObject;
-        NSURL *docPathUrl = [NSFileManager.defaultManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask].lastObject;
-        if([lastLaunchType isEqualToString:@"Shared"]) {
-            preferencesTo = [libraryPathUrl.path stringByAppendingPathComponent:[NSString stringWithFormat:@"SharedDocuments/%@/Library/Preferences", lastLaunchDataUUID]];
-        } else {
-            preferencesTo = [docPathUrl.path stringByAppendingPathComponent:[NSString stringWithFormat:@"Data/Application/%@/Library/Preferences", lastLaunchDataUUID]];
+    if(!isLiveProcess) {
+        NSString* lastLaunchDataUUID = [lcUserDefaults objectForKey:@"lastLaunchDataUUID"];
+        if(lastLaunchDataUUID) {
+            NSString* lastLaunchType = [lcUserDefaults objectForKey:@"lastLaunchType"];
+            NSString* preferencesTo;
+            NSURL *libraryPathUrl = [NSFileManager.defaultManager URLsForDirectory:NSLibraryDirectory inDomains:NSUserDomainMask].lastObject;
+            NSURL *docPathUrl = [NSFileManager.defaultManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask].lastObject;
+            if([lastLaunchType isEqualToString:@"Shared"]) {
+                preferencesTo = [libraryPathUrl.path stringByAppendingPathComponent:[NSString stringWithFormat:@"SharedDocuments/%@/Library/Preferences", lastLaunchDataUUID]];
+            } else {
+                preferencesTo = [docPathUrl.path stringByAppendingPathComponent:[NSString stringWithFormat:@"Data/Application/%@/Library/Preferences", lastLaunchDataUUID]];
+            }
+            // recover preferences
+            [LCSharedUtils dumpPreferenceToPath:preferencesTo dataUUID:lastLaunchDataUUID];
+            [lcUserDefaults removeObjectForKey:@"lastLaunchDataUUID"];
+            [lcUserDefaults removeObjectForKey:@"lastLaunchType"];
         }
-        // recover preferences
-        [LCSharedUtils dumpPreferenceToPath:preferencesTo dataUUID:lastLaunchDataUUID];
-        [lcUserDefaults removeObjectForKey:@"lastLaunchDataUUID"];
-        [lcUserDefaults removeObjectForKey:@"lastLaunchType"];
+        
+        [LCSharedUtils moveSharedAppFolderBack];
     }
-
-    [LCSharedUtils moveSharedAppFolderBack];
-    
     NSString *selectedApp = [lcUserDefaults stringForKey:@"selected"];
     NSString *selectedContainer = [lcUserDefaults stringForKey:@"selectedContainer"];
     if([selectedApp isEqualToString:@"ui"]) {
         selectedApp = nil;
         [lcUserDefaults removeObjectForKey:@"selected"];
         [lcUserDefaults removeObjectForKey:@"selectedContainer"];
+    } else if (isLiveProcess && [lcUserDefaults boolForKey:@"liveprocessRetrieveData"]) {
+        [lcUserDefaults removeObjectForKey:@"selected"];
+        [lcUserDefaults removeObjectForKey:@"selectedContainer"];
+        NSString* preferencesTo;
+        NSURL *libraryPathUrl = [NSFileManager.defaultManager URLsForDirectory:NSLibraryDirectory inDomains:NSUserDomainMask].lastObject;
+        NSURL *docPathUrl = [NSFileManager.defaultManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask].lastObject;
+        preferencesTo = [libraryPathUrl.path stringByAppendingPathComponent:[NSString stringWithFormat:@"SharedDocuments/%@/Library/Preferences", selectedContainer]];
+
+        [LCSharedUtils dumpPreferenceToPath:preferencesTo dataUUID:selectedContainer];
+        [LCSharedUtils moveSharedAppFolderBackWithDataUUID:selectedContainer];
+        [LCSharedUtils setContainerUsingByThisLC:selectedContainer remove:YES];
+        [LCSharedUtils setAppRunningByThisLC:selectedApp remove:YES];
+        [lcUserDefaults removeObjectForKey:@"liveprocessRetrieveData"];
+        exit(0);
+        return 0;
     }
     
     if(selectedApp && !selectedContainer) {
@@ -633,8 +655,8 @@ int LiveContainerMain(int argc, char *argv[]) {
             return 1;
         }
     }
-    [LCSharedUtils setAppRunningByThisLC:nil];
-    [LCSharedUtils setContainerUsingByThisLC:nil];
+    [LCSharedUtils setAppRunningByThisLC:nil remove:YES];
+    [LCSharedUtils setContainerUsingByThisLC:nil remove:YES];
     // recover language before reaching UI
     NSArray* savedLaunguage = [lcUserDefaults objectForKey:@"LCLastLanguages"];
     if(savedLaunguage) {

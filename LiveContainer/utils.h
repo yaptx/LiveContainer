@@ -26,4 +26,5 @@ uint64_t aarch64_emulate_adrp_ldr(uint32_t instruction, uint32_t ldrInstruction,
 + (NSString *)lcAppUrlScheme;
 + (NSBundle *)lcMainBundle;
 + (NSDictionary *)guestAppInfo;
++ (bool)isLiveProcess;
 @end

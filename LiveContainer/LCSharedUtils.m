@@ -173,11 +173,25 @@ extern NSBundle *lcMainBundle;
     }
     
     for (NSString* key in info) {
-        if([bundleId isEqualToString:info[key]]) {
-            if([key isEqualToString:lcAppUrlScheme]) {
-                return nil;
+        if([info[key] isKindOfClass:NSString.class]) {
+            // incase user have app opened while update
+            if([bundleId isEqualToString:info[key]]) {
+                if([key isEqualToString:lcAppUrlScheme]) {
+                    return nil;
+                }
+                return key;
             }
-            return key;
+        } else if ([info[key] isKindOfClass:NSArray.class]) {
+            // in newer version with liveprocess support, it is possible that one lc can open more than 1 app, so we need to save it in an array
+            if(![key isEqualToString:lcAppUrlScheme]) {
+                continue;
+            }
+            for(NSString* runningBundleId in info[key]) {
+                if([bundleId isEqualToString:runningBundleId]) {
+
+                    return key;
+                }
+            }
         }
     }
     
@@ -192,11 +206,25 @@ extern NSBundle *lcMainBundle;
     }
     
     for (NSString* key in info) {
-        if([folderName isEqualToString:info[key]]) {
-            if([key isEqualToString:lcAppUrlScheme]) {
-                return nil;
+        if([info[key] isKindOfClass:NSString.class]) {
+            // incase user have app opened while update
+            if([folderName isEqualToString:info[key]]) {
+                if([key isEqualToString:lcAppUrlScheme]) {
+                    return nil;
+                }
+                return key;
             }
-            return key;
+        } else if ([info[key] isKindOfClass:NSArray.class]) {
+            // in newer version with liveprocess support, it is possible that one lc can open more than 1 app, so we need to save it in an array
+            if(![key isEqualToString:lcAppUrlScheme]) {
+                continue;
+            }
+            for(NSString* runningFolderName in info[key]) {
+                if([folderName isEqualToString:runningFolderName]) {
+
+                    return key;
+                }
+            }
         }
     }
     
@@ -204,33 +232,71 @@ extern NSBundle *lcMainBundle;
 }
 
 // if you pass null then remove this lc from appLock
-+ (void)setAppRunningByThisLC:(NSString*)bundleId {
++ (void)setAppRunningByThisLC:(NSString*)bundleId remove:(BOOL)remove {
     NSURL* infoPath = [self appLockPath];
     
     NSMutableDictionary *info = [NSMutableDictionary dictionaryWithContentsOfFile:infoPath.path];
     if (!info) {
         info = [NSMutableDictionary new];
     }
-    if(bundleId == nil) {
-        [info removeObjectForKey:lcAppUrlScheme];
+    if(remove) {
+        if([info[lcAppUrlScheme] isKindOfClass:NSString.class]) {
+            [info removeObjectForKey:lcAppUrlScheme];
+        } else if ([info[lcAppUrlScheme] isKindOfClass:NSArray.class]) {
+            if(bundleId){
+                [(NSMutableArray*)info[lcAppUrlScheme] removeObject:bundleId];
+            } else {
+                [(NSMutableArray*)info[lcAppUrlScheme] removeAllObjects];
+            }
+        }
     } else {
-        info[lcAppUrlScheme] = bundleId;
+        if([info[lcAppUrlScheme] isKindOfClass:NSString.class]) {
+            // upgrade
+            NSString* oldBundle = info[lcAppUrlScheme];
+            info[lcAppUrlScheme] = [NSMutableArray new];
+            [(NSMutableArray*)info[lcAppUrlScheme] addObject:bundleId];
+            [(NSMutableArray*)info[lcAppUrlScheme] addObject:oldBundle];
+        } else if ([info[lcAppUrlScheme] isKindOfClass:NSArray.class]) {
+            [(NSMutableArray*)info[lcAppUrlScheme] addObject:bundleId];
+        } else {
+            info[lcAppUrlScheme] = [NSMutableArray new];
+            [(NSMutableArray*)info[lcAppUrlScheme] addObject:bundleId];
+        }
     }
     [info writeToFile:infoPath.path atomically:YES];
 
 }
 
-+ (void)setContainerUsingByThisLC:(NSString*)folderName {
++ (void)setContainerUsingByThisLC:(NSString*)folderName remove:(BOOL)remove {
     NSURL* infoPath = [self containerLockPath];
     
     NSMutableDictionary *info = [NSMutableDictionary dictionaryWithContentsOfFile:infoPath.path];
     if (!info) {
         info = [NSMutableDictionary new];
     }
-    if(folderName == nil) {
-        [info removeObjectForKey:lcAppUrlScheme];
+    if(remove) {
+        if([info[lcAppUrlScheme] isKindOfClass:NSString.class]) {
+            [info removeObjectForKey:lcAppUrlScheme];
+        } else if ([info[lcAppUrlScheme] isKindOfClass:NSArray.class]) {
+            if(folderName){
+                [(NSMutableArray*)info[lcAppUrlScheme] removeObject:folderName];
+            } else {
+                [(NSMutableArray*)info[lcAppUrlScheme] removeAllObjects];
+            }
+        }
     } else {
-        info[lcAppUrlScheme] = folderName;
+        if([info[lcAppUrlScheme] isKindOfClass:NSString.class]) {
+            // upgrade
+            NSString* oldFolderName = info[lcAppUrlScheme];
+            info[lcAppUrlScheme] = [NSMutableArray new];
+            [(NSMutableArray*)info[lcAppUrlScheme] addObject:folderName];
+            [(NSMutableArray*)info[lcAppUrlScheme] addObject:oldFolderName];
+        } else if ([info[lcAppUrlScheme] isKindOfClass:NSArray.class]) {
+            [(NSMutableArray*)info[lcAppUrlScheme] addObject:folderName];
+        } else {
+            info[lcAppUrlScheme] = [NSMutableArray new];
+            [(NSMutableArray*)info[lcAppUrlScheme] addObject:folderName];
+        }
     }
     [info writeToFile:infoPath.path atomically:YES];
 
@@ -301,6 +367,42 @@ extern NSBundle *lcMainBundle;
         }
     }
     
+}
+
++ (void)moveSharedAppFolderBackWithDataUUID:(NSString*)dataUUID {
+    NSFileManager *fm = NSFileManager.defaultManager;
+    NSURL *libraryPathUrl = [fm URLsForDirectory:NSLibraryDirectory inDomains:NSUserDomainMask]
+        .lastObject;
+    NSURL *docPathUrl = [fm URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask]
+        .lastObject;
+    NSURL *appGroupFolder = [[LCSharedUtils appGroupPath] URLByAppendingPathComponent:@"LiveContainer"];
+    
+    NSError *error;
+    NSString *sharedAppDataFolderPath = [libraryPathUrl.path stringByAppendingPathComponent:@"SharedDocuments"];
+    if(![fm fileExistsAtPath:sharedAppDataFolderPath]){
+        [fm createDirectoryAtPath:sharedAppDataFolderPath withIntermediateDirectories:YES attributes:@{} error:&error];
+    }
+    // something went wrong with app group
+    if(!appGroupFolder) {
+        [lcUserDefaults setObject:@"LiveContainer was unable to move the data of shared app back because LiveContainer cannot access app group. Please check JITLess diagnose page in LiveContainer settings for more information." forKey:@"error"];
+        return;
+    }
+    
+    NSString* destPath = [appGroupFolder.path stringByAppendingPathComponent:[NSString stringWithFormat:@"Data/Application/%@", dataUUID]];
+    if([fm fileExistsAtPath:destPath]) {
+        [fm
+         moveItemAtPath:[sharedAppDataFolderPath stringByAppendingPathComponent:dataUUID]
+         toPath:[docPathUrl.path stringByAppendingPathComponent:[NSString stringWithFormat:@"FOLDER_EXISTS_AT_APP_GROUP_%@", dataUUID]]
+         error:&error
+        ];
+        
+    } else {
+        [fm
+         moveItemAtPath:[sharedAppDataFolderPath stringByAppendingPathComponent:dataUUID]
+         toPath:destPath
+         error:&error
+        ];
+    }
 }
 
 + (NSBundle*)findBundleWithBundleId:(NSString*)bundleId {
