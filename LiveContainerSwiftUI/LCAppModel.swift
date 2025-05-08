@@ -165,6 +165,10 @@ class LCAppModel: ObservableObject, Hashable {
             }
         }
         
+        if(multitask && MultitaskManager.isUsing(container: uiSelectedContainer!.folderName)) {
+            throw "lc.container.inUse".loc + "\n MultiTask"
+        }
+        
         if
             let fn = uiSelectedContainer?.folderName,
             var runningLC = LCUtils.getContainerUsingLCScheme(containerName: fn),
@@ -172,7 +176,7 @@ class LCAppModel: ObservableObject, Hashable {
         {
             
             if multitask {
-                throw "lc.container.inUse".loc
+                throw "lc.container.inUse".loc + "\n" + runningLC
             }
             
             // it the user is trying to launch the app in normal mode, but the folder is currently in liveprocess's folder, we need to ask liveprocess to put the folder back
@@ -189,7 +193,7 @@ class LCAppModel: ObservableObject, Hashable {
                 var complete = false
                 for _ in 0..<20 {
                     usleep(1000*100)
-                    if let currentLC = LCUtils.getContainerUsingLCScheme(containerName: fn) {
+                    if let _ = LCUtils.getContainerUsingLCScheme(containerName: fn) {
 
                     } else {
                         complete = true

@@ -164,6 +164,7 @@ extension String: @retroactive LocalizedError {
 
 extension UTType {
     static let ipa = UTType(filenameExtension: "ipa")!
+    static let tipa = UTType(filenameExtension: "tipa")!
     static let dylib = UTType(filenameExtension: "dylib")!
     static let deb = UTType(filenameExtension: "deb")!
     static let lcFramework = UTType(filenameExtension: "framework", conformingTo: .package)!
@@ -673,7 +674,7 @@ extension LCUtils {
                 }
             } else if let value2 = value as? [String] {
                 for container in value2 {
-                    if containerName == containerName {
+                    if container == containerName {
                         return key
                     }
                 }
@@ -915,4 +916,24 @@ struct JITStreamerEBMountResponse : Codable {
     let ok: Bool
     let mounting: Bool
     let error: String?
+}
+
+@objc class MultitaskManager : NSObject {
+    static private var usingMultitaskContainers : [String] = []
+    
+    @objc class func registerMultitaskContainer(container: String) {
+        usingMultitaskContainers.append(container)
+    }
+    
+    @objc class func unregisterMultitaskContainer(container: String) {
+        usingMultitaskContainers.removeAll(where: { c in
+            return c == container
+        })
+    }
+    
+    @objc class func isUsing(container: String) -> Bool {
+        return usingMultitaskContainers.contains { c in
+            return c == container
+        }
+    }
 }

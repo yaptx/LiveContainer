@@ -213,7 +213,7 @@ struct LCAppListView : View, LCAppBannerDelegate, LCAppModelDelegate {
         } message: {
             Text(errorInfo)
         }
-        .betterFileImporter(isPresented: $choosingIPA, types: [.ipa], multiple: false, callback: { fileUrls in
+        .betterFileImporter(isPresented: $choosingIPA, types: [.ipa, .tipa], multiple: false, callback: { fileUrls in
             Task { await startInstallApp(fileUrls[0]) }
         }, onDismiss: {
             choosingIPA = false
@@ -639,7 +639,7 @@ struct LCAppListView : View, LCAppBannerDelegate, LCAppModelDelegate {
         
         if installUrl.isFileURL {
             // install from local, we directly call local install method
-            if !installUrl.lastPathComponent.hasSuffix(".ipa") {
+            if !installUrl.lastPathComponent.hasSuffix(".ipa") && !installUrl.lastPathComponent.hasSuffix(".tipa") {
                 errorInfo = "lc.appList.urlFileIsNotIpaError".loc
                 errorShow = true
                 return

@@ -250,7 +250,8 @@ void handleLiveContainerLaunch(NSURL* url) {
         }
     } else {
         NSString* runningLC = [NSClassFromString(@"LCSharedUtils") getContainerUsingLCSchemeWithFolderName:containerFolderName];
-        if(runningLC) {
+        // the app is running in an lc, that lc is not me, also is not my avatar
+        if(runningLC && ![runningLC isEqualToString:[NSUserDefaults lcAppUrlScheme]] && !([[NSUserDefaults lcAppUrlScheme] isEqualToString:@"livecontainer"] && [runningLC isEqualToString:@"liveprocess"] )) {
             NSString* urlStr = [NSString stringWithFormat:@"%@://livecontainer-launch?bundle-name=%@&container-folder-name=%@", runningLC, bundleName, containerFolderName];
             [UIApplication.sharedApplication openURL:[NSURL URLWithString:urlStr] options:@{} completionHandler:nil];
             return;

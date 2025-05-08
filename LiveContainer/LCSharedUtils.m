@@ -209,19 +209,12 @@ extern NSBundle *lcMainBundle;
         if([info[key] isKindOfClass:NSString.class]) {
             // incase user have app opened while update
             if([folderName isEqualToString:info[key]]) {
-                if([key isEqualToString:lcAppUrlScheme]) {
-                    return nil;
-                }
                 return key;
             }
         } else if ([info[key] isKindOfClass:NSArray.class]) {
             // in newer version with liveprocess support, it is possible that one lc can open more than 1 app, so we need to save it in an array
-            if(![key isEqualToString:lcAppUrlScheme]) {
-                continue;
-            }
             for(NSString* runningFolderName in info[key]) {
                 if([folderName isEqualToString:runningFolderName]) {
-
                     return key;
                 }
             }
@@ -257,7 +250,10 @@ extern NSBundle *lcMainBundle;
             [(NSMutableArray*)info[lcAppUrlScheme] addObject:bundleId];
             [(NSMutableArray*)info[lcAppUrlScheme] addObject:oldBundle];
         } else if ([info[lcAppUrlScheme] isKindOfClass:NSArray.class]) {
-            [(NSMutableArray*)info[lcAppUrlScheme] addObject:bundleId];
+            if(![(NSMutableArray*)info[lcAppUrlScheme] containsObject:bundleId]) {
+                [(NSMutableArray*)info[lcAppUrlScheme] addObject:bundleId];
+            }
+
         } else {
             info[lcAppUrlScheme] = [NSMutableArray new];
             [(NSMutableArray*)info[lcAppUrlScheme] addObject:bundleId];
@@ -292,7 +288,10 @@ extern NSBundle *lcMainBundle;
             [(NSMutableArray*)info[lcAppUrlScheme] addObject:folderName];
             [(NSMutableArray*)info[lcAppUrlScheme] addObject:oldFolderName];
         } else if ([info[lcAppUrlScheme] isKindOfClass:NSArray.class]) {
-            [(NSMutableArray*)info[lcAppUrlScheme] addObject:folderName];
+            if(![(NSMutableArray*)info[lcAppUrlScheme] containsObject:folderName]) {
+                [(NSMutableArray*)info[lcAppUrlScheme] addObject:folderName];
+            }
+
         } else {
             info[lcAppUrlScheme] = [NSMutableArray new];
             [(NSMutableArray*)info[lcAppUrlScheme] addObject:folderName];

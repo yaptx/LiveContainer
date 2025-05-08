@@ -13,6 +13,8 @@
 + (instancetype)extensionWithIdentifier:(NSString *)identifier error:(NSError **)error;
 - (void)beginExtensionRequestWithInputItems:(NSArray *)items completion:(void(^)(NSUUID *))callback;
 - (int)pidForRequestIdentifier:(NSUUID *)identifier;
+- (void)_kill:(int)arg1;
+- (void)setRequestInterruptionBlock:(void(^)(NSUUID *))callback;
 @end
 
 void* SecTaskCreateFromSelf(CFAllocatorRef allocator);

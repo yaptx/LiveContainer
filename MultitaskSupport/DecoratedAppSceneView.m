@@ -1,18 +1,23 @@
 #import "DecoratedAppSceneView.h"
 #import "UIKitPrivate+MultitaskSupport.h"
+#import "LiveContainerSwiftUI-Swift.h"
 
 @interface DecoratedAppSceneView()
 @property(nonatomic) _UIScenePresenter *presenter;
 @property(nonatomic) UIMutableApplicationSceneSettings *settings;
 @property(nonatomic) UIApplicationSceneTransitionContext *transitionContext;
 @property(nonatomic) NSString *sceneID;
+@property(nonatomic) NSExtension* extension;
+@property(nonatomic) NSString* dataUUID;
 @end
 
 @implementation DecoratedAppSceneView
-- (instancetype)initWithExtension:(NSExtension *)extension identifier:(NSUUID *)identifier {
-    self = [super initWithFrame:CGRectMake(0, 100, 400, 400)];
+- (instancetype)initWithExtension:(NSExtension *)extension identifier:(NSUUID *)identifier dataUUID:(NSString*)dataUUID {
+    self = [super initWithFrame:CGRectMake(0, 100, 375, 667)];
     
     int pid = [extension pidForRequestIdentifier:identifier];
+    self.extension = extension;
+    self.dataUUID = dataUUID;
     NSLog(@"Presenting app scene from PID %d", pid);
     
     self.navigationBar.overrideUserInterfaceStyle = UIUserInterfaceStyleDark;
@@ -66,6 +71,15 @@
     self.presenter = [scene.uiPresentationManager createPresenterWithIdentifier:self.sceneID];
     [self.presenter activate];
     [self insertSubview:self.presenter.presentationView atIndex:0];
+    
+    [extension setRequestInterruptionBlock:^(NSUUID *uuid) {
+        NSLog(@"Request %@ interrupted.", uuid);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self closeWindow];
+        });
+        
+    }];
+    [MultitaskManager registerMultitaskContainerWithContainer:dataUUID];
     return self;
 }
 
@@ -81,12 +95,13 @@
             self.presenter = nil;
         }
         [self removeFromSuperview];
+        [self.extension _kill:SIGTERM];
+        [MultitaskManager unregisterMultitaskContainerWithContainer:self.dataUUID];
     }];
 }
 
 - (void)resizeWindow:(UIPanGestureRecognizer*)sender {
     [super resizeWindow:sender];
-    
     self.settings.frame = self.bounds;
     [self.presenter.scene updateSettings:self.settings withTransitionContext:self.transitionContext completion:nil];
 }

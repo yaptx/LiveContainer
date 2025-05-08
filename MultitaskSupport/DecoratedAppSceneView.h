@@ -2,6 +2,6 @@
 #import "DecoratedFloatingView.h"
 
 @interface DecoratedAppSceneView : DecoratedFloatingView
-- (instancetype)initWithExtension:(NSExtension *)extension identifier:(NSUUID *)identifier;
+- (instancetype)initWithExtension:(NSExtension *)extension identifier:(NSUUID *)identifier dataUUID:(NSString*)dataUUID;
 @end
 

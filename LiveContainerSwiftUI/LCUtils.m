@@ -84,6 +84,7 @@ Class LCSharedUtilsClass = nil;
     
     NSUserDefaults *lcUserDefaults = NSUserDefaults.standardUserDefaults;
     NSExtensionItem *item = [NSExtensionItem new];
+    NSString* selectedContainer = [lcUserDefaults stringForKey:@"selectedContainer"];
     item.userInfo = @{
         @"selected": [lcUserDefaults stringForKey:@"selected"],
         @"selectedContainer": [lcUserDefaults stringForKey:@"selectedContainer"]
@@ -97,8 +98,7 @@ Class LCSharedUtilsClass = nil;
                 // TODO: show windows elsewhere
                 UIView *view = ((UIWindowScene *)UIApplication.sharedApplication.connectedScenes.anyObject).keyWindow.rootViewController.view;
                 
-                DecoratedAppSceneView *launcherView = [[DecoratedAppSceneView alloc] initWithExtension:extension identifier:identifier];
-                launcherView.frame = CGRectMake(0, 0, 400, 400);
+                DecoratedAppSceneView *launcherView = [[DecoratedAppSceneView alloc] initWithExtension:extension identifier:identifier dataUUID:selectedContainer];
                 launcherView.center = view.center;
                 launcherView.navigationItem.title = displayName;
                 [view addSubview:launcherView];
