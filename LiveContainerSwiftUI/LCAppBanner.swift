@@ -179,13 +179,13 @@ struct LCAppBanner : View {
                         }
                     }
                 }
-                
-                Button {
-                    Task{ await runApp(multitask: true) }
-                } label: {
-                    Label("lc.appBanner.multitask".loc, systemImage: "macwindow.badge.plus")
+                if(sharedModel.multiLCStatus != 2 && model.uiIsShared) {
+                    Button {
+                        Task{ await runApp(multitask: true) }
+                    } label: {
+                        Label("lc.appBanner.multitask".loc, systemImage: "macwindow.badge.plus")
+                    }
                 }
-                
                 Menu {
                     Button {
                         openSafariViewToCreateAppClip()
