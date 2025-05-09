@@ -13,8 +13,29 @@ extern NSBundle *lcMainBundle;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         ans = SecTaskCopyTeamIdentifier(SecTaskCreateFromSelf(NULL), nil);
-        if(!ans)
-            ans = [[lcMainBundle.bundleIdentifier componentsSeparatedByString:@"."] lastObject];
+        if(!ans) {
+            // the above seems not to work if the device is jailbroken by Palera1n, so we use the public api one as backup
+            // https://stackoverflow.com/a/11841898
+            NSString *tempAccountName = @"bundleSeedID";
+            NSDictionary *query = @{
+                (__bridge NSString *)kSecClass : (__bridge NSString *)kSecClassGenericPassword,
+                (__bridge NSString *)kSecAttrAccount : tempAccountName,
+                (__bridge NSString *)kSecAttrService : @"",
+                (__bridge NSString *)kSecReturnAttributes: (__bridge NSNumber *)kCFBooleanTrue,
+            };
+            CFDictionaryRef result = nil;
+            OSStatus status = SecItemCopyMatching((__bridge CFDictionaryRef)query, (CFTypeRef *)&result);
+            if (status == errSecItemNotFound)
+                status = SecItemAdd((__bridge CFDictionaryRef)query, (CFTypeRef *)&result);
+            if (status == errSecSuccess) {
+                status = SecItemDelete((__bridge CFDictionaryRef)query); // remove temp item
+                NSDictionary *dict = (__bridge_transfer NSDictionary *)result;
+                NSString *accessGroup = dict[(__bridge NSString *)kSecAttrAccessGroup];
+                NSArray *components = [accessGroup componentsSeparatedByString:@"."];
+                NSString *bundleSeedID = [[components objectEnumerator] nextObject];
+                ans = bundleSeedID;
+            }
+        }
     });
     return ans;
 }
@@ -368,7 +389,7 @@ extern NSBundle *lcMainBundle;
     
 }
 
-+ (void)moveSharedAppFolderBackWithDataUUID:(NSString*)dataUUID {
++ (BOOL)moveSharedAppFolderBackWithDataUUID:(NSString*)dataUUID {
     NSFileManager *fm = NSFileManager.defaultManager;
     NSURL *libraryPathUrl = [fm URLsForDirectory:NSLibraryDirectory inDomains:NSUserDomainMask]
         .lastObject;
@@ -376,7 +397,7 @@ extern NSBundle *lcMainBundle;
         .lastObject;
     NSURL *appGroupFolder = [[LCSharedUtils appGroupPath] URLByAppendingPathComponent:@"LiveContainer"];
     
-    NSError *error;
+    NSError *error = nil;
     NSString *sharedAppDataFolderPath = [libraryPathUrl.path stringByAppendingPathComponent:@"SharedDocuments"];
     if(![fm fileExistsAtPath:sharedAppDataFolderPath]){
         [fm createDirectoryAtPath:sharedAppDataFolderPath withIntermediateDirectories:YES attributes:@{} error:&error];
@@ -384,24 +405,21 @@ extern NSBundle *lcMainBundle;
     // something went wrong with app group
     if(!appGroupFolder) {
         [lcUserDefaults setObject:@"LiveContainer was unable to move the data of shared app back because LiveContainer cannot access app group. Please check JITLess diagnose page in LiveContainer settings for more information." forKey:@"error"];
-        return;
+        return false;
     }
     
     NSString* destPath = [appGroupFolder.path stringByAppendingPathComponent:[NSString stringWithFormat:@"Data/Application/%@", dataUUID]];
     if([fm fileExistsAtPath:destPath]) {
-        [fm
-         moveItemAtPath:[sharedAppDataFolderPath stringByAppendingPathComponent:dataUUID]
-         toPath:[docPathUrl.path stringByAppendingPathComponent:[NSString stringWithFormat:@"FOLDER_EXISTS_AT_APP_GROUP_%@", dataUUID]]
-         error:&error
-        ];
-        
+        return false;
     } else {
         [fm
          moveItemAtPath:[sharedAppDataFolderPath stringByAppendingPathComponent:dataUUID]
          toPath:destPath
          error:&error
         ];
+        return error == nil;
     }
+    
 }
 
 + (NSBundle*)findBundleWithBundleId:(NSString*)bundleId {

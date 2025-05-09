@@ -339,9 +339,18 @@ static NSString* invokeAppMain(NSString *selectedApp, NSString *selectedContaine
         // move data folder to private library
         NSURL *libraryPathUrl = [fm URLsForDirectory:NSLibraryDirectory inDomains:NSUserDomainMask].lastObject;
         NSString *sharedAppDataFolderPath = [libraryPathUrl.path stringByAppendingPathComponent:@"SharedDocuments"];
+        if(![fm fileExistsAtPath:sharedAppDataFolderPath]){
+            [fm createDirectoryAtPath:sharedAppDataFolderPath withIntermediateDirectories:YES attributes:@{} error:&error];
+        }
         NSString* dataFolderPath = [appGroupFolder.path stringByAppendingPathComponent:[NSString stringWithFormat:@"Data/Application/%@", dataUUID]];
         newHomePath = [sharedAppDataFolderPath stringByAppendingPathComponent: dataUUID];
-        [fm moveItemAtPath:dataFolderPath toPath:newHomePath error:&error];
+        if(![fm fileExistsAtPath:newHomePath]) {
+            [fm moveItemAtPath:dataFolderPath toPath:newHomePath error:&error];
+            if(error) {
+                return [error localizedDescription];
+            }
+        }
+        
     } else {
         newHomePath = [NSString stringWithFormat:@"%@/Data/Application/%@", docPath, dataUUID];
     }
@@ -582,11 +591,12 @@ int LiveContainerMain(int argc, char *argv[]) {
         NSURL *docPathUrl = [NSFileManager.defaultManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask].lastObject;
         preferencesTo = [libraryPathUrl.path stringByAppendingPathComponent:[NSString stringWithFormat:@"SharedDocuments/%@/Library/Preferences", selectedContainer]];
 
-//        [LCSharedUtils dumpPreferenceToPath:preferencesTo dataUUID:selectedContainer];
-        [LCSharedUtils moveSharedAppFolderBackWithDataUUID:selectedContainer];
-        [LCSharedUtils setContainerUsingByThisLC:selectedContainer remove:YES];
-        [LCSharedUtils setAppRunningByThisLC:selectedApp remove:YES];
-        [lcUserDefaults removeObjectForKey:@"liveprocessRetrieveData"];
+        BOOL result = [LCSharedUtils moveSharedAppFolderBackWithDataUUID:selectedContainer];
+        if(result) {
+            [LCSharedUtils setContainerUsingByThisLC:selectedContainer remove:YES];
+            [LCSharedUtils setAppRunningByThisLC:selectedApp remove:YES];
+            [lcUserDefaults removeObjectForKey:@"liveprocessRetrieveData"];
+        }
         exit(0);
         return 0;
     }

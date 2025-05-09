@@ -144,6 +144,7 @@ typedef struct {
 @property(nonatomic, strong, readwrite) NSString *persistenceIdentifier;
 @property (nonatomic, assign, readwrite) UIEdgeInsets peripheryInsets;
 @property (nonatomic, assign, readwrite) UIEdgeInsets safeAreaInsetsPortrait, safeAreaInsetsPortraitUpsideDown, safeAreaInsetsLandscapeLeft, safeAreaInsetsLandscapeRight;
+@property(assign, nonatomic, readwrite) UIUserInterfaceStyle userInterfaceStyle;
 @property (nonatomic, strong, readwrite) BSCornerRadiusConfiguration *cornerRadiusConfiguration;
 - (id)displayConfiguration;
 - (CGRect)frame;

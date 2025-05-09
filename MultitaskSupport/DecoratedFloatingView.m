@@ -13,7 +13,7 @@
 
 - (instancetype)initWithFrame:(CGRect)frame navigationBar:(UINavigationBar *)navigationBar {
     self = [super initWithFrame:frame];
-    self.backgroundColor = UIColor.blackColor;
+    self.backgroundColor = UIColor.systemBackgroundColor;
     self.layer.cornerRadius = 10;
     self.layer.masksToBounds = YES;
 
@@ -22,6 +22,14 @@
     if (!self.navigationBar.superview) {
         [self addSubview:self.navigationBar];
     }
+    
+    CGFloat navBarHeight = self.navigationBar.frame.size.height;
+    CGRect contentFrame = CGRectMake(0, navBarHeight, self.frame.size.width, self.frame.size.height - navBarHeight);
+
+    UIView *contentView = [[UIView alloc] initWithFrame:contentFrame];
+    contentView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.contentView = contentView;
+    [self addSubview:contentView];
 
     UIPanGestureRecognizer *moveGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(moveWindow:)];
     moveGesture.minimumNumberOfTouches = 1;
@@ -37,6 +45,10 @@
     resizeGesture.minimumNumberOfTouches = 1;
     resizeGesture.maximumNumberOfTouches = 1;
     [self.resizeHandle addGestureRecognizer:resizeGesture];
+    
+    self.layer.borderWidth = 1.0;
+    self.layer.borderColor = UIColor.secondarySystemBackgroundColor.CGColor;
+    
     return self;
 }
 

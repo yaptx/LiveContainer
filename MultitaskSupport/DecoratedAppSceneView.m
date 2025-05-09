@@ -9,12 +9,13 @@
 @property(nonatomic) NSString *sceneID;
 @property(nonatomic) NSExtension* extension;
 @property(nonatomic) NSString* dataUUID;
+@property(nonatomic) int resizeDebounceToken;
 @end
 
 @implementation DecoratedAppSceneView
 - (instancetype)initWithExtension:(NSExtension *)extension identifier:(NSUUID *)identifier dataUUID:(NSString*)dataUUID {
-    self = [super initWithFrame:CGRectMake(0, 100, 375, 667)];
-    
+    self = [super initWithFrame:CGRectMake(0, 100, 375, 667 + 44)];
+    self.resizeDebounceToken = 0;
     int pid = [extension pidForRequestIdentifier:identifier];
     self.extension = extension;
     self.dataUUID = dataUUID;
@@ -46,13 +47,14 @@
     settings.cornerRadiusConfiguration = [[PrivClass(BSCornerRadiusConfiguration) alloc] initWithTopLeft:self.layer.cornerRadius bottomLeft:self.layer.cornerRadius bottomRight:self.layer.cornerRadius topRight:self.layer.cornerRadius];
     settings.displayConfiguration = UIScreen.mainScreen.displayConfiguration;
     settings.foreground = YES;
-    settings.frame = self.bounds;
+    settings.frame = CGRectMake(0, 0, self.contentView.bounds.size.width, self.contentView.bounds.size.height);
     settings.interfaceOrientation = UIInterfaceOrientationPortrait;
     //settings.interruptionPolicy = 2; // reconnect
     settings.level = 1;
-    settings.peripheryInsets = UIEdgeInsetsMake(self.navigationBar.frame.size.height, 0, 0, 0);
+    // it seems some apps don't honor these settings so we don't cover the top of the app
+    settings.peripheryInsets = UIEdgeInsetsMake(0, 0, 0, 0);
     settings.persistenceIdentifier = NSUUID.UUID.UUIDString;
-    settings.safeAreaInsetsPortrait = UIEdgeInsetsMake(self.navigationBar.frame.size.height, 0, 0, 0);
+    settings.safeAreaInsetsPortrait = UIEdgeInsetsMake(0, 0, 0, 0);
     //settings.statusBarDisabled = 1;
     //settings.previewMaximumSize =
     //settings.deviceOrientationEventsEnabled = YES;
@@ -70,7 +72,9 @@
     
     self.presenter = [scene.uiPresentationManager createPresenterWithIdentifier:self.sceneID];
     [self.presenter activate];
-    [self insertSubview:self.presenter.presentationView atIndex:0];
+    
+    
+    [self.contentView insertSubview:self.presenter.presentationView atIndex:0];
     
     [extension setRequestInterruptionBlock:^(NSUUID *uuid) {
         NSLog(@"Request %@ interrupted.", uuid);
@@ -102,7 +106,21 @@
 
 - (void)resizeWindow:(UIPanGestureRecognizer*)sender {
     [super resizeWindow:sender];
-    self.settings.frame = self.bounds;
+    __block int currentDebounceToken = self.resizeDebounceToken + 1;
+    self.resizeDebounceToken = currentDebounceToken;
+    dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.05 * NSEC_PER_SEC));
+    dispatch_after(delay, dispatch_get_main_queue(), ^{
+        if(currentDebounceToken != self.resizeDebounceToken) {
+            return;
+        }
+        self.settings.frame = CGRectMake(0, 0, self.contentView.bounds.size.width, self.contentView.bounds.size.height);
+        [self.presenter.scene updateSettings:self.settings withTransitionContext:self.transitionContext completion:nil];
+    });
+
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    self.settings.userInterfaceStyle = self.traitCollection.userInterfaceStyle;
     [self.presenter.scene updateSettings:self.settings withTransitionContext:self.transitionContext completion:nil];
 }
 @end
