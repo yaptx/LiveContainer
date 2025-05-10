@@ -113,8 +113,9 @@
         if(currentDebounceToken != self.resizeDebounceToken) {
             return;
         }
-        self.settings.frame = CGRectMake(0, 0, self.contentView.bounds.size.width, self.contentView.bounds.size.height);
-        [self.presenter.scene updateSettings:self.settings withTransitionContext:self.transitionContext completion:nil];
+        [self.presenter.scene updateSettingsWithBlock:^(UIMutableApplicationSceneSettings *settings) {
+            settings.frame = CGRectMake(0, 0, self.contentView.bounds.size.width, self.contentView.bounds.size.height);
+        }];
     });
 
 }

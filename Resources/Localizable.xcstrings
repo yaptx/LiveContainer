@@ -54,6 +54,23 @@
         }
       }
     },
+    "lc.appBanner.confirmRunWhenMultitasking" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Some apps are running in multitask mode. Running this app will terminate those apps. Continue?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "有一些App正在以多任务模式运行，启动此App会终止这些App，要继续吗？"
+          }
+        }
+      }
+    },
     "lc.appBanner.confirmUninstallMsg %@" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -426,12 +443,18 @@
       }
     },
     "lc.appBanner.multitask" : {
-      "extractionState" : "manual",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Multitask"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "多任务"
           }
         }
       }
@@ -6479,6 +6502,23 @@
         }
       }
     },
+    "lc.container.unableToMoveContainerFromLiveProcess" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to retrieve the data folder from LiveProcess."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法从LiveProcess取回数据。"
+          }
+        }
+      }
+    },
     "lc.container.unbind" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -7489,6 +7529,12 @@
     "lc.jitlessDiag.certificateRevoked" : {
       "extractionState" : "stale",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ملغاه"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7530,6 +7576,12 @@
     "lc.jitlessDiag.certificateStatus" : {
       "extractionState" : "stale",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حالة الشهادة"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7571,6 +7623,12 @@
     "lc.jitlessDiag.certificateValid" : {
       "extractionState" : "stale",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "صالح"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7613,6 +7671,12 @@
       "comment" : "lc.jitlessDiag.certificateValidateUntil",
       "extractionState" : "stale",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الشهادة غير صالحه بعد"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7760,6 +7824,12 @@
     "lc.jitlessDiag.checking" : {
       "extractionState" : "stale",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يتم الفحص"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8933,6 +9003,12 @@
     "lc.settings.dataManagement" : {
       "extractionState" : "stale",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إدارة البيانات"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9498,6 +9574,12 @@
     "lc.settings.importCertificateFromStore %@" : {
       "extractionState" : "stale",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "استيراد شهادة من %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10652,6 +10734,12 @@
     "lc.settings.multiLC.teamIdMismatch" : {
       "extractionState" : "stale",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LiveContainer2 مُوقع بشهادة أخرى عن LiveContainer, لذلك لن يعمل. الرجاء تثبيت LiveContainer2 بِنفس الحساب الذي استخدمته لتثبيت LiveContainer"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10846,6 +10934,12 @@
     "lc.settings.multiLCInstallAlertDesc %@" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سوف يقوم LiveContainer بتوليد ملف الـipa لـLiveContainer أخر. الرجاء مشاركته إلى %@ للتثبيت، هل تود المتابعه؟"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11364,6 +11458,12 @@
     "lc.settings.refreshCertificateFromStore %@" : {
       "extractionState" : "stale",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حدث الشهادة من %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",

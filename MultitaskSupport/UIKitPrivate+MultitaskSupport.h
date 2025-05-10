@@ -90,6 +90,7 @@ typedef struct {
 - (FBProcess *)clientProcess;
 - (UIScenePresentationManager *)uiPresentationManager;
 - (void)updateSettings:(UIMutableApplicationSceneSettings *)settings withTransitionContext:(id)context completion:(id)completion;
+- (void)updateSettingsWithBlock:(void(^)(UIMutableApplicationSceneSettings *settings))arg1;
 @end
 
 @interface FBDisplayManager : NSObject

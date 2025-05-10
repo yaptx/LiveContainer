@@ -4,6 +4,7 @@ protocol LCAppModelDelegate {
     func closeNavigationView()
     func changeAppVisibility(app : LCAppModel)
     func jitLaunch() async
+    func showRunWhenMultitaskAlert() async -> Bool?
 }
 
 class LCAppModel: ObservableObject, Hashable {
@@ -90,9 +91,6 @@ class LCAppModel: ObservableObject, Hashable {
     
     @Published var supportedLanaguages : [String]?
     
-    var jitAlert : YesNoHelper? = nil
-    @Published var jitLog : String = ""
-    
     var delegate : LCAppModelDelegate?
     
     init(appInfo : LCAppInfo, delegate: LCAppModelDelegate? = nil) {
@@ -142,6 +140,13 @@ class LCAppModel: ObservableObject, Hashable {
     func runApp(multitask: Bool = false, containerFolderName : String? = nil) async throws{
         if isAppRunning {
             return
+        }
+        
+        // ask user if they want to terminate all multitasking apps
+        if MultitaskManager.isMultitasking() && !multitask {
+            guard let ans = await delegate?.showRunWhenMultitaskAlert(), ans else {
+                return
+            }
         }
         
         if uiContainers.isEmpty {

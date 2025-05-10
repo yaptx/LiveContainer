@@ -936,4 +936,8 @@ struct JITStreamerEBMountResponse : Codable {
             return c == container
         }
     }
+    
+    @objc class func isMultitasking() -> Bool {
+        return usingMultitaskContainers.count > 0
+    }
 }

@@ -595,8 +595,8 @@ int LiveContainerMain(int argc, char *argv[]) {
         if(result) {
             [LCSharedUtils setContainerUsingByThisLC:selectedContainer remove:YES];
             [LCSharedUtils setAppRunningByThisLC:selectedApp remove:YES];
-            [lcUserDefaults removeObjectForKey:@"liveprocessRetrieveData"];
         }
+        [lcUserDefaults removeObjectForKey:@"liveprocessRetrieveData"];
         exit(0);
         return 0;
     }

@@ -15,7 +15,6 @@ struct AppReplaceOption : Hashable {
 }
 
 struct LCAppListView : View, LCAppBannerDelegate, LCAppModelDelegate {
-    
     @Binding var appDataFolderNames: [String]
     @Binding var tweakFolderNames: [String]
     
@@ -43,6 +42,8 @@ struct LCAppListView : View, LCAppBannerDelegate, LCAppModelDelegate {
     
     @State private var jitLog = ""
     @StateObject private var jitAlert = YesNoHelper()
+    
+    @StateObject private var runWhenMultitaskAlert = YesNoHelper()
     
     @State var safariViewOpened = false
     @State var safariViewURL = URL(string: "https://google.com")!
@@ -234,6 +235,18 @@ struct LCAppListView : View, LCAppBannerDelegate, LCAppModelDelegate {
             })
         } message: {
             Text("lc.appList.installReplaceTip".loc)
+        }
+        .alert("lc.webView.runApp".loc, isPresented: $runWhenMultitaskAlert.show) {
+            Button(role: .destructive) {
+                runWhenMultitaskAlert.close(result: true)
+            } label: {
+                Text("lc.common.continue".loc)
+            }
+            Button("lc.common.cancel".loc, role: .cancel) {
+                runWhenMultitaskAlert.close(result: false)
+            }
+        } message: {
+            Text("lc.appBanner.confirmRunWhenMultitasking".loc)
         }
         .textFieldAlert(
             isPresented: $webViewUrlInput.show,
@@ -816,6 +829,10 @@ struct LCAppListView : View, LCAppBannerDelegate, LCAppModelDelegate {
         }
         LCUtils.launchToGuestApp()
 
+    }
+    
+    func showRunWhenMultitaskAlert() async -> Bool? {
+        return await runWhenMultitaskAlert.open()
     }
     
     func installMdm(data: Data) {
