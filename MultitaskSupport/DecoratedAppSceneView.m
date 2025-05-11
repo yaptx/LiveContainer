@@ -9,22 +9,31 @@
 @property(nonatomic) NSString *sceneID;
 @property(nonatomic) NSExtension* extension;
 @property(nonatomic) NSString* dataUUID;
+@property(nonatomic) NSString* windowName;
+@property(nonatomic) int pid;
+@property(nonatomic) bool isPidShown;
 @property(nonatomic) int resizeDebounceToken;
 @end
 
 @implementation DecoratedAppSceneView
-- (instancetype)initWithExtension:(NSExtension *)extension identifier:(NSUUID *)identifier dataUUID:(NSString*)dataUUID {
+- (instancetype)initWithExtension:(NSExtension *)extension identifier:(NSUUID *)identifier windowName:(NSString*)windowName dataUUID:(NSString*)dataUUID {
     self = [super initWithFrame:CGRectMake(0, 100, 375, 667 + 44)];
     self.resizeDebounceToken = 0;
     int pid = [extension pidForRequestIdentifier:identifier];
     self.extension = extension;
     self.dataUUID = dataUUID;
+    self.pid = pid;
     NSLog(@"Presenting app scene from PID %d", pid);
     
     self.navigationBar.overrideUserInterfaceStyle = UIUserInterfaceStyleDark;
     [self.navigationBar.standardAppearance configureWithTransparentBackground];
     self.navigationBar.standardAppearance.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemClose target:self action:@selector(closeWindow)];
+    self.windowName = windowName;
+    self.isPidShown = false;
+    self.navigationItem.title = windowName;
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(switchAppNameAndPid:)];
+    [self.navigationBar addGestureRecognizer:tapGesture];
     
     self.transitionContext = [UIApplicationSceneTransitionContext new];
     RBSProcessPredicate* predicate = [PrivClass(RBSProcessPredicate) predicateMatchingIdentifier:@(pid)];
@@ -67,8 +76,6 @@
     parameters.clientSettings = clientSettings;
     
     FBScene *scene = [[PrivClass(FBSceneManager) sharedInstance] createSceneWithDefinition:definition initialParameters:parameters];
-    
-    self.navigationItem.title = @"Test name";
     
     self.presenter = [scene.uiPresentationManager createPresenterWithIdentifier:self.sceneID];
     [self.presenter activate];
@@ -118,6 +125,15 @@
         }];
     });
 
+}
+
+- (void)switchAppNameAndPid:(UITapGestureRecognizer*)sender {
+    if(self.isPidShown) {
+        self.navigationItem.title = self.windowName;
+    } else {
+        self.navigationItem.title = [NSString stringWithFormat:@"PID: %d", self.pid];
+    }
+    self.isPidShown = !self.isPidShown;
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {

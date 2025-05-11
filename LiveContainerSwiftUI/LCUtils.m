@@ -98,9 +98,8 @@ Class LCSharedUtilsClass = nil;
                 // TODO: show windows elsewhere
                 UIView *view = ((UIWindowScene *)UIApplication.sharedApplication.connectedScenes.anyObject).keyWindow.rootViewController.view;
                 
-                DecoratedAppSceneView *launcherView = [[DecoratedAppSceneView alloc] initWithExtension:extension identifier:identifier dataUUID:selectedContainer];
+                DecoratedAppSceneView *launcherView = [[DecoratedAppSceneView alloc] initWithExtension:extension identifier:identifier windowName:displayName dataUUID:selectedContainer];
                 launcherView.center = view.center;
-                launcherView.navigationItem.title = displayName;
                 [view addSubview:launcherView];
                 completionHandler(nil);
             } else {

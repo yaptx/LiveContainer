@@ -53,9 +53,13 @@
 			<string>FALSEPREDICATE</string>
 		</dict>
 		<key>NSExtensionPointIdentifier</key>
-		<string>com.apple.app.ui-extension.multiple-instances</string>
+		<string>com.apple.ar.viewer</string>
 		<key>NSExtensionPrincipalClass</key>
 		<string>LiveProcessHandler</string>
+		<key>NSExtensionContextClass</key>
+        <string>NSExtensionContext</string>
+        <key>NSExtensionContextHostClass</key>
+        <string>NSExtensionContext</string>
 	</dict>
 	<key>NSHealthRequiredReadAuthorizationTypeIdentifiers</key>
 	<string>The guest app is requesting for this permission.</string>
@@ -81,5 +85,14 @@
 		<string>remote-notification</string>
 		<string>voip</string>
 	</array>
+    <key>XPCService</key>
+    <dict>
+        <key>ServiceType</key>
+        <string>Application</string>
+        <key>_MultipleInstances</key>
+        <true/>
+        <key>_ProcessType</key>
+        <string>App</string>
+    </dict>
 </dict>
 </plist>
