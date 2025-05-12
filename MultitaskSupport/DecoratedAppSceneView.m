@@ -137,7 +137,8 @@
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    self.settings.userInterfaceStyle = self.traitCollection.userInterfaceStyle;
-    [self.presenter.scene updateSettings:self.settings withTransitionContext:self.transitionContext completion:nil];
+    [self.presenter.scene updateSettingsWithBlock:^(UIMutableApplicationSceneSettings *settings) {
+        settings.userInterfaceStyle = self.traitCollection.userInterfaceStyle;
+    }];
 }
 @end
