@@ -239,7 +239,7 @@ struct LCSettingsView: View {
                 }
                 
                 if #available(iOS 16.1, *) {
-                    if(!sharedModel.isPhone) {
+                    if(UIApplication.shared.supportsMultipleScenes) {
                         Picker(selection: $multitaskMode) {
                             Text("Virtual Window").tag(MultitaskMode.virtualWindow)
                             Text("Native Window").tag(MultitaskMode.nativeWindow)

@@ -98,7 +98,7 @@ Class LCSharedUtilsClass = nil;
             if(identifier) {
                 // TODO: show windows elsewhere
                 if (@available(iOS 16.1, *)) {
-                    if(UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPad && [[[NSUserDefaults alloc] initWithSuiteName:[LCUtils appGroupID]] integerForKey:@"LCMultitaskMode" ] == 1) {
+                    if(UIApplication.sharedApplication.supportsMultipleScenes && [[[NSUserDefaults alloc] initWithSuiteName:[LCUtils appGroupID]] integerForKey:@"LCMultitaskMode" ] == 1) {
                         [MultitaskWindowManager openAppWindowWithId:identifier ext:extension displayName:displayName dataUUID:selectedContainer];
                         completionHandler(nil);
                         return;
@@ -248,8 +248,6 @@ Class LCSharedUtilsClass = nil;
     static Store ans;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        ans = AltStore;
-        return;
         // use uttype to accurately detect store
         if([UTType typeWithIdentifier:[NSString stringWithFormat:@"io.sidestore.Installed.%@", NSBundle.mainBundle.bundleIdentifier]]) {
             ans = SideStore;

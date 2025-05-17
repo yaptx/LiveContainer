@@ -75,7 +75,6 @@ struct AppSceneViewSwiftUI : UIViewControllerRepresentable {
         }
         
         func appDidExit() {
-            MultitaskWindowManager.openWindow!(id: "Main")
             onExit()
         }
         
@@ -100,8 +99,6 @@ struct AppSceneViewSwiftUI : UIViewControllerRepresentable {
 
 @available(iOS 16.1, *)
 struct MultitaskAppWindow : View {
-    @Environment(\.openWindow) var openWindow
-    @Environment(\.scenePhase) var scenePhase
     @State var id: UUID
     @State var show = true
     @State var appInfo : MultitaskAppInfo? = nil
@@ -109,7 +106,6 @@ struct MultitaskAppWindow : View {
     init(id: UUID) {
         self._id = State(initialValue: id)
         guard let appInfo = MultitaskWindowManager.appDict[id] else {
-            openWindow(id: "Main")
             return
         }
         self._appInfo = State(initialValue: appInfo)

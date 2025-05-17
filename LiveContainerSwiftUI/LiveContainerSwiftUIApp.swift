@@ -24,7 +24,7 @@ struct LiveContainerSwiftUIApp : App {
         }
         
         
-        if UIDevice.current.userInterfaceIdiom == .pad, #available(iOS 16.1, *) {
+        if UIApplication.shared.supportsMultipleScenes, #available(iOS 16.1, *) {
             WindowGroup(id: "appView", for: UUID.self) { $id in
                 if let id {
                     MultitaskAppWindow(id: id)
