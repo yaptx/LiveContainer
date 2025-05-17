@@ -201,6 +201,8 @@
 		E1292C2D2DCA4E800065E12D /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				AppSceneViewController.h,
+				AppSceneViewController.m,
 				DecoratedAppSceneView.h,
 				DecoratedAppSceneView.m,
 				DecoratedFloatingView.h,
