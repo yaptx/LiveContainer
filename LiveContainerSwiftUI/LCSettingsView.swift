@@ -22,6 +22,11 @@ enum JITEnablerType : Int {
     case SideStore = 4
 }
 
+enum MultitaskMode : Int {
+    case virtualWindow = 0
+    case nativeWindow = 1
+}
+
 struct LCSettingsView: View {
     @State var errorShow = false
     @State var errorInfo = ""
@@ -53,6 +58,7 @@ struct LCSettingsView: View {
     @AppStorage("LCSideJITServerAddress", store: LCUtils.appGroupUserDefault) var sideJITServerAddress : String = ""
     @AppStorage("LCDeviceUDID", store: LCUtils.appGroupUserDefault) var deviceUDID: String = ""
     @AppStorage("LCJITEnablerType", store: LCUtils.appGroupUserDefault) var JITEnabler: JITEnablerType = .SideJITServer
+    @AppStorage("LCMultitaskMode", store: LCUtils.appGroupUserDefault) var multitaskMode: MultitaskMode = .virtualWindow
     
     @State var store : Store = .Unknown
     
@@ -173,7 +179,7 @@ struct LCSettingsView: View {
                     }
                     Picker(selection: $JITEnabler) {
                         Text("SideJITServer/JITStreamer 2.0").tag(JITEnablerType.SideJITServer)
-                        Text("StikJIT (StandAlone)").tag(JITEnablerType.StkiJIT)
+                        Text("StikDebug").tag(JITEnablerType.StkiJIT)
                         Text("StikJIT (Another LiveContainer)").tag(JITEnablerType.StikJITLC)
                         Text("SideStore").tag(JITEnablerType.SideStore)
                         Text("JitStreamer-EB (Relaunch)").tag(JITEnablerType.JITStreamerEBLegacy)
@@ -229,6 +235,17 @@ struct LCSettingsView: View {
                         }
                     } footer: {
                         Text("lc.settings.strictHidingDesc".loc)
+                    }
+                }
+                
+                if #available(iOS 16.1, *) {
+                    if(!sharedModel.isPhone) {
+                        Picker(selection: $multitaskMode) {
+                            Text("Virtual Window").tag(MultitaskMode.virtualWindow)
+                            Text("Native Window").tag(MultitaskMode.nativeWindow)
+                        } label: {
+                            Text("lc.settings.multitaskMode".loc)
+                        }
                     }
                 }
                 
@@ -334,7 +351,6 @@ struct LCSettingsView: View {
             .navigationBarTitle("lc.tabView.settings".loc)
             .onAppear {
                 updateSideStorePatchStatus()
-                AppDelegate.setImportSideStoreCertFunc(handler: onSideStoreCertificateCallback)
             }
             .onForeground {
                 updateSideStorePatchStatus()
@@ -439,7 +455,9 @@ struct LCSettingsView: View {
             }
         }
         .navigationViewStyle(StackNavigationViewStyle())
-        
+        .onOpenURL { url in
+            handleURL(url: url)
+        }
     }
     
     func installAnotherLC() async {
@@ -613,7 +631,14 @@ struct LCSettingsView: View {
     }
     
     func importCertificateFromSideStore() async {
-        guard let url = URL(string: "\(storeName.lowercased())://certificate?callback_template=livecontainer%3A%2F%2Fcertificate%3Fcert%3D%24%28BASE64_CERT%29%26password%3D%24%28PASSWORD%29") else {
+        let storeScheme : String
+        if store == .AltStore {
+            storeScheme = "altstore-classic"
+        } else {
+            storeScheme = "sidestore"
+        }
+        
+        guard let url = URL(string: "\(storeScheme.lowercased())://certificate?callback_template=livecontainer%3A%2F%2Fcertificate%3Fcert%3D%24%28BASE64_CERT%29%26password%3D%24%28PASSWORD%29") else {
             errorInfo = "Failed to initialize certificate import URL."
             errorShow = true
             return
@@ -660,6 +685,21 @@ struct LCSettingsView: View {
             print("Successfully copied dyld to Documents.")
         } catch {
             print("Error copying dyld \(error)")
+        }
+    }
+    
+    func handleURL(url: URL) {
+        if url.host == "certificate" {
+            if let components = URLComponents(url: url, resolvingAgainstBaseURL: false) {
+                let queryItems = components.queryItems?.reduce(into: [String: String]()) { $0[$1.name.lowercased()] = $1.value } ?? [:]
+                guard let encodedCert = queryItems["cert"]?.removingPercentEncoding,
+                      let password = queryItems["password"],
+                      let certData = Data(base64Encoded: encodedCert)
+                else { return }
+                
+                onSideStoreCertificateCallback(certificateData: certData, password: password)
+                
+            }
         }
     }
 }

@@ -290,6 +290,9 @@ struct LCAppListView : View, LCAppBannerDelegate, LCAppModelDelegate {
         .sheet(isPresented: $helpPresent) {
             LCHelpView(isPresent: $helpPresent)
         }
+        .onOpenURL { url in
+            handleURL(url: url)
+        }
 
     }
     
@@ -350,11 +353,6 @@ struct LCAppListView : View, LCAppBannerDelegate, LCAppModelDelegate {
         for app in sharedModel.hiddenApps {
             app.delegate = self
         }
-        
-        AppDelegate.setLaunchAppFunc(handler: launchAppWithBundleId)
-        AppDelegate.setOpenUrlStrFunc(handler: openWebView)
-        AppDelegate.setInstallFromUrlStrFunc(handler: installFromUrl)
-        
         didAppear = true
     }
     
@@ -852,5 +850,65 @@ struct LCAppListView : View, LCAppBannerDelegate, LCAppModelDelegate {
     
     func copyError() {
         UIPasteboard.general.string = errorInfo
+    }
+    
+    func handleURL(url : URL) {
+        if url.isFileURL {
+            Task { await installFromUrl(urlStr: url.absoluteString) }
+            return
+        }
+        
+        if url.host == "open-web-page" || url.host == "open-url" {
+            if let urlComponent = URLComponents(url: url, resolvingAgainstBaseURL: false), let queryItem = urlComponent.queryItems?.first {
+                if queryItem.value?.isEmpty ?? true {
+                    return
+                }
+                
+                if let decodedData = Data(base64Encoded: queryItem.value ?? ""),
+                   let decodedUrl = String(data: decodedData, encoding: .utf8) {
+                    Task { await openWebView(urlString: decodedUrl) }
+                }
+            }
+        } else if url.host == "livecontainer-launch" {
+            if let components = URLComponents(url: url, resolvingAgainstBaseURL: false) {
+                var bundleId : String? = nil
+                var containerName : String? = nil
+                for queryItem in components.queryItems ?? [] {
+                    if queryItem.name == "bundle-name", let bundleId1 = queryItem.value {
+                        bundleId = bundleId1
+                    } else if queryItem.name == "container-folder-name", let containerName1 = queryItem.value {
+                        containerName = containerName1
+                    }
+                }
+                if let bundleId, bundleId != "ui"{
+                    Task { await launchAppWithBundleId(bundleId: bundleId, container: containerName) }
+                }
+            }
+        } else if url.host == "install" {
+            if let components = URLComponents(url: url, resolvingAgainstBaseURL: false) {
+                var installUrl : String? = nil
+                for queryItem in components.queryItems ?? [] {
+                    if queryItem.name == "url", let installUrl1 = queryItem.value {
+                        installUrl = installUrl1
+                    }
+                }
+                if let installUrl {
+                    Task { await installFromUrl(urlStr: installUrl) }
+                }
+            }
+        }
+//        else if url.host == "certificate" {
+//            if let components = URLComponents(url: url, resolvingAgainstBaseURL: false) {
+//                let queryItems = components.queryItems?.reduce(into: [String: String]()) { $0[$1.name.lowercased()] = $1.value } ?? [:]
+//                guard let encodedCert = queryItems["cert"]?.removingPercentEncoding,
+//                      let password = queryItems["password"],
+//                      let certData = Data(base64Encoded: encodedCert)
+//                else { return false }
+//
+//                AppDelegate.importSideStoreCert(certData: certData, password: password)
+//                
+//            }
+//        }
+
     }
 }

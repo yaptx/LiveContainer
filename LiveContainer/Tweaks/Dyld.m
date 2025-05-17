@@ -63,14 +63,17 @@ static inline int translateImageIndex(int origin) {
     // find tweakloader index
     if(tweakLoaderLoaded && tweakLoaderIndex == 0) {
         const char* tweakloaderPath = [[[[NSUserDefaults lcMainBundle] bundlePath] stringByAppendingPathComponent:@"Frameworks/TweakLoader.dylib"] UTF8String];
-        uint32_t imageCount = orig_dyld_image_count();
-        for(uint32_t i = imageCount - 1; i >= 0; --i) {
-            const char* imgName = orig_dyld_get_image_name(i);
-            if(strcmp(imgName, tweakloaderPath) == 0) {
-                tweakLoaderIndex = i;
-                break;
+        if(tweakloaderPath) {
+            uint32_t imageCount = orig_dyld_image_count();
+            for(uint32_t i = imageCount - 1; i >= 0; --i) {
+                const char* imgName = orig_dyld_get_image_name(i);
+                if(imgName && strcmp(imgName, tweakloaderPath) == 0) {
+                    tweakLoaderIndex = i;
+                    break;
+                }
             }
         }
+
         if(tweakLoaderIndex == 0) {
             tweakLoaderIndex = -1; // can't find, don't search again in the future
         }

@@ -6,6 +6,7 @@
 #import "LCUtils.h"
 #import "../MultitaskSupport/DecoratedAppSceneView.h"
 #import "../ZSign/zsigner.h"
+#import "LiveContainerSwiftUI-Swift.h"
 
 Class LCSharedUtilsClass = nil;
 
@@ -96,6 +97,15 @@ Class LCSharedUtilsClass = nil;
         dispatch_async(dispatch_get_main_queue(), ^{
             if(identifier) {
                 // TODO: show windows elsewhere
+                if (@available(iOS 16.1, *)) {
+                    if(UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPad && [[[NSUserDefaults alloc] initWithSuiteName:[LCUtils appGroupID]] integerForKey:@"LCMultitaskMode" ] == 1) {
+                        [MultitaskWindowManager openAppWindowWithId:identifier ext:extension displayName:displayName dataUUID:selectedContainer];
+                        completionHandler(nil);
+                        return;
+                    }
+                }
+                
+                
                 UIView *view = ((UIWindowScene *)UIApplication.sharedApplication.connectedScenes.anyObject).keyWindow.rootViewController.view;
                 
                 DecoratedAppSceneView *launcherView = [[DecoratedAppSceneView alloc] initWithExtension:extension identifier:identifier windowName:displayName dataUUID:selectedContainer];
@@ -238,6 +248,8 @@ Class LCSharedUtilsClass = nil;
     static Store ans;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
+        ans = AltStore;
+        return;
         // use uttype to accurately detect store
         if([UTType typeWithIdentifier:[NSString stringWithFormat:@"io.sidestore.Installed.%@", NSBundle.mainBundle.bundleIdentifier]]) {
             ans = SideStore;

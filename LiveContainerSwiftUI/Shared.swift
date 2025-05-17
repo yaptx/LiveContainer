@@ -60,6 +60,8 @@ class SharedModel: ObservableObject {
     @Published var isJITModalOpen = false
     @AppStorage("LCCertificateImported") var certificateImported = false
     
+    @Published var enableMultipleWindow = false
+    
     @Published var apps : [LCAppModel] = []
     @Published var hiddenApps : [LCAppModel] = []
     let isPhone: Bool = {

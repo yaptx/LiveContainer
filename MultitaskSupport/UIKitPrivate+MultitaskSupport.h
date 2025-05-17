@@ -54,7 +54,7 @@ typedef struct {
 
 // FrontBoard
 
-@class RBSProcessIdentity, FBProcessExecutableSlice, UIMutableApplicationSceneSettings, UIMutableApplicationSceneClientSettings, UIScenePresentationManager, _UIScenePresenter;
+@class RBSProcessIdentity, FBProcessExecutableSlice, UIMutableApplicationSceneSettings, UIMutableApplicationSceneClientSettings, UIMutableScenePresentationContext, UIScenePresentationManager, _UIScenePresenter;
 
 @interface FBApplicationProcessLaunchTransaction : BSTransaction
 - (instancetype) initWithProcessIdentity:(RBSProcessIdentity *)identity executionContextProvider:(id)providerBlock;
@@ -146,6 +146,7 @@ typedef struct {
 @property (nonatomic, assign, readwrite) UIEdgeInsets peripheryInsets;
 @property (nonatomic, assign, readwrite) UIEdgeInsets safeAreaInsetsPortrait, safeAreaInsetsPortraitUpsideDown, safeAreaInsetsLandscapeLeft, safeAreaInsetsLandscapeRight;
 @property(assign, nonatomic, readwrite) UIUserInterfaceStyle userInterfaceStyle;
+@property(assign, nonatomic, readwrite) UIDeviceOrientation deviceOrientation;
 @property (nonatomic, strong, readwrite) BSCornerRadiusConfiguration *cornerRadiusConfiguration;
 - (id)displayConfiguration;
 - (CGRect)frame;
@@ -227,6 +228,7 @@ typedef struct {
 @property (nonatomic, assign, readonly) _UIScenePresentationView *presentationView;
 @property(nonatomic, assign, readonly) FBScene *scene;
 - (instancetype)initWithOwner:(_UIScenePresenterOwner *)manager identifier:(NSString *)scene sortContext:(NSNumber *)context;
+- (void)modifyPresentationContext:(void(^)(UIMutableScenePresentationContext *context))block;
 - (void)activate;
 - (void)deactivate;
 - (void)invalidate;
@@ -259,4 +261,8 @@ typedef struct {
 
 @interface UVSceneHost : UIView
 + (instancetype)createWithInjectedScene:(UVInjectedScene *)scene error:(NSError **)error;
+@end
+
+@interface UIMutableScenePresentationContext : UIScenePresentationContext
+@property(nonatomic, assign) NSUInteger appearanceStyle;
 @end

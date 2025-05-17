@@ -9,5 +9,8 @@
 #include "LCAppInfo.h"
 #include "LCUtils.h"
 #include "unarchive.h"
+#include "../MultitaskSupport/AppSceneViewController.h"
+#include "../MultitaskSupport/DecoratedAppSceneView.h"
+#include "../LiveContainer/FoundationPrivate.h"
 
 #endif /* LiveContainerSwiftUI_Bridging_Header_h_h */

@@ -1,7 +1,8 @@
 #import "FoundationPrivate.h"
 #import "DecoratedFloatingView.h"
+#import "AppSceneViewController.h"
 
-@interface DecoratedAppSceneView : DecoratedFloatingView
+@interface DecoratedAppSceneView : DecoratedFloatingView<AppSceneViewDelegate>
 - (instancetype)initWithExtension:(NSExtension *)extension identifier:(NSUUID *)identifier windowName:(NSString*)windowName dataUUID:(NSString*)dataUUID;
 @end
 

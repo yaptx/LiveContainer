@@ -692,15 +692,14 @@ int LiveContainerMain(int argc, char *argv[]) {
     }
     void *LiveContainerSwiftUIHandle = dlopen("@executable_path/Frameworks/LiveContainerSwiftUI.framework/LiveContainerSwiftUI", RTLD_LAZY);
     assert(LiveContainerSwiftUIHandle);
-    @autoreleasepool {
-        if ([lcUserDefaults boolForKey:@"LCLoadTweaksToSelf"]) {
-            dlopen("@executable_path/Frameworks/TweakLoader.dylib", RTLD_LAZY);
-        }
 
-        void *uikitHandle = dlopen("/System/Library/Frameworks/UIKit.framework/UIKit", RTLD_GLOBAL);
-        int (*UIApplicationMain)(int, char**, NSString *, NSString *) = dlsym(uikitHandle, "UIApplicationMain");
-        return UIApplicationMain(argc, argv, nil, @"LiveContainerSwiftUI.AppDelegate");
+    if ([lcUserDefaults boolForKey:@"LCLoadTweaksToSelf"]) {
+        dlopen("@executable_path/Frameworks/TweakLoader.dylib", RTLD_LAZY);
     }
+
+    int (*LiveContainerSwiftUIMain)(void) = dlsym(LiveContainerSwiftUIHandle, "main");
+    return LiveContainerSwiftUIMain();
+
 }
 
 // fake main() used for dlsym(RTLD_DEFAULT, main)
