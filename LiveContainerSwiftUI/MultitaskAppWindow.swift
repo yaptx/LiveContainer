@@ -102,6 +102,10 @@ struct MultitaskAppWindow : View {
     @State var id: UUID
     @State var show = true
     @State var appInfo : MultitaskAppInfo? = nil
+    @EnvironmentObject var sceneDelegate: SceneDelegate
+    @Environment(\.openWindow) var openWindow
+    @Environment(\.scenePhase) var scenePhase
+    let pub = NotificationCenter.default.publisher(for: UIScene.didDisconnectNotification)
     var appSceneView : AppSceneViewSwiftUI? = nil
     init(id: UUID) {
         self._id = State(initialValue: id)
@@ -121,12 +125,52 @@ struct MultitaskAppWindow : View {
             }
             .ignoresSafeArea(.all, edges: .all)
             .navigationTitle(appInfo.getWindowTitle())
-            .onDisappear(){
-                appInfo.closeApp()
+            .onReceive(pub) { out in
+                if let scene1 = sceneDelegate.window?.windowScene, let scene2 = out.object as? UIWindowScene, scene1 == scene2 {
+                    appInfo.closeApp()
+                }
             }
             
         } else {
-            Text("The app is terminated.")
+            VStack {
+                Text("lc.multitaskAppWindow.appTerminated".loc)
+                Button("lc.common.close".loc) {
+                    if let session = sceneDelegate.window?.windowScene?.session {
+                        UIApplication.shared.requestSceneSessionDestruction(session, options: nil) { e in
+                            print(e)
+                        }
+                    }
+                }
+            }.onAppear() {
+                // appInfo == nil indicates this is the first scene opened in this launch. We don't want this so we open lc's main scene and close this view
+                // however lc's main view may already be starting in another scene so we wait a bit before opening the main view
+                // also we have to keep the view open for a little bit otherwise lc will be killed by iOS
+                if appInfo == nil {
+                    if DataManager.shared.model.mainWindowOpened {
+                        if let session = sceneDelegate.window?.windowScene?.session {
+                            UIApplication.shared.requestSceneSessionDestruction(session, options: nil) { e in
+                                print(e)
+                            }
+                        }
+
+                    } else {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            if !DataManager.shared.model.mainWindowOpened {
+                                openWindow(id: "Main")
+                            }
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                if let session = sceneDelegate.window?.windowScene?.session {
+                                    UIApplication.shared.requestSceneSessionDestruction(session, options: nil) { e in
+                                        print(e)
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
+
         }
     }
 }

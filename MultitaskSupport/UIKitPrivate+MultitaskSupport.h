@@ -138,7 +138,13 @@ typedef struct {
 @end
 
 // FBSSceneSettings
-@interface UIMutableApplicationSceneSettings : NSObject
+@interface UIApplicationSceneSettings : NSObject
+- (CGRect)frame;
+- (UIInterfaceOrientation)interfaceOrientation;
+- (UIMutableApplicationSceneSettings *)mutableCopy;
+@end
+
+@interface UIMutableApplicationSceneSettings : UIApplicationSceneSettings
 @property(nonatomic, assign, readwrite) BOOL canShowAlerts;
 @property(nonatomic, assign) BOOL deviceOrientationEventsEnabled;
 @property(nonatomic, assign, readwrite) NSInteger interruptionPolicy;
@@ -148,6 +154,8 @@ typedef struct {
 @property(assign, nonatomic, readwrite) UIUserInterfaceStyle userInterfaceStyle;
 @property(assign, nonatomic, readwrite) UIDeviceOrientation deviceOrientation;
 @property (nonatomic, strong, readwrite) BSCornerRadiusConfiguration *cornerRadiusConfiguration;
+@property (assign,nonatomic) CGRect statusBarAvoidanceFrame;
+@property (assign,nonatomic) double statusBarHeight; 
 - (id)displayConfiguration;
 - (CGRect)frame;
 - (NSMutableSet *)ignoreOcclusionReasons;
@@ -184,12 +192,26 @@ typedef struct {
 -(void)destroyScene:(id)arg1 withTransitionContext:(id)arg2 ;
 @end
 
+@interface FBSSceneSettingsDiff : NSObject
+- (UIMutableApplicationSceneSettings *)settingsByApplyingToMutableCopyOfSettings:(UIApplicationSceneSettings *)settings ;
+@end
+
+// UIKit
+@protocol _UISceneSettingsDiffAction<NSObject>
+@required
+- (void)_performActionsForUIScene:(UIScene *)scene withUpdatedFBSScene:(id)fbsScene settingsDiff:(FBSSceneSettingsDiff *)diff fromSettings:(id)settings transitionContext:(id)context lifecycleActionType:(uint32_t)actionType;
+@end
+
 @interface UIImage(internal)
 + (instancetype)_applicationIconImageForBundleIdentifier:(NSString *)bundleID format:(NSInteger)format scale:(CGFloat)scale;
 @end
 
-// UIKit
-@interface UIApplicationSceneTransitionContext : NSObject
+@interface FBSSceneTransitionContext : NSObject
+@property (nonatomic,copy) NSSet * actions;   
+
+@end
+
+@interface UIApplicationSceneTransitionContext : FBSSceneTransitionContext
 @end
 
 @interface UIMutableApplicationSceneClientSettings : NSObject
@@ -247,20 +269,13 @@ typedef struct {
 - (void)_setPresentationContext:(UIScenePresentationContext *)context;
 @end
 
+@interface UIScene(Private)
+- (void)_registerSettingsDiffActionArray:(NSArray<id<_UISceneSettingsDiffAction>> *)array forKey:(NSString *)key;
+- (void)_unregisterSettingsDiffActionArrayForKey:(NSString *)key;
+@end
+
 @interface UIApplication()
 - (void)launchApplicationWithIdentifier:(NSString *)identifier suspended:(BOOL)suspended;
-@end
-
-// PreviewsServicesUI
-@interface UVInjectedScene: NSObject
-@property(nonatomic, assign, readonly) FBScene *scene;
-@property(nonatomic, assign, readonly) NSString *sceneIdentifier;
-+ (instancetype)injectInProcess:(NSInteger)pid error:(NSError **)error;
-+ (instancetype)_injectInProcessHandle:(RBSProcessHandle *)process error:(NSError **)error;
-@end
-
-@interface UVSceneHost : UIView
-+ (instancetype)createWithInjectedScene:(UVInjectedScene *)scene error:(NSError **)error;
 @end
 
 @interface UIMutableScenePresentationContext : UIScenePresentationContext

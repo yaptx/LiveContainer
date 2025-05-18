@@ -67,6 +67,15 @@ static void TweakLoaderConstructor() {
     }
     
     NSMutableArray *errors = [NSMutableArray new];
+    
+    NSArray<NSURL *> *globalTweaks = [NSFileManager.defaultManager contentsOfDirectoryAtURL:[NSURL fileURLWithPath:globalTweakFolder]
+    includingPropertiesForKeys:@[] options:0 error:nil];
+    NSString *tweakFolderName = NSUserDefaults.guestAppInfo[@"LCTweakFolder"];
+    
+    if([globalTweaks count] <= 1 && tweakFolderName.length == 0) {
+        // nothing to load
+        return;
+    }
 
     // Load CydiaSubstrate
     dlopen("@loader_path/CydiaSubstrate.framework/CydiaSubstrate", RTLD_LAZY | RTLD_GLOBAL);
@@ -77,8 +86,7 @@ static void TweakLoaderConstructor() {
 
     // Load global tweaks
     NSLog(@"Loading tweaks from the global folder");
-    NSArray<NSURL *> *globalTweaks = [NSFileManager.defaultManager contentsOfDirectoryAtURL:[NSURL fileURLWithPath:globalTweakFolder]
-    includingPropertiesForKeys:@[] options:0 error:nil];
+
     for (NSURL *fileURL in globalTweaks) {
         NSString *error = loadTweakAtURL(fileURL);
         if (error) {
@@ -87,7 +95,6 @@ static void TweakLoaderConstructor() {
     }
 
     // Load selected tweak folder, recursively
-    NSString *tweakFolderName = NSUserDefaults.guestAppInfo[@"LCTweakFolder"];
     if (tweakFolderName.length > 0) {
         NSLog(@"Loading tweaks from the selected folder");
         NSString *tweakFolder = [globalTweakFolder stringByAppendingPathComponent:tweakFolderName];

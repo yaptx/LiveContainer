@@ -68,6 +68,8 @@ class SharedModel: ObservableObject {
         UIDevice.current.userInterfaceIdiom == .phone
     }()
     
+    var mainWindowOpened = false
+    
     public static let keychainAccessGroupCount = 128
     
     func updateMultiLCStatus() {

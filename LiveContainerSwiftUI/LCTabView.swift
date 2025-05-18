@@ -9,83 +9,16 @@ import Foundation
 import SwiftUI
 
 struct LCTabView: View {
-    @State var appDataFolderNames: [String]
-    @State var tweakFolderNames: [String]
+    @Binding var appDataFolderNames: [String]
+    @Binding var tweakFolderNames: [String]
     
     @State var errorShow = false
     @State var errorInfo = ""
     
-    init() {
-        let fm = FileManager()
-        var tempAppDataFolderNames : [String] = []
-        var tempTweakFolderNames : [String] = []
-        
-        var tempApps: [LCAppModel] = []
-        var tempHiddenApps: [LCAppModel] = []
-
-        do {
-            // load apps
-            try fm.createDirectory(at: LCPath.bundlePath, withIntermediateDirectories: true)
-            let appDirs = try fm.contentsOfDirectory(atPath: LCPath.bundlePath.path)
-            for appDir in appDirs {
-                if !appDir.hasSuffix(".app") {
-                    continue
-                }
-                let newApp = LCAppInfo(bundlePath: "\(LCPath.bundlePath.path)/\(appDir)")!
-                newApp.relativeBundlePath = appDir
-                newApp.isShared = false
-                if newApp.isHidden {
-                    tempHiddenApps.append(LCAppModel(appInfo: newApp))
-                } else {
-                    tempApps.append(LCAppModel(appInfo: newApp))
-                }
-            }
-            if LCPath.lcGroupDocPath != LCPath.docPath {
-                try fm.createDirectory(at: LCPath.lcGroupBundlePath, withIntermediateDirectories: true)
-                let appDirsShared = try fm.contentsOfDirectory(atPath: LCPath.lcGroupBundlePath.path)
-                for appDir in appDirsShared {
-                    if !appDir.hasSuffix(".app") {
-                        continue
-                    }
-                    let newApp = LCAppInfo(bundlePath: "\(LCPath.lcGroupBundlePath.path)/\(appDir)")!
-                    newApp.relativeBundlePath = appDir
-                    newApp.isShared = true
-                    if newApp.isHidden {
-                        tempHiddenApps.append(LCAppModel(appInfo: newApp))
-                    } else {
-                        tempApps.append(LCAppModel(appInfo: newApp))
-                    }
-                }
-            }
-            // load document folders
-            try fm.createDirectory(at: LCPath.dataPath, withIntermediateDirectories: true)
-            let dataDirs = try fm.contentsOfDirectory(atPath: LCPath.dataPath.path)
-            for dataDir in dataDirs {
-                let dataDirUrl = LCPath.dataPath.appendingPathComponent(dataDir)
-                if !dataDirUrl.hasDirectoryPath {
-                    continue
-                }
-                tempAppDataFolderNames.append(dataDir)
-            }
-            
-            // load tweak folders
-            try fm.createDirectory(at: LCPath.tweakPath, withIntermediateDirectories: true)
-            let tweakDirs = try fm.contentsOfDirectory(atPath: LCPath.tweakPath.path)
-            for tweakDir in tweakDirs {
-                let tweakDirUrl = LCPath.tweakPath.appendingPathComponent(tweakDir)
-                if !tweakDirUrl.hasDirectoryPath {
-                    continue
-                }
-                tempTweakFolderNames.append(tweakDir)
-            }
-        } catch {
-            NSLog("[LC] error:\(error)")
-        }
-        DataManager.shared.model.apps = tempApps
-        DataManager.shared.model.hiddenApps = tempHiddenApps
-        _appDataFolderNames = State(initialValue: tempAppDataFolderNames)
-        _tweakFolderNames = State(initialValue: tempTweakFolderNames)
-    }
+    @EnvironmentObject var sceneDelegate: SceneDelegate
+    @State var shouldToggleMainWindowOpen = false
+    @Environment(\.scenePhase) var scenePhase
+    let pub = NotificationCenter.default.publisher(for: UIScene.didDisconnectNotification)
     
     var body: some View {
         TabView {
@@ -115,10 +48,29 @@ struct LCTabView: View {
             Text(errorInfo)
         }
         .onAppear() {
+            closeDuplicatedWindow()
             checkLastLaunchError()
             checkTeamId()
         }
+        .onReceive(pub) { out in
+            if let scene1 = sceneDelegate.window?.windowScene, let scene2 = out.object as? UIWindowScene, scene1 == scene2 {
+                if shouldToggleMainWindowOpen {
+                    DataManager.shared.model.mainWindowOpened = false
+                }
+            }
+        }
         .environmentObject(DataManager.shared.model)
+    }
+    
+    func closeDuplicatedWindow() {
+        if let session = sceneDelegate.window?.windowScene?.session, DataManager.shared.model.mainWindowOpened {
+            UIApplication.shared.requestSceneSessionDestruction(session, options: nil) { e in
+                print(e)
+            }
+        } else {
+            shouldToggleMainWindowOpen = true
+        }
+        DataManager.shared.model.mainWindowOpened = true
     }
     
     func checkLastLaunchError() {

@@ -154,8 +154,14 @@ void LCSavePreference(void) {
             preferenceDict = [[NSMutableDictionary alloc] init];
             LCPreferences[identifier] = preferenceDict;
         }
-        preferenceDict[key] = obj;
-        LCSavePreference();
+        if(![preferenceDict[key] isEqual:obj]) {
+            [self willChangeValueForKey:key];
+            preferenceDict[key] = obj;
+            LCSavePreference();
+            [self didChangeValueForKey:key];
+            [NSNotificationCenter.defaultCenter postNotificationName:NSUserDefaultsDidChangeNotification object:self];
+        }
+
     }
 }
 
@@ -170,8 +176,13 @@ void LCSavePreference(void) {
         if(!preferenceDict) {
             return;
         }
-        [preferenceDict removeObjectForKey:key];
-        LCSavePreference();
+        if(preferenceDict[key]) {
+            [self willChangeValueForKey:key];
+            [preferenceDict removeObjectForKey:key];
+            LCSavePreference();
+            [self didChangeValueForKey:key];
+            [NSNotificationCenter.defaultCenter postNotificationName:NSUserDefaultsDidChangeNotification object:self];
+        }
     }
 }
 

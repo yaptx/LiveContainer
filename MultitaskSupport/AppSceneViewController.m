@@ -11,18 +11,19 @@
 @implementation AppSceneViewController {
     bool isAppRunning;
     int resizeDebounceToken;
+    CGRect currentFrame;
 }
 
-- (instancetype)initWithExtension:(NSExtension *)extension frame:(CGRect)frame identifier:(NSUUID *)identifier dataUUID:(NSString*)dataUUID delegate:(id<AppSceneViewDelegate>)delegate{
+- (instancetype)initWithExtension:(NSExtension *)extension frame:(CGRect)frame identifier:(NSUUID *)identifier dataUUID:(NSString*)dataUUID delegate:(id<AppSceneViewDelegate>)delegate {
     self = [super initWithNibName:nil bundle:nil];
     int pid = [extension pidForRequestIdentifier:identifier];
+    currentFrame = frame;
     self.delegate = delegate;
     self.extension = extension;
     self.dataUUID = dataUUID;
     self.pid = pid;
     isAppRunning = true;
     
-    self.transitionContext = [UIApplicationSceneTransitionContext new];
     RBSProcessPredicate* predicate = [PrivClass(RBSProcessPredicate) predicateMatchingIdentifier:@(pid)];
     
     FBProcessManager *manager = [PrivClass(FBProcessManager) sharedInstance];
@@ -46,12 +47,12 @@
 
     settings.deviceOrientation = UIDevice.currentDevice.orientation;
     bool isNativeWindow = [[[NSUserDefaults alloc] initWithSuiteName:[LCUtils appGroupID]] integerForKey:@"LCMultitaskMode" ] == 1;
-    if(UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication.statusBarOrientation)) {
+    settings.interfaceOrientation = UIApplication.sharedApplication.statusBarOrientation;
+    if(UIInterfaceOrientationIsLandscape(settings.interfaceOrientation)) {
         settings.frame = CGRectMake(0, 0, frame.size.height, frame.size.width);
     } else {
         settings.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
     }
-    settings.interfaceOrientation = UIApplication.sharedApplication.statusBarOrientation;
     //settings.interruptionPolicy = 2; // reconnect
     settings.level = 1;
     settings.persistenceIdentifier = NSUUID.UUID.UUIDString;
@@ -100,24 +101,23 @@
     
     [self.view insertSubview:self.presenter.presentationView atIndex:0];
     [MultitaskManager registerMultitaskContainerWithContainer:dataUUID];
-    if(!isNativeWindow) {
-        [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(rotated) name:UIDeviceOrientationDidChangeNotification object:nil];
-    }
     return self;
 }
 
-- (void)resizeWindowWithFrame:(CGRect)frame {    
+// this method should not be called in native window mode
+- (void)resizeWindowWithFrame:(CGRect)frame {
     __block int currentDebounceToken = self->resizeDebounceToken + 1;
     self->resizeDebounceToken = currentDebounceToken;
-    dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC));
+    dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.05 * NSEC_PER_SEC));
     dispatch_after(delay, dispatch_get_main_queue(), ^{
         if(currentDebounceToken != self->resizeDebounceToken) {
             return;
         }
+        currentFrame = frame;
         [self.presenter.scene updateSettingsWithBlock:^(UIMutableApplicationSceneSettings *settings) {
             settings.deviceOrientation = UIDevice.currentDevice.orientation;
-            [settings setInterfaceOrientation:UIApplication.sharedApplication.statusBarOrientation];
-            if(UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication.statusBarOrientation)) {
+            settings.interfaceOrientation = self.view.window.windowScene.interfaceOrientation;
+            if(UIInterfaceOrientationIsLandscape(settings.interfaceOrientation)) {
                 CGRect frame2 = CGRectMake(frame.origin.x, frame.origin.y, frame.size.height, frame.size.width);
                 settings.frame = frame2;
             } else {
@@ -128,6 +128,7 @@
 }
 
 - (void)closeWindow {
+    [self.view.window.windowScene _unregisterSettingsDiffActionArrayForKey:self.sceneID];
     [[PrivClass(FBSceneManager) sharedInstance] destroyScene:self.sceneID withTransitionContext:nil];
     if(self.presenter){
         [self.presenter deactivate];
@@ -144,46 +145,44 @@
 
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [self.presenter.scene updateSettingsWithBlock:^(UIMutableApplicationSceneSettings *settings) {
-        settings.userInterfaceStyle = self.traitCollection.userInterfaceStyle;
-    }];
+- (void)viewDidAppear:(BOOL)animated {
+    [self.view.window.windowScene _registerSettingsDiffActionArray:@[self] forKey:self.sceneID];
 }
 
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
-     } completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
-         [self.presenter.scene updateSettingsWithBlock:^(UIMutableApplicationSceneSettings *settings) {
-             settings.deviceOrientation = UIDevice.currentDevice.orientation;
-             [settings setInterfaceOrientation:UIApplication.sharedApplication.statusBarOrientation];
-             if(UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication.statusBarOrientation)) {
-                 CGRect frame2 = CGRectMake(0, 0, size.height, size.width);
-                 settings.frame = frame2;
-             } else {
-                 CGRect frame = CGRectMake(0, 0, size.width, size.height);
-                 settings.frame = frame;
-             }
-         }];
-     }];
-}
-- (void)rotated {
-    [self.presenter.scene updateSettingsWithBlock:^(UIMutableApplicationSceneSettings *settings) {
-        if(UIDeviceOrientationIsLandscape(settings.deviceOrientation) ^ UIDeviceOrientationIsLandscape(UIDevice.currentDevice.orientation)) {
-            settings.frame = CGRectMake(0, 0, settings.frame.size.height, settings.frame.size.width);
+- (void)_performActionsForUIScene:(UIScene *)scene withUpdatedFBSScene:(id)fbsScene settingsDiff:(FBSSceneSettingsDiff *)diff fromSettings:(UIApplicationSceneSettings *)settings transitionContext:(id)context lifecycleActionType:(uint32_t)actionType {
+    UIMutableApplicationSceneSettings *baseSettings = [diff settingsByApplyingToMutableCopyOfSettings:settings];
+    bool isNativeWindow = [[[NSUserDefaults alloc] initWithSuiteName:[LCUtils appGroupID]] integerForKey:@"LCMultitaskMode" ] == 1;
+    if(!diff) {
+        return;
+    }
+    
+    if(isNativeWindow) {
+        // directly update the settings
+        baseSettings.interruptionPolicy = 0;
+        UIApplicationSceneTransitionContext *newContext = [context copy];
+        newContext.actions = nil;
+        [self.presenter.scene updateSettings:baseSettings withTransitionContext:newContext completion:nil];
+    } else {
+        UIMutableApplicationSceneSettings *newSettings = [settings mutableCopy];
+        newSettings.userInterfaceStyle = baseSettings.userInterfaceStyle;
+        newSettings.interfaceOrientation = baseSettings.interfaceOrientation;
+        newSettings.deviceOrientation = baseSettings.deviceOrientation;
+        // it seems some apps don't honor these settings so we don't cover the top of the app
+        newSettings.peripheryInsets = UIEdgeInsetsZero;
+        newSettings.safeAreaInsetsPortrait = UIEdgeInsetsZero;
+        newSettings.interruptionPolicy = 0;
+        if(UIInterfaceOrientationIsLandscape(baseSettings.interfaceOrientation)) {
+            newSettings.frame = CGRectMake(0, 0, currentFrame.size.height, currentFrame.size.width);
+        } else {
+            newSettings.frame = CGRectMake(0, 0, currentFrame.size.width, currentFrame.size.height);
         }
-        settings.deviceOrientation = UIDevice.currentDevice.orientation;
-        [settings setInterfaceOrientation:UIApplication.sharedApplication.statusBarOrientation];
-    }];
+        [self.presenter.scene updateSettings:newSettings withTransitionContext:context completion:nil];
+    }
 }
 
-- (void)viewSafeAreaInsetsDidChange {
-    [super viewSafeAreaInsetsDidChange];
-    [self.presenter.scene updateSettingsWithBlock:^(UIMutableApplicationSceneSettings *settings) {
-        UIEdgeInsets defaultInsets = UIApplication.sharedApplication.keyWindow.safeAreaInsets;
-        settings.peripheryInsets = defaultInsets;
-        settings.safeAreaInsetsPortrait = defaultInsets;
-    }];
-
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.view.window.windowScene _registerSettingsDiffActionArray:@[self] forKey:self.sceneID];
 }
 
 @end

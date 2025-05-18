@@ -13,10 +13,10 @@
 - (void)appDidExit;
 @end
 
-@interface AppSceneViewController : UIViewController
+@interface AppSceneViewController : UIViewController<_UISceneSettingsDiffAction>
+@property(nonatomic) UIWindowScene *hostScene;
 @property(nonatomic) _UIScenePresenter *presenter;
 @property(nonatomic) UIMutableApplicationSceneSettings *settings;
-@property(nonatomic) UIApplicationSceneTransitionContext *transitionContext;
 @property(nonatomic) NSString *sceneID;
 @property(nonatomic) NSExtension* extension;
 @property(nonatomic) NSString* dataUUID;
