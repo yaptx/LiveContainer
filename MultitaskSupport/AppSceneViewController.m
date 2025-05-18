@@ -67,7 +67,7 @@
     }
 
 
-    //settings.statusBarDisabled = 1;
+    settings.statusBarDisabled = !isNativeWindow;
     //settings.previewMaximumSize =
     //settings.deviceOrientationEventsEnabled = YES;
     self.settings = settings;
@@ -156,11 +156,11 @@
         return;
     }
     
+    UIApplicationSceneTransitionContext *newContext = [context copy];
+    newContext.actions = nil;
     if(isNativeWindow) {
         // directly update the settings
         baseSettings.interruptionPolicy = 0;
-        UIApplicationSceneTransitionContext *newContext = [context copy];
-        newContext.actions = nil;
         [self.presenter.scene updateSettings:baseSettings withTransitionContext:newContext completion:nil];
     } else {
         UIMutableApplicationSceneSettings *newSettings = [settings mutableCopy];
@@ -176,7 +176,7 @@
         } else {
             newSettings.frame = CGRectMake(0, 0, currentFrame.size.width, currentFrame.size.height);
         }
-        [self.presenter.scene updateSettings:newSettings withTransitionContext:context completion:nil];
+        [self.presenter.scene updateSettings:newSettings withTransitionContext:newContext completion:nil];
     }
 }
 
