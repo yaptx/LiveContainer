@@ -139,9 +139,14 @@ typedef struct {
 
 // FBSSceneSettings
 @interface UIApplicationSceneSettings : NSObject
+- (bool)isForeground;
 - (CGRect)frame;
 - (UIInterfaceOrientation)interfaceOrientation;
 - (UIMutableApplicationSceneSettings *)mutableCopy;
+@end
+
+@interface FBScene (a)
+- (UIApplicationSceneSettings*)settings;
 @end
 
 @interface UIMutableApplicationSceneSettings : UIApplicationSceneSettings
@@ -155,7 +160,8 @@ typedef struct {
 @property(assign, nonatomic, readwrite) UIDeviceOrientation deviceOrientation;
 @property (nonatomic, strong, readwrite) BSCornerRadiusConfiguration *cornerRadiusConfiguration;
 @property (assign,nonatomic) CGRect statusBarAvoidanceFrame;
-@property (assign,nonatomic) double statusBarHeight; 
+@property (assign,nonatomic) double statusBarHeight;
+@property (assign,nonatomic, getter=isForeground) bool foreground;
 - (id)displayConfiguration;
 - (CGRect)frame;
 - (NSMutableSet *)ignoreOcclusionReasons;

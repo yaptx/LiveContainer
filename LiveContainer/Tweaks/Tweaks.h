@@ -12,6 +12,7 @@ void NUDGuestHooksInit(void);
 void SecItemGuestHooksInit(void);
 void DyldHooksInit(bool hideLiveContainer, uint32_t spoofSDKVersion);
 void NSFMGuestHooksInit(void);
+void initDead10ccFix(void);
 
 @interface NSBundle(LiveContainer)
 - (instancetype)initWithPathForMainBundle:(NSString *)path;

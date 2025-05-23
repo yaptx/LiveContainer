@@ -99,7 +99,7 @@
         
     }];
     
-    [self.view insertSubview:self.presenter.presentationView atIndex:0];
+    self.view = self.presenter.presentationView;
     [MultitaskManager registerMultitaskContainerWithContainer:dataUUID];
     return self;
 }
@@ -150,20 +150,20 @@
 }
 
 - (void)_performActionsForUIScene:(UIScene *)scene withUpdatedFBSScene:(id)fbsScene settingsDiff:(FBSSceneSettingsDiff *)diff fromSettings:(UIApplicationSceneSettings *)settings transitionContext:(id)context lifecycleActionType:(uint32_t)actionType {
+    if(!diff) return;
     UIMutableApplicationSceneSettings *baseSettings = [diff settingsByApplyingToMutableCopyOfSettings:settings];
     bool isNativeWindow = [[[NSUserDefaults alloc] initWithSuiteName:[LCUtils appGroupID]] integerForKey:@"LCMultitaskMode" ] == 1;
-    if(!diff) {
-        return;
-    }
     
     UIApplicationSceneTransitionContext *newContext = [context copy];
     newContext.actions = nil;
     if(isNativeWindow) {
         // directly update the settings
         baseSettings.interruptionPolicy = 0;
+        UIApplicationSceneTransitionContext *newContext = [context copy];
+        newContext.actions = nil;
         [self.presenter.scene updateSettings:baseSettings withTransitionContext:newContext completion:nil];
     } else {
-        UIMutableApplicationSceneSettings *newSettings = [settings mutableCopy];
+        UIMutableApplicationSceneSettings *newSettings = [self.presenter.scene.settings mutableCopy];
         newSettings.userInterfaceStyle = baseSettings.userInterfaceStyle;
         newSettings.interfaceOrientation = baseSettings.interfaceOrientation;
         newSettings.deviceOrientation = baseSettings.deviceOrientation;
