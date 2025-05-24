@@ -104,9 +104,9 @@ jobs:
           fi
       - name: Fakesign
         run: |
-          find "$archive_path.xcarchive/Products/Applications/$scheme.app" -type d -path '*/Frameworks/*.framework' -exec ldid -Sentitlements.xml \{\} \;
-          ldid -Sentitlements.xml "$archive_path.xcarchive/Products/Applications/$scheme.app"
-          ldid -SLiveProcess/LiveProcess.entitlements "$archive_path.xcarchive/Products/Applications/$scheme.app/PlugIns/LiveProcess.appex/LiveProcess_PleaseDoNotShortenTheExecutableNameBecauseItIsUsedToReserveSpaceForOverwritingThankYou"
+          find "$archive_path.xcarchive/Products/Applications/$scheme.app" -type d -path '*/Frameworks/*.framework' -exec ldid -S.github/entitlements/entitlements.xml \{\} \;
+          ldid -S.github/entitlements/entitlements.xml "$archive_path.xcarchive/Products/Applications/$scheme.app"
+          ldid -S.github/entitlements/LiveProcess.entitlements "$archive_path.xcarchive/Products/Applications/$scheme.app/PlugIns/LiveProcess.appex/LiveProcess_PleaseDoNotShortenTheExecutableNameBecauseItIsUsedToReserveSpaceForOverwritingThankYou"
       - name: Create IPA
         run: |
           mv "$archive_path.xcarchive/Products/Applications" Payload

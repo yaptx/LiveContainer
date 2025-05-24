@@ -1,0 +1,17 @@
+//
+//  LiveContainer.debug.xcconfig
+//  LiveContainer
+//
+//  Created by s s on 2025/5/24.
+//
+
+// Please Note that signing is handled by ldid when signing on Github Actions, so only bundle identifiers take effect here.
+// To change entitlements, see .github/entitlements
+
+DEVELOPMENT_TEAM = AAAAA11111
+
+LIVECONTAINER_BUNDLE_IDENTIFIER = com.kdt.livecontainer
+PRODUCT_BUNDLE_IDENTIFIER = com.kdt.livecontainer
+
+APP_GROUP_SIDESTORE = group.com.SideStore.SideStore
+APP_GROUP_ALTSTORE = group.com.rileytestut.AltStore
