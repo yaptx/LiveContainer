@@ -8,7 +8,7 @@
 // Please Note that signing is handled by ldid when signing on Github Actions, so only bundle identifiers take effect here.
 // To change entitlements, see .github/entitlements
 
-DEVELOPMENT_TEAM = AAAAA11111
+#include "Global.xcconfig"
 
 LIVECONTAINER_BUNDLE_IDENTIFIER = com.kdt.livecontainer
 PRODUCT_BUNDLE_IDENTIFIER = com.kdt.livecontainer
