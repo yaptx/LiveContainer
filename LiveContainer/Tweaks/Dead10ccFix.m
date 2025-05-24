@@ -42,8 +42,6 @@ void initDead10ccFix(void) {
 @implementation Dead10ccFix
 
 - (void)handleAppDidEnterBackground:(NSNotification *)notification {
-    void* handle = dlopen("/System/Library/PrivateFrameworks/RunningBoard.framework/RunningBoard", RTLD_LAZY|RTLD_GLOBAL|RTLD_FIRST);
-    
     NSSet* locks = [self _lock_lockedFilePathsIgnoring:[NSMutableSet set]];
     for(NSString* path in locks) {
         unsigned char value = 0x01;
@@ -132,9 +130,9 @@ void initDead10ccFix(void) {
             continue;
         }
 
-        if (getxattr(path_c, "com.apple.runningboard.can-suspend", NULL, 0, 0, 0) == 1) {
+        if (getxattr(path_c, "com.apple.runningboard.can-suspend-locked", NULL, 0, 0, 0) == 1) {
             char value;
-            getxattr(path_c, "com.apple.runningboard.can-suspend", &value, sizeof(value), 0, 0);
+            getxattr(path_c, "com.apple.runningboard.can-suspend-locked", &value, sizeof(value), 0, 0);
             if (value != 0) {
                 // _rbs_process_log with %{public}@ Ignoring file with can-suspend-locked: %{public}@
                 NSLog(@"Ignoring file with can-suspend-locked: %@", path);

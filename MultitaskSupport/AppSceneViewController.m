@@ -167,10 +167,7 @@
         newSettings.userInterfaceStyle = baseSettings.userInterfaceStyle;
         newSettings.interfaceOrientation = baseSettings.interfaceOrientation;
         newSettings.deviceOrientation = baseSettings.deviceOrientation;
-        // it seems some apps don't honor these settings so we don't cover the top of the app
-        newSettings.peripheryInsets = UIEdgeInsetsZero;
-        newSettings.safeAreaInsetsPortrait = UIEdgeInsetsZero;
-        newSettings.interruptionPolicy = 0;
+        newSettings.foreground = baseSettings.isForeground;
         if(UIInterfaceOrientationIsLandscape(baseSettings.interfaceOrientation)) {
             newSettings.frame = CGRectMake(0, 0, currentFrame.size.height, currentFrame.size.width);
         } else {
