@@ -56,7 +56,7 @@ int UIApplicationMain(int argc, char * argv[], NSString * principalClassName, NS
 static void* (*orig_dlopen)(void* dyldApiInstancePtr, const char* path, int mode);
 static void* hook_dlopen(void* dyldApiInstancePtr, const char* path, int mode) {
     const char *UIKitFrameworkPath = "/System/Library/Frameworks/UIKit.framework/UIKit";
-    if(!strncmp(path, UIKitFrameworkPath, strlen(UIKitFrameworkPath))) {
+    if(path && !strncmp(path, UIKitFrameworkPath, strlen(UIKitFrameworkPath))) {
         // switch back to original dlopen
         performHookDyldApi("dlopen", 2, (void**)&orig_dlopen, orig_dlopen);
         // FIXME: may be incompatible with jailbreak tweaks?
