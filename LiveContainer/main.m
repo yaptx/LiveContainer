@@ -20,6 +20,7 @@
 
 static int (*appMain)(int, char**);
 static const char *dyldImageName;
+static const char* dyldImageName2;
 NSUserDefaults *lcUserDefaults;
 NSUserDefaults *lcSharedDefaults;
 NSString *lcAppGroupPath;
@@ -150,17 +151,15 @@ static void overwriteExecPath_handler(int signum, siginfo_t* siginfo, void* cont
     assert(maxLen >= newLen);
     
     // if we don't have TPRO, we will use the old way
-    if(!os_thread_self_restrict_tpro_to_rw()) {
-        // Make it RW and overwrite now
-        kern_return_t ret = builtin_vm_protect(mach_task_self(), (mach_vm_address_t)path, maxLen, false, PROT_READ | PROT_WRITE);
-        if (ret != KERN_SUCCESS) {
-            ret = builtin_vm_protect(mach_task_self(), (mach_vm_address_t)path, maxLen, false, PROT_READ | PROT_WRITE | VM_PROT_COPY);
-        }
-        assert(ret == KERN_SUCCESS);
+    kern_return_t ret = builtin_vm_protect(mach_task_self(), (mach_vm_address_t)path, maxLen, false, PROT_READ | PROT_WRITE);
+    if(ret != KERN_SUCCESS) {
+        BOOL tpro_ret = os_thread_self_restrict_tpro_to_rw();
+        assert(tpro_ret);
     }
 
     bzero(path, maxLen);
     strncpy(path, newPath, newLen);
+    dyldImageName2 = path;
 }
 static void overwriteExecPath(NSString *bundlePath) {
     // Silly workaround: we have set our executable name 100 characters long, now just overwrite its path with our fake executable file
@@ -218,6 +217,23 @@ static void *getAppEntryPoint(void *handle) {
     return (void *)header + entryoff;
 }
 
+bool shouldOverwriteExecPathBack = false;
+static void overwriteExecPathLoadImageHandler(const struct mach_header *header, intptr_t slide) {
+    if(!shouldOverwriteExecPathBack) {
+        return;
+    }
+    shouldOverwriteExecPathBack = false;
+    const char* newDyldImageName = NSProcessInfo.processInfo.arguments.firstObject.fileSystemRepresentation;
+    strcpy((char*)dyldImageName, newDyldImageName);
+    
+    kern_return_t ret = builtin_vm_protect(mach_task_self(), (mach_vm_address_t)dyldImageName2, strlen(newDyldImageName) + 1, false, PROT_READ | PROT_WRITE);
+    if(ret != KERN_SUCCESS) {
+        BOOL tpro_ret = os_thread_self_restrict_tpro_to_rw();
+        assert(tpro_ret);
+    }
+    
+    strcpy((char*)dyldImageName2, newDyldImageName);
+}
 
 static NSString* invokeAppMain(NSString *selectedApp, NSString *selectedContainer, int argc, char *argv[]) {
     NSString *appError = nil;
@@ -416,11 +432,21 @@ static NSString* invokeAppMain(NSString *selectedApp, NSString *selectedContaine
         return @"App's executable path not found. Please try force re-signing or reinstalling this app.";
     }
     
+    if([[lcUserDefaults objectForKey:@"LCWaitForDebugger"] boolValue]) {
+        sleep(100);
+    }
+    
     NSMutableArray<NSString *> *objcArgv = NSProcessInfo.processInfo.arguments.mutableCopy;
     objcArgv[0] = appBundle.executablePath;
     [NSProcessInfo.processInfo performSelector:@selector(setArguments:) withObject:objcArgv];
     NSProcessInfo.processInfo.processName = appBundle.infoDictionary[@"CFBundleExecutable"];
     *_CFGetProgname() = NSProcessInfo.processInfo.processName.UTF8String;
+    Class swiftNSProcessInfo = NSClassFromString(@"_NSSwiftProcessInfo");
+    if(swiftNSProcessInfo) {
+        // Swizzle the arguments method to return the ObjC arguments
+        SEL selector = @selector(arguments);
+        method_setImplementation(class_getInstanceMethod(swiftNSProcessInfo, selector), class_getMethodImplementation(NSProcessInfo.class, selector));
+    }
     
     // hook NSUserDefault before running libraries' initializers
     NUDGuestHooksInit();
@@ -461,6 +487,10 @@ static NSString* invokeAppMain(NSString *selectedApp, NSString *selectedContaine
     if(![guestAppInfo[@"dontInjectTweakLoader"] boolValue]) {
         tweakLoaderLoaded = true;
     }
+    
+    _dyld_register_func_for_add_image(overwriteExecPathLoadImageHandler);
+    shouldOverwriteExecPathBack = true;
+    
     void *appHandle = dlopen(appExecPath, RTLD_LAZY|RTLD_GLOBAL|RTLD_FIRST);
     appExecutableHandle = appHandle;
     const char *dlerr = dlerror();
@@ -528,10 +558,6 @@ int LiveContainerMain(int argc, char *argv[]) {
     lcMainBundle = [NSBundle mainBundle];
     lcUserDefaults = NSUserDefaults.standardUserDefaults;
     
-    if([[lcUserDefaults objectForKey:@"LCWaitForDebugger"] boolValue] && !checkJITEnabled()) {
-        sleep(100);
-    }
-    
     lcSharedDefaults = [[NSUserDefaults alloc] initWithSuiteName: [LCSharedUtils appGroupID]];
     lcAppUrlScheme = NSBundle.mainBundle.infoDictionary[@"CFBundleURLTypes"][0][@"CFBundleURLSchemes"][0];
     lcAppGroupPath = [[NSFileManager.defaultManager containerURLForSecurityApplicationGroupIdentifier:[NSClassFromString(@"LCSharedUtils") appGroupID]] path];
@@ -548,6 +574,7 @@ int LiveContainerMain(int argc, char *argv[]) {
         lastLaunchDataUUID = selectedContainer;
     }
     
+    // we put all files in app group after fixing 0xdead10cc. This call is here in case user upgraded lc with app's data in private Library/SharedDocuments
     [LCSharedUtils moveSharedAppFolderBack];
     
     if(lastLaunchDataUUID) {
@@ -574,7 +601,8 @@ int LiveContainerMain(int argc, char *argv[]) {
     } else if (isLiveProcess && [lcUserDefaults boolForKey:@"liveprocessRetrieveData"]) {
         [lcUserDefaults removeObjectForKey:@"selected"];
         [lcUserDefaults removeObjectForKey:@"selectedContainer"];
-
+        NSString* preferencesTo = [LCSharedUtils.appGroupPath.path stringByAppendingPathComponent:[NSString stringWithFormat:@"LiveContainer/Data/Application/%@/Library/Preferences", lastLaunchDataUUID]];
+        [LCSharedUtils dumpPreferenceToPath:preferencesTo dataUUID:lastLaunchDataUUID];
         [LCSharedUtils setContainerUsingByThisLC:selectedContainer remove:YES];
         [LCSharedUtils setAppRunningByThisLC:selectedApp remove:YES];
         [lcUserDefaults removeObjectForKey:@"liveprocessRetrieveData"];

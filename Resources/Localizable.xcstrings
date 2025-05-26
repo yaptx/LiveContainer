@@ -55,12 +55,37 @@
       }
     },
     "lc.appBanner.confirmRunWhenMultitasking" : {
+      "comment" : "lc.appBanner.confirmRunWhenMultitasking",
       "extractionState" : "stale",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بعض التطبيقات تعمل في وضع متعدد المهام. تشغيل هذا التطبيق سوف يغلق هذه التطبيقات، هل تود المتابعة؟"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einige Apps werden im Multitasking-Modus ausgeführt. Wenn Sie diese Anwendung ausführen, werden diese Anwendungen beendet. Fortsetzen?"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Some apps are running in multitask mode. Running this app will terminate those apps. Continue?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Certaines applications sont en mode multitâche. Exécuter cette application mettra fin à ces applications. Continuer ?"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一部のアプリがマルチタスクで実行中です。このアプリを起動すると、マルチタスクで実行しているアプリは終了します。続けますか？"
           }
         },
         "zh-Hans" : {
@@ -445,10 +470,34 @@
     "lc.appBanner.multitask" : {
       "extractionState" : "stale",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "وضع متعدد المهام"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Multitasking"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Multitask"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Multitâche"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "マルチタスク"
           }
         },
         "zh-Hans" : {
@@ -1333,7 +1382,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "アプリを隠す"
+            "value" : "非表示のアプリ"
           }
         },
         "sv" : {
@@ -1386,7 +1435,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "アプリの設定でアプリを隠す。"
+            "value" : "非表示のアプリはここに表示されます"
           }
         },
         "sv" : {
@@ -2075,7 +2124,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "スキーム \"%@\" はLiveContainerにインストールされているアプリでは開けません。"
+            "value" : "スキーム \"%@\"はLiveContainerにインストールしているアプリでは開けません。"
           }
         },
         "sv" : {
@@ -4329,6 +4378,23 @@
         }
       }
     },
+    "lc.common.close" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Close"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关闭"
+          }
+        }
+      }
+    },
     "lc.common.container" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -6505,10 +6571,34 @@
     "lc.container.unableToMoveContainerFromLiveProcess" : {
       "extractionState" : "stale",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فشل استرجاع ملف البيانات من LiveProcess."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Datenordner vom \"LiveProcess\" konnte nicht abgerufen werden."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Failed to retrieve the data folder from LiveProcess."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossible de récupérer le dossier de données depuis LiveProcess."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LiveProcessからデータフォルダの取得に失敗しました。"
           }
         },
         "zh-Hans" : {
@@ -8368,6 +8458,23 @@
         }
       }
     },
+    "lc.multitaskAppWindow.appTerminated" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This app has been terminated."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App已被终止。"
+          }
+        }
+      }
+    },
     "lc.settings.about" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -9177,7 +9284,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "この設定がオフになるまでLiveContainerは新しいアプリに署名しません。この設定がオンの間にインストールされたアプリは未署名のままです。"
+            "value" : "この設定をオンにすると、LiveContainerは新しくインストールするアプリに署名しません。以前にインストールしたアプリにこの設定の影響はありません。"
           }
         },
         "sv" : {
@@ -10961,7 +11068,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LiveContainerは別のLiveContainer用のipaを生成します。インストールするには%@に共有してください。続けますか？"
+            "value" : "LiveContainerは別のLiveContainer用のIPAを生成します。インストールするには%@に共有してください。続けますか？"
           }
         },
         "zh-Hans" : {
@@ -11080,6 +11187,57 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "重新下載另一個LiveContainer"
+          }
+        }
+      }
+    },
+    "lc.settings.multitaskMode" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Multitasking Mode"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "多任务模式"
+          }
+        }
+      }
+    },
+    "lc.settings.multitaskMode.nativeWindow" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Native Window"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "原生窗口"
+          }
+        }
+      }
+    },
+    "lc.settings.multitaskMode.virtualWindow" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Virtual Window"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "虚拟窗口"
           }
         }
       }
@@ -13145,7 +13303,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "アプリを起動"
+            "value" : "アプリを実行"
           }
         },
         "sv" : {
