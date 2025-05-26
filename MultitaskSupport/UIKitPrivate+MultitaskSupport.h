@@ -9,10 +9,6 @@
 
 #define PrivClass(NAME) NSClassFromString(@#NAME)
 
-typedef struct {
-	unsigned val[8];
-} SCD_Struct_RB3;
-
 @interface LSResourceProxy : NSObject
 	@property (setter=_setLocalizedName:,nonatomic,copy) NSString *localizedName;
 @end
@@ -107,7 +103,7 @@ typedef struct {
 @interface FBProcessManager : NSObject
 + (instancetype)sharedInstance;
 - (FBProcessExecutionContext *)launchProcessWithContext:(FBMutableProcessExecutionContext *)context;
-- (void)registerProcessForAuditToken:(SCD_Struct_RB3)token;
+- (void)registerProcessForAuditToken:(audit_token_t)token;
 @end
 
 @interface FBSSceneSpecification : NSObject
@@ -127,7 +123,7 @@ typedef struct {
 @interface RBSProcessHandle
 @property(nonatomic, copy, readonly) RBSProcessIdentity *identity;
 + (instancetype)handleForPredicate:(RBSProcessPredicate *)predicate error:(NSError **)error;
-- (SCD_Struct_RB3)auditToken;
+- (audit_token_t)auditToken;
 @end
 
 @interface UIApplicationSceneSpecification : FBSSceneSpecification

@@ -224,9 +224,15 @@ static void overwriteExecPathLoadImageHandler(const struct mach_header *header, 
     }
     shouldOverwriteExecPathBack = false;
     const char* newDyldImageName = NSProcessInfo.processInfo.arguments.firstObject.fileSystemRepresentation;
+    
+    kern_return_t ret = builtin_vm_protect(mach_task_self(), (mach_vm_address_t)dyldImageName, strlen(newDyldImageName) + 1, false, PROT_READ | PROT_WRITE);
+    if(ret != KERN_SUCCESS) {
+        BOOL tpro_ret = os_thread_self_restrict_tpro_to_rw();
+        assert(tpro_ret);
+    }
     strcpy((char*)dyldImageName, newDyldImageName);
     
-    kern_return_t ret = builtin_vm_protect(mach_task_self(), (mach_vm_address_t)dyldImageName2, strlen(newDyldImageName) + 1, false, PROT_READ | PROT_WRITE);
+    ret = builtin_vm_protect(mach_task_self(), (mach_vm_address_t)dyldImageName2, strlen(newDyldImageName) + 1, false, PROT_READ | PROT_WRITE);
     if(ret != KERN_SUCCESS) {
         BOOL tpro_ret = os_thread_self_restrict_tpro_to_rw();
         assert(tpro_ret);
@@ -703,6 +709,16 @@ int LiveContainerMain(int argc, char *argv[]) {
     assert(LiveContainerSwiftUIHandle);
 
     if ([lcUserDefaults boolForKey:@"LCLoadTweaksToSelf"]) {
+        NSString *tweakFolder = nil;
+        if (isSharedBundle) {
+            NSURL *appGroupPath = [NSFileManager.defaultManager containerURLForSecurityApplicationGroupIdentifier:[LCSharedUtils appGroupID]];
+            NSURL *appGroupFolder = [appGroupPath URLByAppendingPathComponent:@"LiveContainer"];
+            tweakFolder = [appGroupFolder.path stringByAppendingPathComponent:@"Tweaks"];
+        } else {
+            NSString *docPath = [NSFileManager.defaultManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask].lastObject.path;
+            tweakFolder = [docPath stringByAppendingPathComponent:@"Tweaks"];
+        }
+        setenv("LC_GLOBAL_TWEAKS_FOLDER", tweakFolder.UTF8String, 1);
         dlopen("@executable_path/Frameworks/TweakLoader.dylib", RTLD_LAZY);
     }
 
