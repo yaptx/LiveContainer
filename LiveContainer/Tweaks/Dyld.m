@@ -130,43 +130,38 @@ const char* hook_dyld_get_image_name(uint32_t image_index) {
     __attribute__((musttail)) return orig_dyld_get_image_name(translateImageIndex(image_index));
 }
 
-void *findPrivateSymbol(struct mach_header_64 *header, const char *name) {
-    uintptr_t slide = 0;
-    uint8_t *linkedit_base = NULL;
-    struct dysymtab_command *dysymtab_cmd = NULL;
-    struct symtab_command* symtab_cmd = NULL;
-    uintptr_t cur = (uintptr_t)header + sizeof(struct mach_header_64);
-    struct load_command *cmd;
-    for(uint i = 0; i < header->ncmds; i++, cur += cmd->cmdsize) {
-        cmd = (struct load_command *)cur;
-        switch(cmd->cmd) {
-            case LC_SEGMENT_64: {
-                const struct segment_command_64* seg = (struct segment_command_64 *)cmd;
-                if(!strcmp(seg->segname, "__TEXT"))
-                    slide = (uintptr_t)header - seg->vmaddr;
-                if(!strcmp(seg->segname, "__LINKEDIT"))
-                    linkedit_base = (uint8_t *)(seg->vmaddr - seg->fileoff + slide);
-            } break;
-            case LC_DYSYMTAB:
-                dysymtab_cmd = (struct dysymtab_command*)cmd;
-                break;
-            case LC_SYMTAB:
-                symtab_cmd = (struct symtab_command *)cmd;
-                break;
+void *findPrivateSymbol(struct mach_header_64 *mh, const char *target_name) {
+    if (!mh || !target_name) return NULL;
+
+    // Find load commands
+    const struct load_command* lc = (const struct load_command*)(mh + 1);
+    const struct symtab_command* symtab = NULL;
+
+    // Iterate through load commands to find LC_SYMTAB
+    for (uint32_t i = 0; i < mh->ncmds; ++i) {
+        if (lc->cmd == LC_SYMTAB) {
+            symtab = (const struct symtab_command*)lc;
+            break;
+        }
+        lc = (const struct load_command*)((const uint8_t*)lc + lc->cmdsize);
+    }
+
+    if (!symtab) return NULL;
+
+    // Get symbol table and string table
+    const struct nlist_64* symtab_base = (const struct nlist_64*)((const uint8_t*)mh + symtab->symoff);
+    const char* strtab_base = (const char*)((const uint8_t*)mh + symtab->stroff);
+
+    for (uint32_t i = 0; i < symtab->nsyms; ++i) {
+        const struct nlist_64* sym = &symtab_base[i];
+        const char* name = strtab_base + sym->n_un.n_strx;
+
+        // Check for private symbol (not external) and name match
+        if (!(sym->n_type & N_EXT) && strcmp(name, target_name) == 0) {
+            return ((void*)mh) + ((struct nlist_64*)sym)->n_value;  // Cast away const
         }
     }
-    assert(linkedit_base && dysymtab_cmd && symtab_cmd);
-    const struct nlist_64 *symtab = (const struct nlist_64 *)(linkedit_base + symtab_cmd->symoff);
-    const char *strtab = (const char *)(linkedit_base + symtab_cmd->stroff);
-    const struct nlist_64* local_start = &symtab[dysymtab_cmd->ilocalsym];
-    const struct nlist_64* local_end = &local_start[dysymtab_cmd->nlocalsym];
-    for (const struct nlist_64* s = local_start; s < local_end; s++) {
-         if ((s->n_type & N_TYPE) == N_SECT && (s->n_type & N_STAB) == 0) {
-            const char* curr_name = &strtab[s->n_un.n_strx];
-            if (!strcmp(curr_name, name))
-                return (void *)(s->n_value + slide);
-        }
-    }
+
     return NULL;
 }
 
@@ -346,7 +341,7 @@ void DyldHooksInit(bool hideLiveContainer, uint32_t spoofSDKVersion) {
     orig_dyld_get_image_header = _dyld_get_image_header;
     
     // hook dlopen and dlsym to solve RTLD_MAIN_ONLY, hook other functions to hide LiveContainer itself
-    rebind_symbols((struct rebinding[5]){
+    rebind_symbols((struct rebinding[6]){
         {"dlopen", (void *)hook_dlopen, (void **)&orig_dlopen},
         {"dlsym", (void *)hook_dlsym, (void **)&orig_dlsym},
         {"_dyld_image_count", (void *)hook_dyld_image_count, (void **)&orig_dyld_image_count},

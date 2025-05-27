@@ -14,7 +14,7 @@
 
 @implementation DecoratedAppSceneView
 - (instancetype)initWithExtension:(NSExtension *)extension identifier:(NSUUID *)identifier windowName:(NSString*)windowName dataUUID:(NSString*)dataUUID {
-    self = [super initWithFrame:CGRectMake(0, 100, 375, 667 + 44)];
+    self = [super initWithFrame:CGRectMake(0, 100, 320, 480 + 44)];
     AppSceneViewController* appSceneView = [[AppSceneViewController alloc] initWithExtension:extension frame:CGRectMake(0, 0, self.contentView.bounds.size.width, self.contentView.bounds.size.height) identifier:identifier dataUUID:dataUUID delegate:self];
     self.appSceneView = appSceneView;
     int pid = appSceneView.pid;
