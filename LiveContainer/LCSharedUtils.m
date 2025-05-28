@@ -5,6 +5,7 @@
 extern NSUserDefaults *lcUserDefaults;
 extern NSString *lcAppUrlScheme;
 extern NSBundle *lcMainBundle;
+extern NSString* getLCEntitlementXML(void);
 
 @implementation LCSharedUtils
 
@@ -74,6 +75,22 @@ extern NSBundle *lcMainBundle;
             appGroupID = group;
             return;
         }
+        
+        // if no possibleAppGroup is found, we detect app group from entitlement file
+        NSString *entitlementXML = getLCEntitlementXML();
+        if (!entitlementXML) {
+            return;
+        }
+        NSData *xmlData = [entitlementXML dataUsingEncoding:NSUTF8StringEncoding];
+        id entitlementDict = [NSPropertyListSerialization propertyListWithData:xmlData options:0 format:NULL error:NULL];
+        if (![entitlementDict isKindOfClass:[NSDictionary class]]) {
+            return;
+        }
+        NSArray<NSString *> *appGroups = entitlementDict[@"com.apple.security.application-groups"];
+        if (!appGroups) {
+            return;
+        }
+        appGroupID = [appGroups firstObject];
     });
     return appGroupID;
 }
