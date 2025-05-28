@@ -279,7 +279,7 @@ Class LCSharedUtilsClass = nil;
 }
 
 + (BOOL)isAppGroupAltStoreLike {
-    return ![self.appGroupID isEqualToString:@"Unknown"];
+    return [self.appGroupID containsString:@"SideStore"] || [self.appGroupID containsString:@"AltStore"];
 }
 
 + (void)changeMainExecutableTo:(NSString *)exec error:(NSError **)error {
