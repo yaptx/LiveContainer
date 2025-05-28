@@ -357,7 +357,7 @@ struct LCJITLessDiagnoseView : View {
             return;
         }
         
-        if !sharedModel.certificateImported && !LCUtils.isAppGroupAltStoreLike() {
+        if !sharedModel.certificateImported && !LCUtils.isAppGroupAltStoreLike() && store != .ADP {
             errorInfo = "lc.settings.unsupportedInstallMethod".loc
             errorShow = true
             return;

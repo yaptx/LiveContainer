@@ -642,7 +642,7 @@ struct LCSettingsView: View {
             LCUtils.appGroupUserDefault.set(certificateData, forKey: "LCCertificateData")
             LCUtils.appGroupUserDefault.set(certificatePassword, forKey: "LCCertificatePassword")
             LCUtils.appGroupUserDefault.set(NSDate.now, forKey: "LCCertificateUpdateDate")
-            sharedModel.certificateImported = sharedModel.certificateImported
+            certificateDataFound = true
         } else {
             UserDefaults.standard.set(certificatePassword, forKey: "LCCertificatePassword")
             UserDefaults.standard.set(certificateData, forKey: "LCCertificateData")
@@ -680,7 +680,7 @@ struct LCSettingsView: View {
             LCUtils.appGroupUserDefault.set(nil, forKey: "LCCertificateData")
             LCUtils.appGroupUserDefault.set(nil, forKey: "LCCertificatePassword")
             LCUtils.appGroupUserDefault.set(nil, forKey: "LCCertificateUpdateDate")
-            sharedModel.certificateImported = sharedModel.certificateImported
+            certificateDataFound = false
         } else {
             UserDefaults.standard.set(false, forKey: "LCCertificateImported")
             UserDefaults.standard.set(nil, forKey: "LCCertificatePassword")
