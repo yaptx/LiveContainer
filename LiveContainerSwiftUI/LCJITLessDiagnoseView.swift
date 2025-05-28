@@ -351,7 +351,7 @@ struct LCJITLessDiagnoseView : View {
     }
     
     func testJITLessMode() {
-        if !sharedModel.certificateImported && store == .ADP {
+        if store == .ADP && !certificateDataFound {
             errorInfo = "lc.settings.error.certNotImported".loc
             errorShow = true
             return;
