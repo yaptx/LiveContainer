@@ -649,6 +649,7 @@ struct LCSettingsView: View {
             UserDefaults.standard.set(true, forKey: "LCCertificateImported")
             sharedModel.certificateImported = true
         }
+        UserDefaults.standard.set(LCUtils.appGroupID(), forKey: "LCAppGroupID")
     }
     
     func importCertificateFromSideStore() async {
@@ -687,6 +688,7 @@ struct LCSettingsView: View {
             UserDefaults.standard.set(nil, forKey: "LCCertificateData")
             sharedModel.certificateImported = false
         }
+        UserDefaults.standard.set(nil, forKey: "LCAppGroupID")
     }
     
     func nukeSideStore() async {
