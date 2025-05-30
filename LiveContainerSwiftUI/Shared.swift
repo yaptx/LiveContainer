@@ -761,6 +761,8 @@ extension LCUtils {
             return "AltStore"
         case .SideStore:
             return "SideStore"
+        case .ADP:
+            return "ADP"
         default:
             return "Unknown Store"
         }

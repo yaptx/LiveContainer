@@ -202,18 +202,23 @@ struct LCJITLessDiagnoseView : View {
                             } else if store == .SideStore {
                                 Text("SideStore")
                                     .foregroundStyle(.gray)
-                            } else {
+                            } else if store == .ADP {
+                                Text("lc.common.ADP".loc)
+                                    .foregroundStyle(.gray)
+                            }else {
                                 Text("lc.common.unknown")
                                     .foregroundStyle(.gray)
                             }
+                            
                         }
-                        HStack {
-                            Text("lc.jitlessDiag.patchDetected".loc)
-                            Spacer()
-                            Text(isPatchDetected ? "lc.common.yes".loc : "lc.common.no".loc)
-                                .foregroundStyle(isPatchDetected ? .green : .red)
+                        if store != .ADP && store != .Unknown {
+                            HStack {
+                                Text("lc.jitlessDiag.patchDetected".loc)
+                                Spacer()
+                                Text(isPatchDetected ? "lc.common.yes".loc : "lc.common.no".loc)
+                                    .foregroundStyle(isPatchDetected ? .green : .red)
+                            }
                         }
-                        
                         HStack {
                             Text("lc.jitlessDiag.certDataFound".loc)
                             Spacer()
@@ -346,7 +351,13 @@ struct LCJITLessDiagnoseView : View {
     }
     
     func testJITLessMode() {
-        if !sharedModel.certificateImported && !LCUtils.isAppGroupAltStoreLike() {
+        if store == .ADP && !certificateDataFound {
+            errorInfo = "lc.settings.error.certNotImported".loc
+            errorShow = true
+            return;
+        }
+        
+        if !sharedModel.certificateImported && !LCUtils.isAppGroupAltStoreLike() && store != .ADP {
             errorInfo = "lc.settings.unsupportedInstallMethod".loc
             errorShow = true
             return;

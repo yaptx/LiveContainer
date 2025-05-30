@@ -4272,6 +4272,29 @@
         }
       }
     },
+    "lc.common.ADP" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ADP Certificate"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开发者证书"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "開發者證書"
+          }
+        }
+      }
+    },
     "lc.common.auto" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -9409,6 +9432,29 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "App橫幅的顏色隨著圖標變化"
+          }
+        }
+      }
+    },
+    "lc.settings.error.certNotImported" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You must import ADP certificate before testing JIT-Less mode."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在设测试JIT模式前，你必须要先导入开发者证书。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在測試免JIT模式前，你需要先匯入開發者證書。"
           }
         }
       }

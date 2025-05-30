@@ -78,7 +78,7 @@ struct LCAppSettingsView : View{
                 }
                 
                 if !model.uiIsShared {
-                    if LCUtils.isAppGroupAltStoreLike() {
+                    if LCUtils.isAppGroupAltStoreLike() || LCUtils.store() == .ADP {
                         Button("lc.appSettings.toSharedApp".loc) {
                             Task { await moveToAppGroup()}
                         }

@@ -265,6 +265,8 @@ Class LCSharedUtilsClass = nil;
             ans = AltStore;
         } else if ([[self appGroupID] containsString:@"SideStore"] && ![[self appGroupID] isEqualToString:@"group.com.SideStore.SideStore"]) {
             ans = SideStore;
+        } else if (![[self appGroupID] containsString:@"Unknown"] ) {
+            ans = ADP;
         } else {
             ans = Unknown;
         }
@@ -277,7 +279,7 @@ Class LCSharedUtilsClass = nil;
 }
 
 + (BOOL)isAppGroupAltStoreLike {
-    return ![self.appGroupID isEqualToString:@"Unknown"];
+    return [self.appGroupID containsString:@"SideStore"] || [self.appGroupID containsString:@"AltStore"];
 }
 
 + (void)changeMainExecutableTo:(NSString *)exec error:(NSError **)error {

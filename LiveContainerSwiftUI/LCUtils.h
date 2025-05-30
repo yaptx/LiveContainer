@@ -5,6 +5,7 @@ typedef void (^LCParseMachOCallback)(const char *path, struct mach_header_64 *he
 typedef NS_ENUM(NSInteger, Store){
     SideStore = 0,
     AltStore = 1,
+    ADP = 2,
     Unknown = -1
 };
 

@@ -98,6 +98,20 @@ struct LCSettingsView: View {
                                     Text("lc.settings.removeCertificate".loc)
                                 }
                             }
+                        } else if store == .ADP {
+                            if !certificateDataFound {
+                                Button {
+                                    Task{ await importCertificate() }
+                                } label: {
+                                    Text("lc.settings.importCertificate".loc)
+                                }
+                            } else {
+                                Button {
+                                    Task{ await removeCertificate() }
+                                } label: {
+                                    Text("lc.settings.removeCertificate".loc)
+                                }
+                            }
                         } else {
                             Button {
                                 Task{ await importCertificateFromSideStore() }
@@ -131,7 +145,7 @@ struct LCSettingsView: View {
                         Text("lc.settings.jitLessDesc".loc)
                     }
                 }
-                if store != .Unknown || LCUtils.isAppGroupAltStoreLike() {
+                if (store != .Unknown && store != .ADP) || LCUtils.isAppGroupAltStoreLike() {
                     Section{
                         Button {
                             Task { await installAnotherLC() }
@@ -624,10 +638,18 @@ struct LCSettingsView: View {
             errorShow = true
             return
         }
-        UserDefaults.standard.set(certificatePassword, forKey: "LCCertificatePassword")
-        UserDefaults.standard.set(certificateData, forKey: "LCCertificateData")
-        UserDefaults.standard.set(true, forKey: "LCCertificateImported")
-        sharedModel.certificateImported = true
+        if store == .ADP {
+            LCUtils.appGroupUserDefault.set(certificateData, forKey: "LCCertificateData")
+            LCUtils.appGroupUserDefault.set(certificatePassword, forKey: "LCCertificatePassword")
+            LCUtils.appGroupUserDefault.set(NSDate.now, forKey: "LCCertificateUpdateDate")
+            certificateDataFound = true
+        } else {
+            UserDefaults.standard.set(certificatePassword, forKey: "LCCertificatePassword")
+            UserDefaults.standard.set(certificateData, forKey: "LCCertificateData")
+            UserDefaults.standard.set(true, forKey: "LCCertificateImported")
+            sharedModel.certificateImported = true
+        }
+        UserDefaults.standard.set(LCUtils.appGroupID(), forKey: "LCAppGroupID")
     }
     
     func importCertificateFromSideStore() async {
@@ -655,10 +677,18 @@ struct LCSettingsView: View {
         guard let doRemove = await certificateRemoveAlert.open(), doRemove else {
             return
         }
-        UserDefaults.standard.set(false, forKey: "LCCertificateImported")
-        UserDefaults.standard.set(nil, forKey: "LCCertificatePassword")
-        UserDefaults.standard.set(nil, forKey: "LCCertificateData")
-        sharedModel.certificateImported = false
+        if store == .ADP {
+            LCUtils.appGroupUserDefault.set(nil, forKey: "LCCertificateData")
+            LCUtils.appGroupUserDefault.set(nil, forKey: "LCCertificatePassword")
+            LCUtils.appGroupUserDefault.set(nil, forKey: "LCCertificateUpdateDate")
+            certificateDataFound = false
+        } else {
+            UserDefaults.standard.set(false, forKey: "LCCertificateImported")
+            UserDefaults.standard.set(nil, forKey: "LCCertificatePassword")
+            UserDefaults.standard.set(nil, forKey: "LCCertificateData")
+            sharedModel.certificateImported = false
+        }
+        UserDefaults.standard.set(nil, forKey: "LCAppGroupID")
     }
     
     func nukeSideStore() async {
