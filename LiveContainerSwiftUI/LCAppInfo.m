@@ -378,7 +378,7 @@ uint32_t dyld_get_sdk_version(const struct mach_header* mh);
                     } else {
                         bool signatureValid = checkCodeSignature(executablePath.UTF8String);
                         if(signatureValid) {
-                            completetionHandler(YES, nil);
+                            completetionHandler(YES, [error localizedDescription]);
                         } else {
                             completetionHandler(NO, @"lc.signer.latestCertificateInvalidErr");
                         }
