@@ -79,7 +79,7 @@ extern NSString* getLCEntitlementXML(void);
         // if no possibleAppGroup is found, we detect app group from entitlement file
         // Cache app group after importing cert so we don't have to analyze executable every launch
         NSString *cached = [lcUserDefaults objectForKey:@"LCAppGroupID"];
-        if (cached) {
+        if (cached && [NSFileManager.defaultManager containerURLForSecurityApplicationGroupIdentifier:cached]) {
             appGroupID = cached;
             return;
         }
