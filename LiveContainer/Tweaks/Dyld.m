@@ -33,7 +33,6 @@ uint32_t (*orig_dyld_image_count)(void);
 const struct mach_header* (*orig_dyld_get_image_header)(uint32_t image_index);
 intptr_t (*orig_dyld_get_image_vmaddr_slide)(uint32_t image_index);
 const char* (*orig_dyld_get_image_name)(uint32_t image_index);
-int (*orig__NSGetExecutablePath)(char* buf, uint32_t* bufsize);
 
 uint32_t guestAppSdkVersion = 0;
 uint32_t guestAppSdkVersionSet = 0;
