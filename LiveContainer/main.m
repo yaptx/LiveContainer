@@ -19,8 +19,6 @@
 #include <mach-o/ldsyms.h>
 
 static int (*appMain)(int, char**);
-static const char *dyldImageName;
-static const char* dyldImageName2;
 NSUserDefaults *lcUserDefaults;
 NSUserDefaults *lcSharedDefaults;
 NSString *lcAppGroupPath;
@@ -132,66 +130,41 @@ static void overwriteMainNSBundle(NSBundle *newBundle) {
 }
 
 int (*orig__NSGetExecutablePath)(void* dyldPtr, char* buf, uint32_t* bufsize);
-int hook__NSGetExecutablePath_overwriteExecPath(void* dyldApiInstancePtr, char* buf, uint32_t* bufsize) {
-    assert(dyldApiInstancePtr + 0x8 != 0);
-    void* dyldConfig = *(void**)(dyldApiInstancePtr + 0x8);
+int hook__NSGetExecutablePath_overwriteExecPath(void* dyldApiInstancePtr, char* newPath, uint32_t* bufsize) {
+    assert(dyldApiInstancePtr != 0);
+    void** dyldConfig = ((void***)dyldApiInstancePtr)[1];
+    assert(dyldConfig != 0);
 
-    void* mainExecutablePath = 0;
+    void** mainExecutablePtr = 0;
     // mainExecutablePath is at 0x10 for iOS 15~18.3.2, 0x20 for iOS 18.4+
-    if(dyldConfig + 0x10 != 0 && ((char*)(*(void**)(dyldConfig + 0x10)))[0] == '/') {
-        mainExecutablePath = *(void**)(dyldConfig + 0x10);
-    } else if (dyldConfig + 0x20 != 0 && ((char*)(*(void**)(dyldConfig + 0x20)))[0] == '/') {
-        mainExecutablePath = *(void**)(dyldConfig + 0x20);
+    if(dyldConfig[2] != 0 && ((char*)dyldConfig[2])[0] == '/') {
+        mainExecutablePtr = &dyldConfig[2];
+    } else if (dyldConfig[4] != 0 && ((char*)dyldConfig[4])[0] == '/') {
+        mainExecutablePtr = &dyldConfig[4];
     } else {
-        assert(mainExecutablePath != 0);
+        assert(mainExecutablePtr != 0);
     }
     
-    char *newPath = (char *)dyldImageName;
-    size_t maxLen = rnd64(strlen(mainExecutablePath), 8);
-    size_t newLen = strlen(newPath);
-    
-    kern_return_t ret = builtin_vm_protect(mach_task_self(), (mach_vm_address_t)mainExecutablePath, maxLen, false, PROT_READ | PROT_WRITE);
+    kern_return_t ret = builtin_vm_protect(mach_task_self(), (mach_vm_address_t)mainExecutablePtr, sizeof(mainExecutablePtr), false, PROT_READ | PROT_WRITE);
     if(ret != KERN_SUCCESS) {
         BOOL tpro_ret = os_thread_self_restrict_tpro_to_rw();
         assert(tpro_ret);
     }
 
-    bzero(mainExecutablePath, maxLen);
-    strncpy(mainExecutablePath, newPath, newLen);
-    dyldImageName2 = mainExecutablePath;
+    *mainExecutablePtr = newPath;
     return 0;
 }
 
-static void overwriteExecPath(NSString *bundlePath) {
-    // Silly workaround: we have set our executable name 100 characters long, now just overwrite its path with our fake executable file
-    char *path = (char *)dyldImageName;
-    const char *newPath = [bundlePath stringByAppendingPathComponent:@"LiveContainer"].UTF8String;
-    size_t maxLen = rnd64(strlen(path), 8);
-    size_t newLen = strlen(newPath);
-
-    // Check if it's long enough...
-    assert(maxLen >= newLen);
-    // Create an empty file so dyld could resolve its path properly
-    close(open(newPath, O_CREAT | S_IRUSR | S_IWUSR));
-
-    // Make it RW and overwrite now
-    kern_return_t ret = builtin_vm_protect(mach_task_self(), (mach_vm_address_t)path, maxLen, false, PROT_READ | PROT_WRITE);
-    if(ret != KERN_SUCCESS) {
-        BOOL tpro_ret = os_thread_self_restrict_tpro_to_rw();
-        assert(tpro_ret);
-    }
-    bzero(path, maxLen);
-    strncpy(path, newPath, newLen);
-
+static void overwriteExecPath(const char *newPath) {
     // dyld4 stores executable path in a different place
     // https://github.com/apple-oss-distributions/dyld/blob/ce1cc2088ef390df1c48a1648075bbd51c5bbc6a/dyld/DyldAPIs.cpp#L802
     char currPath[PATH_MAX];
     uint32_t len = PATH_MAX;
     _NSGetExecutablePath(currPath, &len);
 
-    if (strncmp(currPath, newPath, newLen)) {
+    if (strncmp(currPath, newPath, strlen(newPath))) {
         performHookDyldApi("_NSGetExecutablePath", 2, (void**)&orig__NSGetExecutablePath, hook__NSGetExecutablePath_overwriteExecPath);
-        _NSGetExecutablePath(NULL, NULL);
+        _NSGetExecutablePath(newPath, NULL);
         // put the original function back
         performHookDyldApi("_NSGetExecutablePath", 2, (void**)&orig__NSGetExecutablePath, orig__NSGetExecutablePath);
     }
@@ -213,30 +186,6 @@ static void *getAppEntryPoint(void *handle) {
     }
     assert(entryoff > 0);
     return (void *)header + entryoff;
-}
-
-bool shouldOverwriteExecPathBack = false;
-static void overwriteExecPathLoadImageHandler(const struct mach_header *header, intptr_t slide) {
-    if(!shouldOverwriteExecPathBack) {
-        return;
-    }
-    shouldOverwriteExecPathBack = false;
-    const char* newDyldImageName = NSProcessInfo.processInfo.arguments.firstObject.fileSystemRepresentation;
-    
-    kern_return_t ret = builtin_vm_protect(mach_task_self(), (mach_vm_address_t)dyldImageName, strlen(newDyldImageName) + 1, false, PROT_READ | PROT_WRITE);
-    if(ret != KERN_SUCCESS) {
-        BOOL tpro_ret = os_thread_self_restrict_tpro_to_rw();
-        assert(tpro_ret);
-    }
-    strcpy((char*)dyldImageName, newDyldImageName);
-    
-    ret = builtin_vm_protect(mach_task_self(), (mach_vm_address_t)dyldImageName2, strlen(newDyldImageName) + 1, false, PROT_READ | PROT_WRITE);
-    if(ret != KERN_SUCCESS) {
-        BOOL tpro_ret = os_thread_self_restrict_tpro_to_rw();
-        assert(tpro_ret);
-    }
-    
-    strcpy((char*)dyldImageName2, newDyldImageName);
 }
 
 static NSString* invokeAppMain(NSString *selectedApp, NSString *selectedContainer, int argc, char *argv[]) {
@@ -336,18 +285,11 @@ static NSString* invokeAppMain(NSString *selectedApp, NSString *selectedContaine
     // Locate dyld image name address
     const char **path = _CFGetProcessPath();
     const char *oldPath = *path;
-    for (uint32_t i = 0; i < _dyld_image_count(); i++) {
-        const char *name = _dyld_get_image_name(i);
-        if (!strcmp(name, oldPath)) {
-            dyldImageName = name;
-            break;
-        }
-    }
     
     // Overwrite @executable_path
-    const char *appExecPath = appBundle.executablePath.UTF8String;
+    const char *appExecPath = appBundle.executablePath.fileSystemRepresentation;
     *path = appExecPath;
-    overwriteExecPath(appBundle.bundlePath);
+    overwriteExecPath(appExecPath);
     
     // Overwrite NSUserDefaults
     if([guestAppInfo[@"doUseLCBundleId"] boolValue]) {
@@ -491,9 +433,6 @@ static NSString* invokeAppMain(NSString *selectedApp, NSString *selectedContaine
     if(![guestAppInfo[@"dontInjectTweakLoader"] boolValue]) {
         tweakLoaderLoaded = true;
     }
-    
-    _dyld_register_func_for_add_image(overwriteExecPathLoadImageHandler);
-    shouldOverwriteExecPathBack = true;
     
     void *appHandle = dlopen(appExecPath, RTLD_LAZY|RTLD_GLOBAL|RTLD_FIRST);
     appExecutableHandle = appHandle;

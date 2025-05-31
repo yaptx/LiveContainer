@@ -368,7 +368,7 @@ Class LCSharedUtilsClass = nil;
     NSURL* appBundlePath = [tmpPayloadPath URLByAppendingPathComponent:@"App.app"];
     
     NSURL* execFromPath = [appBundlePath URLByAppendingPathComponent:infoDict[@"CFBundleExecutable"]];
-    infoDict[@"CFBundleExecutable"] = @"LiveContainer_PleaseDoNotShortenTheExecutableNameBecauseItIsUsedToReserveSpaceForOverwritingThankYou2";
+    infoDict[@"CFBundleExecutable"] = @"LiveContainer2";
     NSURL* execToPath = [appBundlePath URLByAppendingPathComponent:infoDict[@"CFBundleExecutable"]];
     
     // we remove the teamId after app group id so it can be correctly signed by AltSign. We don't touch application-identifier or team-id since most signer can handle them correctly otherwise the app won't launch at all

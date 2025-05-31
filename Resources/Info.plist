@@ -20,7 +20,7 @@
 		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
-	<string>LiveContainer_PleaseDoNotShortenTheExecutableNameBecauseItIsUsedToReserveSpaceForOverwritingThankYou</string>
+	<string>LiveContainer</string>
 	<key>CFBundleIcons</key>
 	<dict>
 		<key>CFBundlePrimaryIcon</key>
