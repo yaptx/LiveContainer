@@ -27,7 +27,6 @@ void* appExecutableHandle = 0;
 bool tweakLoaderLoaded = false;
 bool appExecutableFileTypeOverwritten = false;
 
-void* (*orig_dlopen)(const char* path, int mode);
 void* (*orig_dlsym)(void * __handle, const char * __symbol);
 uint32_t (*orig_dyld_image_count)(void);
 const struct mach_header* (*orig_dyld_get_image_header)(uint32_t image_index);
@@ -86,16 +85,6 @@ static inline int translateImageIndex(int origin) {
         return origin + 1;
     }
     return origin;
-}
-
-static void* hook_dlopen(const char* path, int mode) {
-    const char mainExecPath[PATH_MAX];
-    uint32_t mainExecPathLen = sizeof(mainExecPath);
-    _NSGetExecutablePath((char *)mainExecPath, &mainExecPathLen);
-    if(appExecutableHandle && path && !strncmp(path, mainExecPath, mainExecPathLen)) {
-        return appExecutableHandle;
-    }
-    __attribute__((musttail)) return orig_dlopen(path, mode);
 }
 
 void* hook_dlsym(void * __handle, const char * __symbol) {
@@ -340,14 +329,13 @@ void DyldHooksInit(bool hideLiveContainer, uint32_t spoofSDKVersion) {
     orig_dyld_get_image_header = _dyld_get_image_header;
     
     // hook dlopen and dlsym to solve RTLD_MAIN_ONLY, hook other functions to hide LiveContainer itself
-    rebind_symbols((struct rebinding[6]){
-        {"dlopen", (void *)hook_dlopen, (void **)&orig_dlopen},
+    rebind_symbols((struct rebinding[5]){
         {"dlsym", (void *)hook_dlsym, (void **)&orig_dlsym},
         {"_dyld_image_count", (void *)hook_dyld_image_count, (void **)&orig_dyld_image_count},
         {"_dyld_get_image_header", (void *)hook_dyld_get_image_header, (void **)&orig_dyld_get_image_header},
         {"_dyld_get_image_vmaddr_slide", (void *)hook_dyld_get_image_vmaddr_slide, (void **)&orig_dyld_get_image_vmaddr_slide},
         {"_dyld_get_image_name", (void *)hook_dyld_get_image_name, (void **)&orig_dyld_get_image_name},
-    }, hideLiveContainer ? 6: 2);
+    }, hideLiveContainer ? 5: 1);
     
     appExecutableFileTypeOverwritten = !hideLiveContainer;
     

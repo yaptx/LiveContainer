@@ -129,45 +129,39 @@ static void overwriteMainNSBundle(NSBundle *newBundle) {
     assert(![NSBundle.mainBundle.executablePath isEqualToString:oldPath]);
 }
 
-int (*orig__NSGetExecutablePath)(void* dyldPtr, char* buf, uint32_t* bufsize);
 int hook__NSGetExecutablePath_overwriteExecPath(void* dyldApiInstancePtr, char* newPath, uint32_t* bufsize) {
     assert(dyldApiInstancePtr != 0);
-    void** dyldConfig = ((void***)dyldApiInstancePtr)[1];
+    void* dyldConfig = ((void**)dyldApiInstancePtr)[1];
     assert(dyldConfig != 0);
-
-    void** mainExecutablePtr = 0;
-    // mainExecutablePath is at 0x10 for iOS 15~18.3.2, 0x20 for iOS 18.4+
-    if(dyldConfig[2] != 0 && ((char*)dyldConfig[2])[0] == '/') {
-        mainExecutablePtr = &dyldConfig[2];
-    } else if (dyldConfig[4] != 0 && ((char*)dyldConfig[4])[0] == '/') {
-        mainExecutablePtr = &dyldConfig[4];
-    } else {
-        assert(mainExecutablePtr != 0);
-    }
     
-    kern_return_t ret = builtin_vm_protect(mach_task_self(), (mach_vm_address_t)mainExecutablePtr, sizeof(mainExecutablePtr), false, PROT_READ | PROT_WRITE);
+    char** mainExecutablePathPtr = 0;
+    // mainExecutablePath is at 0x10 for iOS 15~18.3.2, 0x20 for iOS 18.4+
+    if(((void**)dyldConfig)[2] != 0 && ((char**)dyldConfig)[2][0] == '/') {
+        mainExecutablePathPtr = ((char**)dyldConfig) + 2;
+    } else if (((void**)dyldConfig)[4] != 0 && ((char**)dyldConfig)[4][0] == '/') {
+        mainExecutablePathPtr = ((char**)dyldConfig) + 4;
+    } else {
+        assert(mainExecutablePathPtr != 0);
+    }
+
+    kern_return_t ret = builtin_vm_protect(mach_task_self(), (mach_vm_address_t)mainExecutablePathPtr, sizeof(mainExecutablePathPtr), false, PROT_READ | PROT_WRITE);
     if(ret != KERN_SUCCESS) {
         BOOL tpro_ret = os_thread_self_restrict_tpro_to_rw();
         assert(tpro_ret);
     }
+    *mainExecutablePathPtr = newPath;
 
-    *mainExecutablePtr = newPath;
     return 0;
 }
 
-static void overwriteExecPath(const char *newPath) {
-    // dyld4 stores executable path in a different place
+static void overwriteExecPath(const char *newExecPath) {
+    // dyld4 stores executable path in a different place (iOS 15.0 +)
     // https://github.com/apple-oss-distributions/dyld/blob/ce1cc2088ef390df1c48a1648075bbd51c5bbc6a/dyld/DyldAPIs.cpp#L802
-    char currPath[PATH_MAX];
-    uint32_t len = PATH_MAX;
-    _NSGetExecutablePath(currPath, &len);
-
-    if (strncmp(currPath, newPath, strlen(newPath))) {
-        performHookDyldApi("_NSGetExecutablePath", 2, (void**)&orig__NSGetExecutablePath, hook__NSGetExecutablePath_overwriteExecPath);
-        _NSGetExecutablePath(newPath, NULL);
-        // put the original function back
-        performHookDyldApi("_NSGetExecutablePath", 2, (void**)&orig__NSGetExecutablePath, orig__NSGetExecutablePath);
-    }
+    int (*orig__NSGetExecutablePath)(void* dyldPtr, char* buf, uint32_t* bufsize);
+    performHookDyldApi("_NSGetExecutablePath", 2, (void**)&orig__NSGetExecutablePath, hook__NSGetExecutablePath_overwriteExecPath);
+    _NSGetExecutablePath((char*)newExecPath, NULL);
+    // put the original function back
+    performHookDyldApi("_NSGetExecutablePath", 2, (void**)&orig__NSGetExecutablePath, orig__NSGetExecutablePath);
 }
 
 static void *getAppEntryPoint(void *handle) {

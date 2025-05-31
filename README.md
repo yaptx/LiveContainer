@@ -131,8 +131,17 @@ Open Xcode, select your developer account and set bundle identifier to `com.kdt.
 - Inject a load command to load `TweakLoader.dylib`
 
 ### Patching `@executable_path`
-- Call `_NSGetExecutablePath` with an invalid buffer pointer input -> SIGSEGV
-- Do some [magic stuff](https://github.com/khanhduytran0/LiveContainer/blob/5ef1e6a/main.m#L74-L115) to overwrite the contents of executable_path.
+- Hook `dyld4::APIs::_NSGetExecutablePath`
+- Call `_NSGetExecutablePath`
+- Replace `config.process.mainExecutablePath`
+  - Calculate address of `config.process.mainExecutablePath` using `dyld4::APIs` instance (passed as first parameter)
+  - Use `builtin_vm_protect` or TPRO unlock to make it writable
+  - Replace the address with one we have control of
+- Put the original `dyld4::APIs::_NSGetExecutablePath` back
+
+> Old Method
+>- Call `_NSGetExecutablePath` with an invalid buffer pointer input -> SIGSEGV
+>- Do some [magic stuff](https://github.com/khanhduytran0/LiveContainer/blob/5ef1e6a/main.m#L74-L115) to overwrite the contents of executable_path.
 
 ### Patching `NSBundle.mainBundle`
 - This property is overwritten with the guest app's bundle.
