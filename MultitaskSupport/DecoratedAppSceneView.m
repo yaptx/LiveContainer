@@ -3,6 +3,7 @@
 #import "AppSceneViewController.h"
 #import "UIKitPrivate+MultitaskSupport.h"
 #import "PiPManager.h"
+#import "../LiveContainer/Localization.h"
 
 static int hook_return_2(void) {
     return 2;
@@ -41,27 +42,45 @@ void UIKitFixesInit(void) {
     
     self.scaleRatio = 1.0;
     NSArray *menuItems = @[
-        [UIAction actionWithTitle:@"Copy PID" image:[UIImage systemImageNamed:@"doc.on.doc"] identifier:nil handler:^(UIAction * _Nonnull action) {
+        [UIAction actionWithTitle:@"lc.multitask.copyPid".loc image:[UIImage systemImageNamed:@"doc.on.doc"] identifier:nil handler:^(UIAction * _Nonnull action) {
             UIPasteboard.generalPasteboard.string = @(pid).stringValue;
         }],
-        [UIAction actionWithTitle:@"PIP" image:[UIImage systemImageNamed:@"pip.enter"] identifier:nil handler:^(UIAction * _Nonnull action) {
+        [UIAction actionWithTitle:@"lc.multitask.enablePip".loc image:[UIImage systemImageNamed:@"pip.enter"] identifier:nil handler:^(UIAction * _Nonnull action) {
             if ([PiPManager.shared isPiPWithView:self.appSceneView.view]) {
                 [PiPManager.shared stopPiP];
             } else {
-                [PiPManager.shared startPiPWithView:self.appSceneView.view contentView:self.contentView];
+                [PiPManager.shared startPiPWithView:self.appSceneView.view contentView:self.contentView extension:extension];
             }
         }],
         [UICustomViewMenuElement elementWithViewProvider:^UIView *(UICustomViewMenuElement *element) {
-            return [self scaleSliderViewWithTitle:@"Scale" min:0.5 max:2.0 value:self.scaleRatio stepInterval:0.01];
+            return [self scaleSliderViewWithTitle:@"lc.multitask.scale".loc min:0.5 max:2.0 value:self.scaleRatio stepInterval:0.01];
         }]
     ];
     
     NSString *pidText = [NSString stringWithFormat:@"PID: %d", pid];
-    UIButton *titleView = [UIButton buttonWithType:UIButtonTypeCustom];
-    titleView.titleLabel.font = self.navigationBar._defaultTitleFont;
+    UIImageSymbolConfiguration* sc1 = [UIImageSymbolConfiguration configurationWithPaletteColors:@[UIColor.secondaryLabelColor,UIColor.secondarySystemFillColor]];
+    
+    UIImageSymbolConfiguration* sc2 = [UIImageSymbolConfiguration configurationWithScale:UIImageSymbolScaleMedium];
+    UIImageSymbolConfiguration* sc = [sc1 configurationByApplyingConfiguration:sc2];
+    UIImage* dropDownImage = [UIImage systemImageNamed:@"chevron.down.circle.fill" withConfiguration:sc];
+    
+    UIButtonConfiguration* bc = [UIButtonConfiguration plainButtonConfiguration];
+    bc.imagePadding = 4;
+    bc.imagePlacement = NSDirectionalRectEdgeTrailing;
+    bc.titleTextAttributesTransformer = ^(NSDictionary<NSAttributedStringKey, id> *incoming) {
+        NSMutableDictionary<NSAttributedStringKey, id> *outgoing = [incoming mutableCopy];
+        outgoing[NSFontAttributeName] = self.navigationBar._defaultTitleFont;
+        return outgoing;
+    };
+    UIButton *titleView = [UIButton buttonWithConfiguration:bc primaryAction:nil];
+
+    [titleView setTitleColor:UIColor.labelColor forState:UIControlStateNormal];
+    [titleView setTitleColor:UIColor.secondaryLabelColor forState:UIControlStateHighlighted];
     //[UIFont boldSystemFontOfSize:_doneButton.titleLabel.font.pointSize]];
     titleView.showsMenuAsPrimaryAction = YES;
     [titleView setTitle:windowName forState:UIControlStateNormal];
+    [titleView setImage:dropDownImage forState:UIControlStateNormal];
+    
     titleView.menu = [UIMenu menuWithTitle:pidText children:menuItems];
     
     self.navigationBar.overrideUserInterfaceStyle = UIUserInterfaceStyleDark;

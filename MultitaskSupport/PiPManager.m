@@ -11,6 +11,7 @@
 @property(nonatomic, strong) AVPictureInPictureController *pipController;
 @property(nonatomic) UIView* displayingView;
 @property(nonatomic) UIView* contentView;
+@property(nonatomic) NSExtension* extension;
 @end
 
 
@@ -41,7 +42,7 @@ static PiPManager* sharedInstance = nil;
     return self;
 }
 
-- (void)startPiPWithView:(UIView*)view contentView:(UIView*)contentView {
+- (void)startPiPWithView:(UIView*)view contentView:(UIView*)contentView extension:(NSExtension*)extension {
     [self.pipController stopPictureInPicture];
     if(self.contentView) {
         [self.contentView insertSubview:self.displayingView atIndex:0];
@@ -59,6 +60,7 @@ static PiPManager* sharedInstance = nil;
         [self.pipController setValue:@1 forKey:@"controlsStyle"];
         self.displayingView = view;
         self.contentView = contentView;
+        self.extension = extension;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self.pipController startPictureInPicture];
         });
@@ -79,6 +81,8 @@ static PiPManager* sharedInstance = nil;
                                    options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
                                    context:NULL];
     self.pipVideoCallViewController.preferredContentSize = self.displayingView.bounds.size;
+    // Remove UIApplicationDidEnterBackgroundNotification so apps like YouTube can continue playing video
+    [NSNotificationCenter.defaultCenter removeObserver:self.extension name:UIApplicationDidEnterBackgroundNotification object:UIApplication.sharedApplication];
 }
 
 
@@ -90,6 +94,8 @@ static PiPManager* sharedInstance = nil;
 - (void)pictureInPictureControllerDidStopPictureInPicture:(AVPictureInPictureController *)pictureInPictureController {
     [self.contentView insertSubview:self.displayingView atIndex:0];
     self.displayingView.transform = CGAffineTransformIdentity;
+    // Re-add UIApplicationDidEnterBackgroundNotification
+    [NSNotificationCenter.defaultCenter addObserver:self.extension selector:@selector(_hostDidEnterBackgroundNote:) name:UIApplicationDidEnterBackgroundNotification object:UIApplication.sharedApplication];
 }
 
 - (void)pictureInPictureController:(AVPictureInPictureController *)pictureInPictureController failedToStartPictureInPictureWithError:(NSError *)error {

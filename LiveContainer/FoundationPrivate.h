@@ -15,6 +15,7 @@
 - (int)pidForRequestIdentifier:(NSUUID *)identifier;
 - (void)_kill:(int)arg1;
 - (void)setRequestInterruptionBlock:(void(^)(NSUUID *))callback;
+- (void)_hostDidEnterBackgroundNote:(NSNotification *)note;
 @end
 
 void* SecTaskCreateFromSelf(CFAllocatorRef allocator);
