@@ -6,6 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UIKitPrivate.h"
 
 #define PrivClass(NAME) NSClassFromString(@#NAME)
 
@@ -29,11 +30,6 @@
 	@property (getter=isRemovedSystemApp,nonatomic,readonly) BOOL removedSystemApp;
 @end
 
-@interface LSApplicationWorkspace : NSObject
-+ (instancetype)defaultWorkspace;
-- (NSArray <LSApplicationProxy *> *)allInstalledApplications;
-@end
-
 @interface BSCornerRadiusConfiguration : NSObject
 - (id)initWithTopLeft:(CGFloat)tl bottomLeft:(CGFloat)bl bottomRight:(CGFloat)br topRight:(CGFloat)tr;
 @end
@@ -50,7 +46,7 @@
 
 // FrontBoard
 
-@class RBSProcessIdentity, FBProcessExecutableSlice, UIMutableApplicationSceneSettings, UIMutableApplicationSceneClientSettings, UIMutableScenePresentationContext, UIScenePresentationManager, _UIScenePresenter;
+@class RBSProcessIdentity, FBProcessExecutableSlice, UIMutableApplicationSceneClientSettings, UIMutableScenePresentationContext, UIScenePresentationManager, _UIScenePresenter;
 
 @interface FBApplicationProcessLaunchTransaction : BSTransaction
 - (instancetype) initWithProcessIdentity:(RBSProcessIdentity *)identity executionContextProvider:(id)providerBlock;
@@ -134,7 +130,7 @@
 @end
 
 // FBSSceneSettings
-@interface UIApplicationSceneSettings : NSObject
+@interface UIApplicationSceneSettings(Multitask)
 - (bool)isForeground;
 - (CGRect)frame;
 - (UIInterfaceOrientation)interfaceOrientation;
@@ -145,7 +141,7 @@
 - (UIApplicationSceneSettings*)settings;
 @end
 
-@interface UIMutableApplicationSceneSettings : UIApplicationSceneSettings
+@interface UIMutableApplicationSceneSettings(Multitask)
 @property(nonatomic, assign, readwrite) BOOL canShowAlerts;
 @property(nonatomic, assign) BOOL deviceOrientationEventsEnabled;
 @property(nonatomic, assign, readwrite) NSInteger interruptionPolicy;
@@ -170,15 +166,9 @@
 - (BSSettings *)otherSettings;
 @end
 
-@interface FBSSceneParameters : NSObject
-@property(nonatomic, copy) UIMutableApplicationSceneSettings *settings;
-@property(nonatomic, copy) UIMutableApplicationSceneClientSettings *clientSettings;
+@interface FBSSceneParameters(Multitask)
 + (instancetype)parametersForSpecification:(FBSSceneSpecification *)spec;
 //- (void)updateSettingsWithBlock:(id)block;
-@end
-
-@interface FBSMutableSceneParameters : FBSSceneParameters
-//- (void)updateClientSettingsWithBlock:(id)block;
 @end
 
 @interface FBSMutableSceneDefinition : NSObject
@@ -206,19 +196,6 @@
 
 @interface UIImage(internal)
 + (instancetype)_applicationIconImageForBundleIdentifier:(NSString *)bundleID format:(NSInteger)format scale:(CGFloat)scale;
-@end
-
-@interface FBSSceneTransitionContext : NSObject
-@property (nonatomic,copy) NSSet * actions;   
-
-@end
-
-@interface UIApplicationSceneTransitionContext : FBSSceneTransitionContext
-@end
-
-@interface UIMutableApplicationSceneClientSettings : NSObject
-@property(nonatomic, assign) NSInteger interfaceOrientation;
-@property(nonatomic, assign) NSInteger statusBarStyle;
 @end
 
 @interface UIWindow (Private)

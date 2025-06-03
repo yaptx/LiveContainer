@@ -31,7 +31,7 @@
     RBSProcessHandle* processHandle = [PrivClass(RBSProcessHandle) handleForPredicate:predicate error:nil];
     [manager registerProcessForAuditToken:processHandle.auditToken];
     // NSString *identifier = [NSString stringWithFormat:@"sceneID:%@-%@", bundleID, @"default"];
-    self.sceneID = [NSString stringWithFormat:@"sceneID:%@-%@", @"LiveContainerAppProcess", NSUUID.UUID.UUIDString];
+    self.sceneID = [NSString stringWithFormat:@"sceneID:%@-%@", @"LiveProcess", NSUUID.UUID.UUIDString];
     
     FBSMutableSceneDefinition *definition = [PrivClass(FBSMutableSceneDefinition) definition];
     definition.identity = [PrivClass(FBSSceneIdentity) identityForIdentifier:self.sceneID];
@@ -159,15 +159,13 @@
     if(isNativeWindow) {
         // directly update the settings
         baseSettings.interruptionPolicy = 0;
-        UIApplicationSceneTransitionContext *newContext = [context copy];
-        newContext.actions = nil;
         [self.presenter.scene updateSettings:baseSettings withTransitionContext:newContext completion:nil];
     } else {
         UIMutableApplicationSceneSettings *newSettings = [self.presenter.scene.settings mutableCopy];
         newSettings.userInterfaceStyle = baseSettings.userInterfaceStyle;
         newSettings.interfaceOrientation = baseSettings.interfaceOrientation;
         newSettings.deviceOrientation = baseSettings.deviceOrientation;
-        newSettings.foreground = baseSettings.isForeground;
+        newSettings.foreground = YES;
         if(UIInterfaceOrientationIsLandscape(baseSettings.interfaceOrientation)) {
             newSettings.frame = CGRectMake(0, 0, currentFrame.size.height, currentFrame.size.width);
         } else {

@@ -129,17 +129,17 @@ static void overwriteMainNSBundle(NSBundle *newBundle) {
     assert(![NSBundle.mainBundle.executablePath isEqualToString:oldPath]);
 }
 
-int hook__NSGetExecutablePath_overwriteExecPath(void* dyldApiInstancePtr, char* newPath, uint32_t* bufsize) {
+int hook__NSGetExecutablePath_overwriteExecPath(char*** dyldApiInstancePtr, char* newPath, uint32_t* bufsize) {
     assert(dyldApiInstancePtr != 0);
-    void* dyldConfig = ((void**)dyldApiInstancePtr)[1];
+    char** dyldConfig = dyldApiInstancePtr[1];
     assert(dyldConfig != 0);
     
     char** mainExecutablePathPtr = 0;
     // mainExecutablePath is at 0x10 for iOS 15~18.3.2, 0x20 for iOS 18.4+
-    if(((void**)dyldConfig)[2] != 0 && ((char**)dyldConfig)[2][0] == '/') {
-        mainExecutablePathPtr = ((char**)dyldConfig) + 2;
-    } else if (((void**)dyldConfig)[4] != 0 && ((char**)dyldConfig)[4][0] == '/') {
-        mainExecutablePathPtr = ((char**)dyldConfig) + 4;
+    if(dyldConfig[2] != 0 && dyldConfig[2][0] == '/') {
+        mainExecutablePathPtr = dyldConfig + 2;
+    } else if (dyldConfig[4] != 0 && dyldConfig[4][0] == '/') {
+        mainExecutablePathPtr = dyldConfig + 4;
     } else {
         assert(mainExecutablePathPtr != 0);
     }
@@ -337,11 +337,6 @@ static NSString* invokeAppMain(NSString *selectedApp, NSString *selectedContaine
 
     }
     
-    if([guestAppInfo[@"fixBlackScreen"] boolValue]) {
-        dlopen("/System/Library/Frameworks/UIKit.framework/UIKit", RTLD_GLOBAL);
-        NSLog(@"[LC] Fix BlackScreen2 %@", [NSClassFromString(@"UIScreen") mainScreen]);
-    }
-
     setenv("CFFIXED_USER_HOME", newHomePath.UTF8String, 1);
     setenv("HOME", newHomePath.UTF8String, 1);
     setenv("TMPDIR", newTmpPath.UTF8String, 1);
@@ -372,6 +367,11 @@ static NSString* invokeAppMain(NSString *selectedApp, NSString *selectedContaine
         return @"App's executable path not found. Please try force re-signing or reinstalling this app.";
     }
     
+    if([guestAppInfo[@"fixBlackScreen"] boolValue]) {
+        dlopen("/System/Library/Frameworks/UIKit.framework/UIKit", RTLD_GLOBAL);
+        NSLog(@"[LC] Fix BlackScreen2 %@", [NSClassFromString(@"UIScreen") mainScreen]);
+    }
+
     if([[lcUserDefaults objectForKey:@"LCWaitForDebugger"] boolValue]) {
         sleep(100);
     }

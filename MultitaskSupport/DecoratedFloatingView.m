@@ -1,4 +1,5 @@
 #import "DecoratedFloatingView.h"
+#import "ResizeHandleView.h"
 
 @implementation DecoratedFloatingView
 
@@ -28,6 +29,8 @@
 
     UIView *contentView = [[UIView alloc] initWithFrame:contentFrame];
     contentView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    contentView.layer.anchorPoint = CGPointMake(0, 0);
+    contentView.layer.position = CGPointMake(0, self.navigationBar.frame.size.height);
     self.contentView = contentView;
     [self addSubview:contentView];
 
@@ -37,14 +40,12 @@
     [self.navigationBar addGestureRecognizer:moveGesture];
 
     // Resize handle (idea stolen from Notes debugging window)
-    self.resizeHandle = [[UIView alloc] initWithFrame:CGRectMake(self.frame.size.width - 30, self.frame.size.height - 30, 60, 60)];
-    self.resizeHandle.backgroundColor = [UIColor colorWithWhite:1 alpha:0.2];
-    self.resizeHandle.transform = CGAffineTransformMakeRotation(M_PI_4);
-    [self addSubview:self.resizeHandle];
     UIPanGestureRecognizer *resizeGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(resizeWindow:)];
     resizeGesture.minimumNumberOfTouches = 1;
     resizeGesture.maximumNumberOfTouches = 1;
+    self.resizeHandle = [[ResizeHandleView alloc] initWithFrame:CGRectMake(self.frame.size.width - 60, self.frame.size.height - 60, 60, 60)];
     [self.resizeHandle addGestureRecognizer:resizeGesture];
+    [self addSubview:self.resizeHandle];
     
     self.layer.borderWidth = 1.0;
     self.layer.borderColor = UIColor.secondarySystemBackgroundColor.CGColor;
@@ -53,10 +54,6 @@
 }
 
 - (void)moveWindow:(UIPanGestureRecognizer*)sender {
-    if (sender.state == UIGestureRecognizerStateBegan) {
-        [self.superview bringSubviewToFront:self];
-    }
-
     CGPoint point = [sender translationInView:self];
     [sender setTranslation:CGPointZero inView:self];
 
@@ -71,7 +68,12 @@
     frame.size.width = MAX(50, frame.size.width + point.x);
     frame.size.height = MAX(50, frame.size.height + point.y);
     self.frame = frame;
-    self.resizeHandle.center = CGPointMake(self.resizeHandle.center.x + point.x, self.resizeHandle.center.y + point.y);
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [super touchesBegan:touches withEvent:event];
+    // FIXME: how to bring view to front when touching the passthrough view?
+    [self.superview bringSubviewToFront:self];
 }
 
 @end

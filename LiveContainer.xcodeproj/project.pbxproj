@@ -210,6 +210,10 @@
 				DecoratedAppSceneView.m,
 				DecoratedFloatingView.h,
 				DecoratedFloatingView.m,
+				PiPManager.h,
+				PiPManager.m,
+				ResizeHandleView.h,
+				ResizeHandleView.m,
 				"UIKitPrivate+MultitaskSupport.h",
 			);
 			target = 17413FB42D9C0BAE00F3F928 /* LiveContainerSwiftUI */;

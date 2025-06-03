@@ -64,16 +64,14 @@
 @end
 
 
-
-@interface FBSMutableSceneParameters : NSObject
-@property(nonatomic, copy) UIMutableApplicationSceneSettings *settings;
-@end
-
-
 @interface FBSSceneParameters : NSObject
 @property(nonatomic, copy) UIApplicationSceneSettings *settings;
 @property(nonatomic, copy) UIApplicationSceneClientSettings *clientSettings;
 - (instancetype)initWithXPCDictionary:(NSDictionary*)dict;
+@end
+
+@interface FBSMutableSceneParameters : FBSSceneParameters
+@property(nonatomic, copy) UIMutableApplicationSceneSettings *settings;
 @end
 
 @interface UIWindow (private)
@@ -83,4 +81,17 @@
 @interface LSApplicationWorkspace : NSObject
 + (instancetype)defaultWorkspace;
 - (BOOL)openApplicationWithBundleID:(NSString *)arg1 ;
+@end
+
+@interface UICustomViewMenuElement : UIMenuElement
++ (instancetype)elementWithViewProvider:(UIView *(^)(UICustomViewMenuElement *element))provider;
+
+@end
+
+@interface UINavigationBar(private)
+- (UIFont *)_defaultTitleFont;
+@end
+
+@interface _UIPrototypingMenuSlider : UISlider
+@property(nonatomic, assign, readwrite) CGFloat stepSize;
 @end
