@@ -185,7 +185,7 @@ class LCAppModel: ObservableObject, Hashable {
             }
             
             // it the user is trying to launch the app in normal mode, but the folder is currently in liveprocess's folder, we need to ask liveprocess to put the folder back
-            if !multitask && runningLC == "liveprocess" && DataManager.shared.model.multiLCStatus != 2{
+            if !multitask && runningLC == "liveprocess" && DataManager.shared.model.multiLCStatus != 2, #available(iOS 16.0, *) {
                 UserDefaults.standard.set(self.appInfo.relativeBundlePath, forKey: "selected")
                 UserDefaults.standard.set(uiSelectedContainer?.folderName, forKey: "selectedContainer")
                 defer {
@@ -246,7 +246,7 @@ class LCAppModel: ObservableObject, Hashable {
         
         if appInfo.isJITNeeded || appInfo.is32bit {
             await delegate?.jitLaunch()
-        } else if multitask {
+        } else if multitask, #available(iOS 16.0, *) {
             try await LCUtils.launchMultitaskGuestApp(appInfo.displayName())
         } else {
             LCUtils.launchToGuestApp()

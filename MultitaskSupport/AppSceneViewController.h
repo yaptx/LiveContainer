@@ -13,6 +13,7 @@
 - (void)appDidExit;
 @end
 
+API_AVAILABLE(ios(16.0))
 @interface AppSceneViewController : UIViewController<_UISceneSettingsDiffAction>
 @property(nonatomic) UIWindowScene *hostScene;
 @property(nonatomic) _UIScenePresenter *presenter;

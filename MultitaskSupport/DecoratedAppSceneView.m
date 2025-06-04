@@ -58,35 +58,9 @@ void UIKitFixesInit(void) {
     ];
     
     NSString *pidText = [NSString stringWithFormat:@"PID: %d", pid];
-    UIImageSymbolConfiguration* sc1 = [UIImageSymbolConfiguration configurationWithPaletteColors:@[UIColor.secondaryLabelColor,UIColor.secondarySystemFillColor]];
-    
-    UIImageSymbolConfiguration* sc2 = [UIImageSymbolConfiguration configurationWithScale:UIImageSymbolScaleMedium];
-    UIImageSymbolConfiguration* sc = [sc1 configurationByApplyingConfiguration:sc2];
-    UIImage* dropDownImage = [UIImage systemImageNamed:@"chevron.down.circle.fill" withConfiguration:sc];
-    
-    UIButtonConfiguration* bc = [UIButtonConfiguration plainButtonConfiguration];
-    bc.imagePadding = 4;
-    bc.imagePlacement = NSDirectionalRectEdgeTrailing;
-    bc.titleTextAttributesTransformer = ^(NSDictionary<NSAttributedStringKey, id> *incoming) {
-        NSMutableDictionary<NSAttributedStringKey, id> *outgoing = [incoming mutableCopy];
-        outgoing[NSFontAttributeName] = self.navigationBar._defaultTitleFont;
-        return outgoing;
-    };
-    UIButton *titleView = [UIButton buttonWithConfiguration:bc primaryAction:nil];
-
-    [titleView setTitleColor:UIColor.labelColor forState:UIControlStateNormal];
-    [titleView setTitleColor:UIColor.secondaryLabelColor forState:UIControlStateHighlighted];
-    //[UIFont boldSystemFontOfSize:_doneButton.titleLabel.font.pointSize]];
-    titleView.showsMenuAsPrimaryAction = YES;
-    [titleView setTitle:windowName forState:UIControlStateNormal];
-    [titleView setImage:dropDownImage forState:UIControlStateNormal];
-    
-    titleView.menu = [UIMenu menuWithTitle:pidText children:menuItems];
-    
-    self.navigationBar.overrideUserInterfaceStyle = UIUserInterfaceStyleDark;
-    [self.navigationBar.standardAppearance configureWithTransparentBackground];
-    self.navigationBar.standardAppearance.backgroundColor = [UIColor colorWithWhite:0 alpha:0.5];
-    self.navigationItem.titleView = titleView;
+    [self.navigationItem setTitleMenuProvider:^UIMenu *(NSArray<UIMenuElement *> *suggestedActions){
+        return [UIMenu menuWithTitle:pidText children:menuItems];
+    }];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemClose target:self action:@selector(closeWindow)];
     self.windowName = windowName;
     self.navigationItem.title = windowName;

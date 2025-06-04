@@ -12,6 +12,8 @@
     bool isAppRunning;
     int resizeDebounceToken;
     CGRect currentFrame;
+    bool isNativeWindow;
+    bool allowUpdateSettings;
 }
 
 - (instancetype)initWithExtension:(NSExtension *)extension frame:(CGRect)frame identifier:(NSUUID *)identifier dataUUID:(NSString*)dataUUID delegate:(id<AppSceneViewDelegate>)delegate {
@@ -23,7 +25,8 @@
     self.dataUUID = dataUUID;
     self.pid = pid;
     isAppRunning = true;
-    
+    allowUpdateSettings = false;
+    isNativeWindow = [[[NSUserDefaults alloc] initWithSuiteName:[LCUtils appGroupID]] integerForKey:@"LCMultitaskMode" ] == 1;
     RBSProcessPredicate* predicate = [PrivClass(RBSProcessPredicate) predicateMatchingIdentifier:@(pid)];
     
     FBProcessManager *manager = [PrivClass(FBProcessManager) sharedInstance];
@@ -46,7 +49,6 @@
     settings.foreground = YES;
 
     settings.deviceOrientation = UIDevice.currentDevice.orientation;
-    bool isNativeWindow = [[[NSUserDefaults alloc] initWithSuiteName:[LCUtils appGroupID]] integerForKey:@"LCMultitaskMode" ] == 1;
     settings.interfaceOrientation = UIApplication.sharedApplication.statusBarOrientation;
     if(UIInterfaceOrientationIsLandscape(settings.interfaceOrientation)) {
         settings.frame = CGRectMake(0, 0, frame.size.height, frame.size.width);
@@ -101,6 +103,10 @@
     
     self.view = self.presenter.presentationView;
     [MultitaskManager registerMultitaskContainerWithContainer:dataUUID];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        // ignore UIApplicationSceneSettings for 1s to solve the wrong safe area issue in native window mode.
+        self->allowUpdateSettings = true;
+    });
     return self;
 }
 
@@ -113,7 +119,7 @@
         if(currentDebounceToken != self->resizeDebounceToken) {
             return;
         }
-        currentFrame = frame;
+        self->currentFrame = frame;
         [self.presenter.scene updateSettingsWithBlock:^(UIMutableApplicationSceneSettings *settings) {
             settings.deviceOrientation = UIDevice.currentDevice.orientation;
             settings.interfaceOrientation = self.view.window.windowScene.interfaceOrientation;
@@ -152,11 +158,10 @@
 - (void)_performActionsForUIScene:(UIScene *)scene withUpdatedFBSScene:(id)fbsScene settingsDiff:(FBSSceneSettingsDiff *)diff fromSettings:(UIApplicationSceneSettings *)settings transitionContext:(id)context lifecycleActionType:(uint32_t)actionType {
     if(!diff) return;
     UIMutableApplicationSceneSettings *baseSettings = [diff settingsByApplyingToMutableCopyOfSettings:settings];
-    bool isNativeWindow = [[[NSUserDefaults alloc] initWithSuiteName:[LCUtils appGroupID]] integerForKey:@"LCMultitaskMode" ] == 1;
     
     UIApplicationSceneTransitionContext *newContext = [context copy];
     newContext.actions = nil;
-    if(isNativeWindow) {
+    if(isNativeWindow && allowUpdateSettings) {
         // directly update the settings
         baseSettings.interruptionPolicy = 0;
         [self.presenter.scene updateSettings:baseSettings withTransitionContext:newContext completion:nil];

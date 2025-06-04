@@ -180,10 +180,12 @@ struct LCAppBanner : View {
                     }
                 }
                 if(sharedModel.multiLCStatus != 2 && model.uiIsShared) {
-                    Button {
-                        Task{ await runApp(multitask: true) }
-                    } label: {
-                        Label("lc.appBanner.multitask".loc, systemImage: "macwindow.badge.plus")
+                    if #available(iOS 16.0, *) {
+                        Button {
+                            Task{ await runApp(multitask: true) }
+                        } label: {
+                            Label("lc.appBanner.multitask".loc, systemImage: "macwindow.badge.plus")
+                        }
                     }
                 }
                 Menu {
