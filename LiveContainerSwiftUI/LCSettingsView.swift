@@ -292,7 +292,7 @@ struct LCSettingsView: View {
                     }
                     HStack {
                         Image("Twitter")
-                        Button("TranKha50277352") {
+                        Button("khanhduytran0") {
                             openTwitter()
                         }
                     }
@@ -510,7 +510,7 @@ struct LCSettingsView: View {
     }
     
     func openTwitter() {
-        UIApplication.shared.open(URL(string: "https://twitter.com/TranKha50277352")!)
+        UIApplication.shared.open(URL(string: "https://twitter.com/khanhduytran0")!)
     }
     
     func updateSideStorePatchStatus() {

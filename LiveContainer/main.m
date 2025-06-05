@@ -184,6 +184,9 @@ static void *getAppEntryPoint(void *handle) {
 
 static NSString* invokeAppMain(NSString *selectedApp, NSString *selectedContainer, int argc, char *argv[]) {
     NSString *appError = nil;
+    if([[lcUserDefaults objectForKey:@"LCWaitForDebugger"] boolValue]) {
+        sleep(100);
+    }
     if (!LCSharedUtils.certificatePassword) {
         // First of all, let's check if we have JIT
         for (int i = 0; i < 10 && !checkJITEnabled(); i++) {
@@ -421,10 +424,6 @@ static NSString* invokeAppMain(NSString *selectedApp, NSString *selectedContaine
     
     if(![guestAppInfo[@"dontInjectTweakLoader"] boolValue]) {
         tweakLoaderLoaded = true;
-    }
-    
-    if([[lcUserDefaults objectForKey:@"LCWaitForDebugger"] boolValue]) {
-        sleep(100);
     }
     
     void *appHandle = dlopen(appExecPath, RTLD_LAZY|RTLD_GLOBAL|RTLD_FIRST);
