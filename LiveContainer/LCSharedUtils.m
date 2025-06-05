@@ -189,16 +189,6 @@ extern NSString* getLCEntitlementXML(void);
     [lcUserDefaults setObject:urlString forKey:@"webPageToOpen"];
 }
 
-+ (NSURL*)appLockPath {
-    static dispatch_once_t once;
-    static NSURL *infoPath;
-    
-    dispatch_once(&once, ^{
-        infoPath = [[LCSharedUtils appGroupPath] URLByAppendingPathComponent:@"LiveContainer/appLock.plist"];
-    });
-    return infoPath;
-}
-
 + (NSURL*)containerLockPath {
     static dispatch_once_t once;
     static NSURL *infoPath;
@@ -207,39 +197,6 @@ extern NSString* getLCEntitlementXML(void);
         infoPath = [[LCSharedUtils appGroupPath] URLByAppendingPathComponent:@"LiveContainer/containerLock.plist"];
     });
     return infoPath;
-}
-
-+ (NSString*)getAppRunningLCSchemeWithBundleId:(NSString*)bundleId {
-    NSURL* infoPath = [self appLockPath];
-    NSMutableDictionary *info = [NSMutableDictionary dictionaryWithContentsOfFile:infoPath.path];
-    if (!info) {
-        return nil;
-    }
-    
-    for (NSString* key in info) {
-        if([info[key] isKindOfClass:NSString.class]) {
-            // incase user have app opened while update
-            if([bundleId isEqualToString:info[key]]) {
-                if([key isEqualToString:lcAppUrlScheme]) {
-                    return nil;
-                }
-                return key;
-            }
-        } else if ([info[key] isKindOfClass:NSArray.class]) {
-            // in newer version with liveprocess support, it is possible that one lc can open more than 1 app, so we need to save it in an array
-            if(![key isEqualToString:lcAppUrlScheme]) {
-                continue;
-            }
-            for(NSString* runningBundleId in info[key]) {
-                if([bundleId isEqualToString:runningBundleId]) {
-
-                    return key;
-                }
-            }
-        }
-    }
-    
-    return nil;
 }
 
 + (NSString*)getContainerUsingLCSchemeWithFolderName:(NSString*)folderName {
@@ -266,45 +223,6 @@ extern NSString* getLCEntitlementXML(void);
     }
     
     return nil;
-}
-
-// if you pass null then remove this lc from appLock
-+ (void)setAppRunningByThisLC:(NSString*)bundleId remove:(BOOL)remove {
-    NSURL* infoPath = [self appLockPath];
-    
-    NSMutableDictionary *info = [NSMutableDictionary dictionaryWithContentsOfFile:infoPath.path];
-    if (!info) {
-        info = [NSMutableDictionary new];
-    }
-    if(remove) {
-        if([info[lcAppUrlScheme] isKindOfClass:NSString.class]) {
-            [info removeObjectForKey:lcAppUrlScheme];
-        } else if ([info[lcAppUrlScheme] isKindOfClass:NSArray.class]) {
-            if(bundleId){
-                [(NSMutableArray*)info[lcAppUrlScheme] removeObject:bundleId];
-            } else {
-                [(NSMutableArray*)info[lcAppUrlScheme] removeAllObjects];
-            }
-        }
-    } else {
-        if([info[lcAppUrlScheme] isKindOfClass:NSString.class]) {
-            // upgrade
-            NSString* oldBundle = info[lcAppUrlScheme];
-            info[lcAppUrlScheme] = [NSMutableArray new];
-            [(NSMutableArray*)info[lcAppUrlScheme] addObject:bundleId];
-            [(NSMutableArray*)info[lcAppUrlScheme] addObject:oldBundle];
-        } else if ([info[lcAppUrlScheme] isKindOfClass:NSArray.class]) {
-            if(![(NSMutableArray*)info[lcAppUrlScheme] containsObject:bundleId]) {
-                [(NSMutableArray*)info[lcAppUrlScheme] addObject:bundleId];
-            }
-
-        } else {
-            info[lcAppUrlScheme] = [NSMutableArray new];
-            [(NSMutableArray*)info[lcAppUrlScheme] addObject:bundleId];
-        }
-    }
-    [info writeToFile:infoPath.path atomically:YES];
-
 }
 
 + (void)setContainerUsingByThisLC:(NSString*)folderName remove:(BOOL)remove {
@@ -341,18 +259,6 @@ extern NSString* getLCEntitlementXML(void);
             [(NSMutableArray*)info[lcAppUrlScheme] addObject:folderName];
         }
     }
-    [info writeToFile:infoPath.path atomically:YES];
-
-}
-
-+ (void)removeAppRunningByLC:(NSString*)LCScheme {
-    NSURL* infoPath = [self appLockPath];
-    
-    NSMutableDictionary *info = [NSMutableDictionary dictionaryWithContentsOfFile:infoPath.path];
-    if (!info) {
-        return;
-    }
-    [info removeObjectForKey:LCScheme];
     [info writeToFile:infoPath.path atomically:YES];
 
 }

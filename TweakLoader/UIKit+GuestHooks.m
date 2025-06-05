@@ -397,6 +397,11 @@ BOOL canAppOpenItself(NSURL* url) {
     }
 }
 
++ (BOOL)_wantsApplicationBehaviorAsExtension {
+    // Fix LiveProcess: Make _UIApplicationWantsExtensionBehavior return NO so delegate code runs in the run loop
+    return YES;
+}
+
 @end
 
 // Handler for SceneDelegate

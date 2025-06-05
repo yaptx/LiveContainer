@@ -242,7 +242,6 @@ static NSString* invokeAppMain(NSString *selectedApp, NSString *selectedContaine
     }
     
     if(isSharedBundle) {
-        [LCSharedUtils setAppRunningByThisLC:selectedApp remove:NO];
         [LCSharedUtils setContainerUsingByThisLC:dataUUID remove:NO];
     }
     
@@ -371,10 +370,6 @@ static NSString* invokeAppMain(NSString *selectedApp, NSString *selectedContaine
         dlopen("/System/Library/Frameworks/UIKit.framework/UIKit", RTLD_GLOBAL);
         NSLog(@"[LC] Fix BlackScreen2 %@", [NSClassFromString(@"UIScreen") mainScreen]);
     }
-
-    if([[lcUserDefaults objectForKey:@"LCWaitForDebugger"] boolValue]) {
-        sleep(100);
-    }
     
     NSMutableArray<NSString *> *objcArgv = NSProcessInfo.processInfo.arguments.mutableCopy;
     objcArgv[0] = appBundle.executablePath;
@@ -426,6 +421,10 @@ static NSString* invokeAppMain(NSString *selectedApp, NSString *selectedContaine
     
     if(![guestAppInfo[@"dontInjectTweakLoader"] boolValue]) {
         tweakLoaderLoaded = true;
+    }
+    
+    if([[lcUserDefaults objectForKey:@"LCWaitForDebugger"] boolValue]) {
+        sleep(100);
     }
     
     void *appHandle = dlopen(appExecPath, RTLD_LAZY|RTLD_GLOBAL|RTLD_FIRST);
@@ -541,7 +540,6 @@ int LiveContainerMain(int argc, char *argv[]) {
         NSString* preferencesTo = [LCSharedUtils.appGroupPath.path stringByAppendingPathComponent:[NSString stringWithFormat:@"LiveContainer/Data/Application/%@/Library/Preferences", lastLaunchDataUUID]];
         [LCSharedUtils dumpPreferenceToPath:preferencesTo dataUUID:lastLaunchDataUUID];
         [LCSharedUtils setContainerUsingByThisLC:selectedContainer remove:YES];
-        [LCSharedUtils setAppRunningByThisLC:selectedApp remove:YES];
         [lcUserDefaults removeObjectForKey:@"liveprocessRetrieveData"];
         exit(0);
         return 0;
@@ -591,7 +589,6 @@ int LiveContainerMain(int argc, char *argv[]) {
 
                 }
             } else {
-                [LCSharedUtils removeAppRunningByLC: runningLC];
                 [LCSharedUtils removeContainerUsingByLC: runningLC];
             }
         });
@@ -627,7 +624,6 @@ int LiveContainerMain(int argc, char *argv[]) {
             return 1;
         }
     }
-    [LCSharedUtils setAppRunningByThisLC:nil remove:YES];
     [LCSharedUtils setContainerUsingByThisLC:nil remove:YES];
     // recover language before reaching UI
     NSArray* savedLaunguage = [lcUserDefaults objectForKey:@"LCLastLanguages"];

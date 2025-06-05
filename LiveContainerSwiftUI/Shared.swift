@@ -630,35 +630,6 @@ extension LCUtils {
         
     }
     
-    public static func getAppRunningLCScheme(bundleId: String) -> String? {
-        // Retrieve the app group path using the app group ID
-        let infoPath = LCPath.lcGroupDocPath.appendingPathComponent("appLock.plist")
-        // Read the plist file into a dictionary
-        guard let info = NSDictionary(contentsOf: infoPath) as? [String: Any] else {
-            return nil
-        }
-        // Iterate over the dictionary to find the matching bundle ID
-        for (key, value) in info {
-            if key == LCUtils.appUrlScheme() {
-                continue
-            }
-            
-            if let value2 = value as? String {
-                if value2 == bundleId {
-                    return key
-                }
-            } else if let value2 = value as? [String] {
-                for bundle in value2 {
-                    if bundle == bundleId {
-                        return key
-                    }
-                }
-            }
-        }
-        
-        return nil
-    }
-    
     public static func getContainerUsingLCScheme(containerName: String) -> String? {
         // Retrieve the app group path using the app group ID
         let infoPath = LCPath.lcGroupDocPath.appendingPathComponent("containerLock.plist")

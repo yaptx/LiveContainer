@@ -29,6 +29,7 @@ struct LCContainerView : View {
     @Environment(\.dismiss) private var dismiss
     @State private var typingContainerName : String = ""
     @State private var inUse = false
+    @State private var runningLC : String? = nil
     
     @State private var errorShow = false
     @State private var errorInfo = ""
@@ -93,6 +94,16 @@ struct LCContainerView : View {
                 if inUse {
                     Text("lc.container.inUse".loc)
                         .foregroundStyle(.gray)
+                    if #available(iOS 16.0, *) {
+                        if runningLC == "liveprocess" && DataManager.shared.model.multiLCStatus != 2 {
+                            Button {
+                                Task { await retrieveDataFromLiveProcess() }
+                            } label: {
+                                Text("lc.appBanner.retrieveDataFromLiveProcess".loc)
+                            }
+                        }
+                    }
+                    
                 } else {
                     if !container.isShared {
                         Button {
@@ -179,7 +190,8 @@ struct LCContainerView : View {
         .onAppear() {
             container.reloadInfoPlist()
             settingsBundle = delegate.getSettingsBundle()
-            inUse = LCUtils.getContainerUsingLCScheme(containerName: container.folderName) != nil
+            runningLC = LCUtils.getContainerUsingLCScheme(containerName: container.folderName)
+            inUse = runningLC != nil
         }
         
     }
@@ -267,6 +279,43 @@ struct LCContainerView : View {
                 }
                 try fm.removeItem(at: file)
             }
+        } catch {
+            errorInfo = error.localizedDescription
+            errorShow = true
+        }
+    }
+    
+    @available(iOS 16.0, *)
+    func retrieveDataFromLiveProcess() async {
+        do {
+        
+            UserDefaults.standard.set("", forKey: "selected")
+            UserDefaults.standard.set(container.folderName, forKey: "selectedContainer")
+            defer {
+                UserDefaults.standard.removeObject(forKey: "selected")
+                UserDefaults.standard.removeObject(forKey: "selectedContainer")
+            }
+            try await LCUtils.launchMultitaskGuestDataRetrieve("LiveProcessDataRetrieve")
+
+            // wait 20 * 0.1s for LiveProcess to move the data back
+            var complete = false
+            for _ in 0..<20 {
+                usleep(1000*100)
+                if let _ = LCUtils.getContainerUsingLCScheme(containerName: container.folderName) {
+
+                } else {
+                    complete = true
+                    break
+                }
+            }
+            
+            if !complete {
+                throw "lc.container.unableToMoveContainerFromLiveProcess".loc
+            }
+            
+            inUse = false
+            runningLC = nil
+            
         } catch {
             errorInfo = error.localizedDescription
             errorShow = true

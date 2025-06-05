@@ -8,13 +8,10 @@
 + (BOOL)launchToGuestApp;
 + (BOOL)launchToGuestAppWithURL:(NSURL *)url;
 + (void)setWebPageUrlForNextLaunch:(NSString*)urlString;
-+ (NSString*)getAppRunningLCSchemeWithBundleId:(NSString*)bundleId;
 + (NSString*)getContainerUsingLCSchemeWithFolderName:(NSString*)folderName;
-+ (void)setAppRunningByThisLC:(NSString*)bundleId remove:(BOOL)remove;
 + (void)setContainerUsingByThisLC:(NSString*)folderName remove:(BOOL)remove;
 + (void)moveSharedAppFolderBack;
 + (BOOL)moveSharedAppFolderBackWithDataUUID:(NSString*)dataUUID;
-+ (void)removeAppRunningByLC:(NSString*)LCScheme;
 + (void)removeContainerUsingByLC:(NSString*)LCScheme;
 + (NSBundle*)findBundleWithBundleId:(NSString*)bundleId;
 + (void)dumpPreferenceToPath:(NSString*)plistLocationTo dataUUID:(NSString*)dataUUID;

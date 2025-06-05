@@ -428,13 +428,15 @@ struct LCAppSettingsView : View{
     }
     
     func movePrivateDoc() async {
-        let runningLC = LCUtils.getAppRunningLCScheme(bundleId: appInfo.relativeBundlePath!)
-        if runningLC != nil {
-            errorInfo = "lc.appSettings.appOpenInOtherLc %@ %@".localizeWithFormat(runningLC!, runningLC!)
-            errorShow = true
-            return
+        for container in appInfo.containers {
+            let runningLC = LCUtils.getContainerUsingLCScheme(containerName: container.folderName)
+            if runningLC != nil {
+                errorInfo = "lc.appSettings.appOpenInOtherLc %@ %@".localizeWithFormat(runningLC!, runningLC!)
+                errorShow = true
+                return
+            }
         }
-        
+
         guard let result = await moveToPrivateDocAlert.open(), result else {
             return
         }
