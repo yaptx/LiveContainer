@@ -54,6 +54,8 @@ struct LCAppListView : View, LCAppBannerDelegate, LCAppModelDelegate {
     @State private var helpPresent = false
     
     @EnvironmentObject private var sharedModel : SharedModel
+    @AppStorage("LCMultitaskMode", store: LCUtils.appGroupUserDefault) var multitaskMode: MultitaskMode = .virtualWindow
+    @AppStorage("LCLaunchInMultitaskMode") var launchInMultitaskMode = false
 
     init(appDataFolderNames: Binding<[String]>, tweakFolderNames: Binding<[String]>) {
         _installOptions = State(initialValue: [])
@@ -785,7 +787,7 @@ struct LCAppListView : View, LCAppBannerDelegate, LCAppModelDelegate {
         }
 
         do {
-            try await appFound.runApp(containerFolderName: container)
+            try await appFound.runApp(multitask: launchInMultitaskMode, containerFolderName: container)
         } catch {
             errorInfo = error.localizedDescription
             errorShow = true

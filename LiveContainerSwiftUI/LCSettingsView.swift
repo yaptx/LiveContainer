@@ -59,6 +59,7 @@ struct LCSettingsView: View {
     @AppStorage("LCDeviceUDID", store: LCUtils.appGroupUserDefault) var deviceUDID: String = ""
     @AppStorage("LCJITEnablerType", store: LCUtils.appGroupUserDefault) var JITEnabler: JITEnablerType = .SideJITServer
     @AppStorage("LCMultitaskMode", store: LCUtils.appGroupUserDefault) var multitaskMode: MultitaskMode = .virtualWindow
+    @AppStorage("LCLaunchInMultitaskMode") var launchInMultitaskMode = false
     
     @State var store : Store = .Unknown
     
@@ -260,6 +261,9 @@ struct LCSettingsView: View {
                         } label: {
                             Text("lc.settings.multitaskMode".loc)
                         }
+                    }
+                    Toggle(isOn: $launchInMultitaskMode) {
+                        Text("lc.settings.autoLaunchInMultitaskMode".loc)
                     }
                 }
                 

@@ -34,6 +34,7 @@ struct LCAppBanner : View {
     @State private var errorShow = false
     @State private var errorInfo = ""
     @AppStorage("dynamicColors") var dynamicColors = true
+    @AppStorage("LCLaunchInMultitaskMode") var launchInMultitaskMode = false
     @State private var mainColor : Color
     
     @EnvironmentObject private var sharedModel : SharedModel
@@ -106,7 +107,11 @@ struct LCAppBanner : View {
             }
             Spacer()
             Button {
-                Task{ await runApp(multitask: false) }
+                if launchInMultitaskMode {
+                    Task{ await runApp(multitask: true) }
+                } else {
+                    Task{ await runApp(multitask: false) }
+                }
             } label: {
                 if !model.isSigningInProgress {
                     Text("lc.appBanner.run".loc).bold().foregroundColor(.white)
@@ -182,9 +187,19 @@ struct LCAppBanner : View {
                 if(sharedModel.multiLCStatus != 2 && model.uiIsShared) {
                     if #available(iOS 16.0, *) {
                         Button {
-                            Task{ await runApp(multitask: true) }
+                            if launchInMultitaskMode {
+                                Task{ await runApp(multitask: false) }
+                            } else {
+                                Task{ await runApp(multitask: true) }
+                            }
+
                         } label: {
-                            Label("lc.appBanner.multitask".loc, systemImage: "macwindow.badge.plus")
+                            if launchInMultitaskMode {
+                                Label("lc.appBanner.run".loc, systemImage: "play.fill")
+                            } else {
+                                Label("lc.appBanner.multitask".loc, systemImage: "macwindow.badge.plus")
+                            }
+
                         }
                     }
                 }

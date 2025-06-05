@@ -124,7 +124,7 @@ struct DownloadAlert : View {
 }
 
 public struct DownloadAlertModifier: ViewModifier {
-    @StateObject var helper : DownloadHelper
+    @ObservedObject var helper : DownloadHelper
     @State var show = false
     
     public func body(content: Content) -> some View {

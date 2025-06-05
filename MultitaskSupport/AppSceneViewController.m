@@ -13,7 +13,6 @@
     int resizeDebounceToken;
     CGRect currentFrame;
     bool isNativeWindow;
-    bool allowUpdateSettings;
 }
 
 - (instancetype)initWithExtension:(NSExtension *)extension frame:(CGRect)frame identifier:(NSUUID *)identifier dataUUID:(NSString*)dataUUID delegate:(id<AppSceneViewDelegate>)delegate {
@@ -25,7 +24,6 @@
     self.dataUUID = dataUUID;
     self.pid = pid;
     isAppRunning = true;
-    allowUpdateSettings = false;
     isNativeWindow = [[[NSUserDefaults alloc] initWithSuiteName:[LCUtils appGroupID]] integerForKey:@"LCMultitaskMode" ] == 1;
     RBSProcessPredicate* predicate = [PrivClass(RBSProcessPredicate) predicateMatchingIdentifier:@(pid)];
     
@@ -103,10 +101,6 @@
     
     self.view = self.presenter.presentationView;
     [MultitaskManager registerMultitaskContainerWithContainer:dataUUID];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        // ignore UIApplicationSceneSettings for 1s to solve the wrong safe area issue in native window mode.
-        self->allowUpdateSettings = true;
-    });
     return self;
 }
 
@@ -161,7 +155,7 @@
     
     UIApplicationSceneTransitionContext *newContext = [context copy];
     newContext.actions = nil;
-    if(isNativeWindow && allowUpdateSettings) {
+    if(isNativeWindow) {
         // directly update the settings
         baseSettings.interruptionPolicy = 0;
         [self.presenter.scene updateSettings:baseSettings withTransitionContext:newContext completion:nil];
