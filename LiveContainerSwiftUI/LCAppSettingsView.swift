@@ -155,7 +155,7 @@ struct LCAppSettingsView : View{
             
             Section {
                 NavigationLink {
-                    if let supportedLanguage = model.supportedLanaguages {
+                    if let supportedLanguage = model.supportedLanguages {
                         Form {
                             Picker(selection: $model.uiSelectedLanguage) {
                                 Text("lc.common.auto".loc).tag("")
