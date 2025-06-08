@@ -87,7 +87,7 @@ class LCAppModel: ObservableObject, Hashable {
         }
     }
     
-    @Published var supportedLanaguages : [String]?
+    @Published var supportedLanguages : [String]?
     
     var jitAlert : YesNoHelper? = nil
     @Published var jitLog : String = ""
@@ -341,16 +341,16 @@ class LCAppModel: ObservableObject, Hashable {
     
     func loadSupportedLanguages() throws {
         let fm = FileManager.default
-        if supportedLanaguages != nil {
+        if supportedLanguages != nil {
             return
         }
-        supportedLanaguages = []
+        supportedLanguages = []
         let fileURLs = try fm.contentsOfDirectory(at: URL(fileURLWithPath: appInfo.bundlePath()!) , includingPropertiesForKeys: nil)
         for fileURL in fileURLs {
             let attributes = try fm.attributesOfItem(atPath: fileURL.path)
             let fileType = attributes[.type] as? FileAttributeType
             if(fileType == .typeDirectory && fileURL.lastPathComponent.hasSuffix(".lproj")) {
-                supportedLanaguages?.append(fileURL.deletingPathExtension().lastPathComponent)
+                supportedLanguages?.append(fileURL.deletingPathExtension().lastPathComponent)
             }
         }
         
