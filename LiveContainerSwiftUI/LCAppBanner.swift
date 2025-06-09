@@ -108,6 +108,14 @@ struct LCAppBanner : View {
             Spacer()
             Button {
                 if launchInMultitaskMode && model.uiIsShared {
+                    if #available(iOS 16.1, *) {
+                        if let currentDataFolder = model.uiSelectedContainer?.folderName,
+                            MultitaskManager.isUsing(container: currentDataFolder),
+                            MultitaskWindowManager.openExistingAppWindow(dataUUID: currentDataFolder) {
+                            return
+                        }
+                    }
+
                     Task{ await runApp(multitask: true) }
                 } else {
                     Task{ await runApp(multitask: false) }

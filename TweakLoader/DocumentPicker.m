@@ -2,7 +2,7 @@
 #import "LCSharedUtils.h"
 #import "UIKitPrivate.h"
 #import "utils.h"
-
+#import "../LiveContainer/FoundationPrivate.h"
 
 BOOL fixFilePicker;
 __attribute__((constructor))
@@ -15,7 +15,7 @@ static void NSFMGuestHooksInit() {
     swizzleClassMethod(UTType.class, @selector(typeWithIdentifier:), @selector(hook_typeWithIdentifier:));
     if (fixFilePicker) {
         swizzle(NSURL.class, @selector(startAccessingSecurityScopedResource), @selector(hook_startAccessingSecurityScopedResource));
-        swizzle(UIDocumentPickerViewController.class, @selector(setAllowsMultipleSelection:), @selector(hook_setAllowsMultipleSelection:));
+        swizzle(NSClassFromString(@"DOCConfiguration"), @selector(setHostIdentifier:), @selector(hook_setHostIdentifier:));
     }
 
 }
@@ -69,16 +69,6 @@ static void NSFMGuestHooksInit() {
 
 @end
 
-
-@implementation NSURL(LiveContainerHook)
-
-- (BOOL)hook_startAccessingSecurityScopedResource {
-    [self hook_startAccessingSecurityScopedResource];
-    return YES;
-}
-
-@end
-
 @implementation UTType(LiveContainerHook)
 
 +(instancetype)hook_typeWithIdentifier:(NSString*)identifier {
@@ -90,6 +80,31 @@ static void NSFMGuestHooksInit() {
         return ans;
     } else {
         return [UTType importedTypeWithIdentifier:identifier];
+    }
+}
+
+@end
+
+@implementation DOCConfiguration
+
+- (void)hook_setHostIdentifier:(NSString *)ignored {
+    CFErrorRef error = NULL;
+    CFTypeRef value = SecTaskCopyValueForEntitlement(SecTaskCreateFromSelf(NULL), CFSTR("application-identifier"), &error);
+
+    if (value) {
+        NSString *entStr = (__bridge NSString *)value;
+        CFRelease(value);
+        NSRange dotRange = [entStr rangeOfString:@"."];
+        if (dotRange.location != NSNotFound) {
+               NSString *result = [entStr substringFromIndex:dotRange.location + 1];
+            [self hook_setHostIdentifier:result];
+        } else {
+            [self hook_setHostIdentifier:entStr];
+        }
+    } else if (error) {
+        NSLog(@"Error fetching entitlement: %@", error);
+        CFRelease(error);
+        [self hook_setHostIdentifier:ignored];
     }
 }
 
