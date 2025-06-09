@@ -101,4 +101,5 @@
 @end
 
 @interface DOCConfiguration : NSObject
+- (void)setHostIdentifier:(NSString *)ignored;
 @end
