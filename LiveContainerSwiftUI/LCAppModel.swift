@@ -142,6 +142,10 @@ class LCAppModel: ObservableObject, Hashable {
             return
         }
         
+        if multitask && !uiIsShared {
+            throw "It's not possible to multitask with private apps."
+        }
+        
         // ask user if they want to terminate all multitasking apps
         if MultitaskManager.isMultitasking() && !multitask {
             guard let ans = await delegate?.showRunWhenMultitaskAlert(), ans else {

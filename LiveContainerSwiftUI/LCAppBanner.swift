@@ -107,7 +107,7 @@ struct LCAppBanner : View {
             }
             Spacer()
             Button {
-                if launchInMultitaskMode {
+                if launchInMultitaskMode && model.uiIsShared {
                     Task{ await runApp(multitask: true) }
                 } else {
                     Task{ await runApp(multitask: false) }
