@@ -474,6 +474,7 @@ extension LCUtils {
         } catch {
             return nil
         }
+        LCPatchAppBundleFixupARM64eSlice(url)
         await withUnsafeContinuation { c in
             func compeletionHandler(success: Bool, error: Error?){
                 do {

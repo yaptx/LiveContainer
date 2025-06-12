@@ -135,12 +135,18 @@ extern NSBundle *lcMainBundle;
     }
     NSURL *launchURL = [NSURL URLWithString:[NSString stringWithFormat:urlScheme, NSBundle.mainBundle.bundleIdentifier]];
 
+    if(@available(iOS 19.0, *)) {
+        [[NSClassFromString(@"LSApplicationWorkspace") defaultWorkspace] openApplicationWithBundleID:@"com.apple.springboard"];
+    }
     if ([application canOpenURL:launchURL]) {
         //[UIApplication.sharedApplication suspend];
         for (int i = 0; i < tries; i++) {
-        [application openURL:launchURL options:@{} completionHandler:^(BOOL b) {
-            exit(0);
-        }];
+            if(@available(iOS 19.0, *)) {
+                [[NSClassFromString(@"LSApplicationWorkspace") defaultWorkspace] openApplicationWithBundleID:NSBundle.mainBundle.bundleIdentifier];
+            }
+            [application openURL:launchURL options:@{} completionHandler:^(BOOL b) {
+                exit(0);
+            }];
         }
         return YES;
     } else {

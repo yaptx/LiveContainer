@@ -130,6 +130,59 @@ NSString *LCParseMachO(const char *path, bool readOnly, LCParseMachOCallback cal
     return nil;
 }
 
+NSString *LCPatchMachOFixupARM64eSlice(const char *path) {
+    int fd = open(path, O_RDWR, 0600);
+    if(fd < 0) {
+        return [NSString stringWithFormat:@"Failed to open %s: %s", path, strerror(errno)];
+    }
+    struct stat s = {0};
+    fstat(fd, &s);
+    void *map = mmap(NULL, s.st_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+    if(map == MAP_FAILED) {
+        close(fd);
+        return [NSString stringWithFormat:@"Failed to map %s: %s", path, strerror(errno)];
+    }
+
+    uint32_t magic = *(uint32_t *)map;
+    if(magic == FAT_CIGAM) {
+        // Find arm64e slice without CPU_SUBTYPE_LIB64
+        struct fat_header *header = (struct fat_header *)map;
+        struct fat_arch *arch = (struct fat_arch *)(map + sizeof(struct fat_header));
+        for(int i = 0; i < OSSwapInt32(header->nfat_arch); i++) {
+            if(OSSwapInt32(arch->cputype) == CPU_TYPE_ARM64 && OSSwapInt32(arch->cpusubtype) == CPU_SUBTYPE_ARM64E) {
+                struct mach_header_64 *header = (struct mach_header_64 *)(map + OSSwapInt32(arch->offset));
+                header->cpusubtype |= CPU_SUBTYPE_LIB64;
+                arch->cpusubtype = htonl(header->cpusubtype);
+                break;
+            }
+            arch = (struct fat_arch *)((void *)arch + sizeof(struct fat_arch));
+        }
+    }
+
+    msync(map, s.st_size, MS_SYNC);
+    munmap(map, s.st_size);
+    close(fd);
+    return nil;
+}
+
+void LCPatchAppBundleFixupARM64eSlice(NSURL *bundleURL) {
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSDirectoryEnumerator *enumerator = [fm enumeratorAtURL:bundleURL includingPropertiesForKeys:nil options:NSDirectoryEnumerationSkipsHiddenFiles errorHandler:nil];
+    for (NSURL *fileURL in enumerator) {
+        if ([fileURL.pathExtension isEqualToString:@"dylib"]) {
+            LCPatchMachOFixupARM64eSlice(fileURL.path.fileSystemRepresentation);
+        } else if ([fileURL.pathExtension isEqualToString:@"framework"]) {
+            NSDictionary *info = [NSDictionary dictionaryWithContentsOfURL:[fileURL URLByAppendingPathComponent:@"Info.plist"]];
+            NSString *executableName = info[@"CFBundleExecutable"];
+            if(!executableName) {
+                executableName = fileURL.lastPathComponent.stringByDeletingPathExtension;
+            }
+            NSURL *executableURL = [fileURL URLByAppendingPathComponent:executableName];
+            LCPatchMachOFixupARM64eSlice(executableURL.path.fileSystemRepresentation);
+        }
+    }
+}
+
 void LCChangeExecUUID(struct mach_header_64 *header) {
     uint8_t *imageHeaderPtr = (uint8_t*)header + sizeof(struct mach_header_64);
     struct load_command *command = (struct load_command *)imageHeaderPtr;
