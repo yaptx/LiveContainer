@@ -135,18 +135,16 @@ extern NSBundle *lcMainBundle;
     }
     NSURL *launchURL = [NSURL URLWithString:[NSString stringWithFormat:urlScheme, NSBundle.mainBundle.bundleIdentifier]];
 
-    if(@available(iOS 19.0, *)) {
-        [[NSClassFromString(@"LSApplicationWorkspace") defaultWorkspace] openApplicationWithBundleID:@"com.apple.springboard"];
-    }
     if ([application canOpenURL:launchURL]) {
         //[UIApplication.sharedApplication suspend];
         for (int i = 0; i < tries; i++) {
-            if(@available(iOS 19.0, *)) {
-                [[NSClassFromString(@"LSApplicationWorkspace") defaultWorkspace] openApplicationWithBundleID:NSBundle.mainBundle.bundleIdentifier];
-            }
             [application openURL:launchURL options:@{} completionHandler:^(BOOL b) {
                 exit(0);
             }];
+        }
+        // Workaround iOS 26 black screen
+        if(@available(iOS 19.0, *)) {
+            [[LSApplicationWorkspace defaultWorkspace] openApplicationWithBundleID:@"com.apple.springboard"];
         }
         return YES;
     } else {
