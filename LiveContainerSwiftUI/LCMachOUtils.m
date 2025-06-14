@@ -61,7 +61,6 @@ void LCPatchExecSlice(const char *path, struct mach_header_64 *header, bool doIn
     struct segment_command_64 *seg = (struct segment_command_64 *)imageHeaderPtr;
     assert(seg->cmd == LC_SEGMENT_64 || seg->cmd == LC_ID_DYLIB);
     if (seg->cmd == LC_SEGMENT_64 && seg->vmaddr == 0) {
-        assert(seg->vmsize == 0x100000000);
         seg->vmaddr = 0x100000000 - 0x4000;
         seg->vmsize = 0x4000;
     }
@@ -95,6 +94,35 @@ void LCPatchExecSlice(const char *path, struct mach_header_64 *header, bool doIn
     }
     if (!hasDylibCommand) {
         insertDylibCommand(LC_ID_DYLIB, path, header);
+    }
+    
+    // Ensure No duplicated dylibs, often caused by incorrect tweak injection
+    // https://github.com/LiveContainer/LiveContainer/issues/582
+    // https://github.com/apple-oss-distributions/dyld/blob/93bd81f9d7fcf004fcebcb66ec78983882b41e71/mach_o/Header.cpp#L678
+    struct load_command *command2 = (struct load_command *)imageHeaderPtr;
+    __block int   depCount = 0;
+    const char*   depPathsBuffer[256];
+    const char**  depPaths = depPathsBuffer;
+    for(int i = 0; i < header->ncmds; i++) {
+        switch ( command2->cmd ) {
+            case LC_LOAD_DYLIB:
+            case LC_LOAD_WEAK_DYLIB:
+            case LC_REEXPORT_DYLIB:
+            case LC_LOAD_UPWARD_DYLIB: {
+                char* loadPath =  (void *)command2 + ((struct dylib_command*)command2)->dylib.name.offset;
+                for ( int i = 0; i < depCount; ++i ) {
+                    if ( strcmp(loadPath, depPaths[i]) == 0 ) {
+                        // replace this duplicated dylib command with an invalid command number
+                        command2->cmd = 0x114515;
+                        NSLog(@"Fixed duplicated load command %s", loadPath);
+                        continue;
+                    }
+                }
+                depPaths[depCount] = loadPath;
+                ++depCount;
+            }
+        }
+        command2 = (struct load_command *)((void *)command2 + command2->cmdsize);
     }
 }
 

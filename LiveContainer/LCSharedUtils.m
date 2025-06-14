@@ -144,7 +144,7 @@ extern NSBundle *lcMainBundle;
         }
         // Workaround iOS 26 black screen
         if(@available(iOS 19.0, *)) {
-            [[LSApplicationWorkspace defaultWorkspace] openApplicationWithBundleID:@"com.apple.springboard"];
+            [[NSClassFromString(@"LSApplicationWorkspace") defaultWorkspace] openApplicationWithBundleID:@"com.apple.springboard"];
         }
         return YES;
     } else {

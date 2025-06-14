@@ -51,6 +51,7 @@ struct LCTabView: View {
             closeDuplicatedWindow()
             checkLastLaunchError()
             checkTeamId()
+            checkBundleId()
         }
         .onReceive(pub) { out in
             if let scene1 = sceneDelegate.window?.windowScene, let scene2 = out.object as? UIWindowScene, scene1 == scene2 {
@@ -128,5 +129,34 @@ struct LCTabView: View {
             }
         }
         UserDefaults.standard.set(currentTeamId, forKey: "LCCertificateTeamId")
+    }
+    
+    func checkBundleId() {
+        if UserDefaults.standard.bool(forKey: "LCBundleIdChecked") {
+            return
+        }
+        
+        let task = SecTaskCreateFromSelf(nil)
+        guard let value = SecTaskCopyValueForEntitlement(task, "application-identifier" as CFString, nil), let appIdentifier = value.takeRetainedValue() as? String else {
+            errorInfo = "Unable to determine application-identifier"
+            errorShow = true
+            return
+        }
+        
+        guard let bundleId = Bundle.main.bundleIdentifier else {
+            return
+        }
+        
+        var correctBundleId = ""
+        if appIdentifier.count > 11 {
+            let startIndex = appIdentifier.index(appIdentifier.startIndex, offsetBy: 11)
+            correctBundleId = String(appIdentifier[startIndex...])
+        }
+        
+        if(bundleId != correctBundleId) {
+            errorInfo = "lc.settings.bundleIdMismatch %@ %@".localizeWithFormat(bundleId, correctBundleId)
+            errorShow = true
+        }
+        UserDefaults.standard.set(true, forKey: "LCBundleIdChecked")
     }
 }
