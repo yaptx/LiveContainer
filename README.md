@@ -30,10 +30,10 @@ It’s recommended to follow the following steps to set up JIT-Less mode for usi
 
 ## Download Mthods
 ### Stable:
-  [AltSource (raw)](https://raw.githubusercontent.com/LiveContainer/LiveContainer/refs/heads/main/apps.json) ([Add to AltStore](https://tinyurl.com/LCAltStoreClassic), [Add to SideStore](https://tinyurl.com/LCSideStore)), [IPA download](https://github.com/LiveContainer/LiveContainer/releases/latest)
+  [AltSource (raw)](https://raw.githubusercontent.com/LiveContainer/LiveContainer/refs/heads/main/apps.json) ([Add to AltStore](https://tinyurl.com/LCAltStoreClassic), [Add to SideStore](https://tinyurl.com/LCSideStore)), [IPA download](https://github.com/LiveContainer/LiveContainer/releases/latest/download/LiveContainer.ipa)
 
 ### Nightly:
-  [AltSource (raw)](https://raw.githubusercontent.com/LiveContainer/LiveContainer/refs/heads/hbdev/apps_nightly.json) ([Add to AltStore](https://tinyurl.com/LCAltStoreClassic-N), [Add to SideStore](https://tinyurl.com/LCSideStore-N)), [IPA download](https://github.com/LiveContainer/LiveContainer/releases/tag/nightly)
+  [AltSource (raw)](https://github.com/LiveContainer/LiveContainer/releases/download/nightly/apps_nightly.json) ([Add to AltStore](https://tinyurl.com/LC-NAltStoreClassic), [Add to SideStore](https://tinyurl.com/LC-NSideStore)), [IPA download](https://github.com/LiveContainer/LiveContainer/releases/download/nightly/LiveContainer.ipa)
 
 - It is recommended to setup JIT-Less mode, in which LiveContainer signs your apps with your certificate from AltStore/SideStore (see the instructions below).
 
