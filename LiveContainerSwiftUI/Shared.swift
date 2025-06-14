@@ -256,9 +256,6 @@ public struct DocModifier: ViewModifier {
                 controller.allowsMultipleSelection = multiple
                 controller.delegate = delegate
                 self.docController = controller
-                guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
-                    return
-                }
                 sceneDelegate.window?.rootViewController?.present(controller, animated: true)
             } else if !isPresented, let docController = docController {
                 docController.dismiss(animated: true)
