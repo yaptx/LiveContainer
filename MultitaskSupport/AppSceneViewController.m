@@ -87,6 +87,12 @@
         context.appearanceStyle = 2;
     }];
     [self.presenter activate];
+    [extension setRequestInterruptionBlock:^(NSUUID *uuid) {
+        NSLog(@"Request %@ interrupted.", uuid);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self displayAppTerminatedTextIfNeeded];
+        });
+    }];
     
     self.view = self.presenter.presentationView;
     [MultitaskManager registerMultitaskContainerWithContainer:dataUUID];
@@ -118,17 +124,11 @@
 
 - (void)closeWindow {
     [self.extension setRequestInterruptionBlock:^(NSUUID *uuid) {
-        NSLog(@"Request %@ interrupted.", uuid);
         dispatch_async(dispatch_get_main_queue(), ^{
-            if(self.delegate) {
-                [self.delegate appDidExit];
-                self.delegate = nil;
-                [MultitaskManager unregisterMultitaskContainerWithContainer:self.dataUUID];
-                self.isAppRunning = false;
-            }
+            [self.delegate appDidExit];
+            [self closeWindow];
         });
     }];
-    
     [self.view.window.windowScene _unregisterSettingsDiffActionArrayForKey:self.sceneID];
     [[PrivClass(FBSceneManager) sharedInstance] destroyScene:self.sceneID withTransitionContext:nil];
     if(self.presenter){
@@ -201,6 +201,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self displayAppTerminatedTextIfNeeded];
     [self.view.window.windowScene _registerSettingsDiffActionArray:@[self] forKey:self.sceneID];
 }
 

@@ -68,6 +68,15 @@ class SharedModel: ObservableObject {
         UIDevice.current.userInterfaceIdiom == .phone
     }()
     
+    let isLiquidGlassSearchEnabled = {
+        if #available(iOS 19.0, *) {
+            return UIDevice.current.userInterfaceIdiom == .phone &&
+            (dyld_get_program_sdk_version() >= 0x1a0000 || UserDefaults.standard.bool(forKey: "com.apple.SwiftUI.IgnoreSolariumLinkedOnCheck"))
+        } else {
+            return false
+        }
+    }()
+    
     var mainWindowOpened = false
     
     public static let keychainAccessGroupCount = 128

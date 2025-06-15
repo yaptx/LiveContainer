@@ -322,7 +322,7 @@ struct LCAppListView : View, LCAppBannerDelegate, LCAppModelDelegate {
             handleURL(url: url)
         }
         .apply {
-            if #available(iOS 19.0, *), sharedModel.isPhone, dyld_get_program_sdk_version() >= 0x1a0000 {
+            if #available(iOS 19.0, *), sharedModel.isLiquidGlassSearchEnabled {
                 $0
             } else {
                 $0.searchable(text: $searchContext.query)

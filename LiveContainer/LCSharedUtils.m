@@ -118,9 +118,12 @@ extern NSBundle *lcMainBundle;
 }
 
 + (BOOL)launchToGuestApp {
-    if (self.certificatePassword) {
-        [[LSApplicationWorkspace defaultWorkspace] openApplicationWithBundleID:@"com.apple.springboard"];
-        [[LSApplicationWorkspace defaultWorkspace] openApplicationWithBundleID:NSUserDefaults.lcMainBundle.bundleIdentifier];
+#if !TARGET_OS_SIMULATOR
+    if (self.certificatePassword)
+#endif
+    {
+        [[NSClassFromString(@"LSApplicationWorkspace") defaultWorkspace] openApplicationWithBundleID:@"com.apple.springboard"];
+        [[NSClassFromString(@"LSApplicationWorkspace") defaultWorkspace] openApplicationWithBundleID:NSUserDefaults.lcMainBundle.bundleIdentifier];
         exit(0);
     }
     
