@@ -48,15 +48,15 @@ If something goes wrong, please check "JIT-Less Mode Diagnose" for more informat
 
 #### Method 1 (Requires AltStore 2.2.1+ / SideStore 0.6.2-nightly+ \[recommended])
 - Open Settings in LiveContainer 
-- Tap "Import Certificate from SideStore"
-- SideStore will be opened and ask if you want to export the certificate. If you don't see the prompt, keep SideStore open in the background and tap "Import Certificate from SideStore" again.
-- Press "Export"
+- Tap "Import Certificate from AltStore/SideStore"
+- AltStore/SideStore will be opened and ask if you want to export the certificate. If you don't see the prompt, keep AltStore/SideStore open in the background and tap "Import Certificate from AltStore/SideStore" again.
+- Press "Export" in SideStore or set a password and export in AltStore
 - Tap "JIT-Less Mode Diagnose" and tap "Test JIT-Less Mode"
 - If it says "JIT-Less Mode Test Passed", you are good to go!
 >[!Note] 
 If you reinstall AltStore/SideStore using AltServer, you will need to go through these steps again or risk needing to reinstall the app.
 
-#### Method 2 (Requires AltStore/SideStore)
+#### Method 2 (Deprecated, Requires AltStore/SideStore)
 - Open Settings in LiveContainer, tap "Patch AltStore/SideStore", and the app will switch to AltStore/SideStore to reinstall it with the tweak applied. If you use AltWidget, select "Keep Extension."
 - Wait for the installation to finish, then **reopen AltStore/SideStore**.
 - Return to LiveContainer and press "Test JIT-Less Mode." If it says "Test Passed," JIT-less mode is ready.
@@ -85,6 +85,17 @@ The first LiveContainer (blue icon) always launches by default.
 If an app is already running in the first container, you'll be prompted to either open it in the second LiveContainer (gray icon) or terminate the current app and relaunch it in the first. If the app is already running in the second container, it will switch automatically.
 To use an app in the second container, you must convert this app to a shared app. You can do that by opening the first LiveContainer (blue), long press on your app, open the settings of your app and then "Convert to Shared App". After that, you can launch your app using LiveContainer2 (grey).
 
+### Multitaksing
+You can now launch multiple apps simultaneously in in-app virtual windows. These windows can be resized, scaled, and even displayed using the native Picture-in-Picture (PiP) feature. On iPads, apps can run in native window mode, displaying each app in a separate system window. And if you wish, you can choose to run apps in multitasking mode by default in settings.
+
+To use multitasking:
+1. Convert the app you want to multitask into a **shared app**.
+2. Hold its banner and tap **"Multitask"**.
+
+>[!Note]
+>1. To use multitasking, ensure you select **"Keep Extension"** when installing via SideStore/AltStore.  
+>2. If you want to enable JIT for multitasked apps, you’ll need a JIT enabler that supports attaching by PID.
+
 ### Fix File Picker & Local Notification
 Some apps may experience issues with their file pickers or not be able to apply for notification permission in LiveContainer. To resolve this, enable "Fix File Picker & Local Notification" in the app-specific settings.
 
@@ -112,7 +123,7 @@ LiveContainer offers three levels of app hiding:
 Unfortunately, not all apps work in LiveContainer, so we have a [compatibility list](https://github.com/LiveContainer/LiveContainer/labels/compatibility) to tell if there is apps that have issues. If they aren't on this list, then it's likely going run. However, if it doesn't work, please make an [issue](https://github.com/LiveContainer/LiveContainer/issues/new/choose) about it.
 
 ## Building
-Open Xcode, select your developer account and set bundle identifier to `com.kdt.livecontainer.YOUR_TEAM_ID`
+Open Xcode, edit `DEVELOPMENT_TEAM[config=Debug]` in `xcconfigs/Global.xcconfig` to your team id and compile.
 
 ## Project structure
 ### Main executable
@@ -122,13 +133,13 @@ Open Xcode, select your developer account and set bundle identifier to `com.kdt.
 
 ### LiveContainerSwiftUI
 - SwiftUI rewrite of LiveContainerUI (by @hugeBlack)
-- Lanaguage file `Localizable.xcstrings` is in here for multilingual support
+- Lanaguage file `Localizable.xcstrings` is in here for multilingual support. To help us translate LiveContainer, please visit [our crodwin project](https://crowdin.com/project/livecontainer)
 
 ### TweakLoader
 - A simple tweak injector, which loads CydiaSubstrate and load tweaks.
 - Injected to every app you install in LiveContainer.
 
-### AltStoreTweak
+### AltStoreTweak (Deprecated)
 - The tweak that got injected into SideStore/AltStore to retrieve certificate from it everytime it launches.
 
 ### ZSign

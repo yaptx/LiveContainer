@@ -10154,37 +10154,37 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "إعداد وضع بدون-JIT (متجر التصحيحات) في الإعدادات لاستخدام LiveContainer بدون JIT.\nتحقق من صفحة تشخيص بدون-JIT في الإعدادات إذا واجهت مشكلة في تفعيل وضع بدون-JIT.\nاضغط على زر الإضافة لتثبيت التطبيقات.\nاضغط مطولاً على التطبيق للوصول إلى إعدادات المحددة للتطبيق، وإصلاحات، وإضافة التطبيقات إلى الشاشة الرئيسية."
+            "value" : "إعداد وضع بدون-JIT في الإعدادات لاستخدام LiveContainer بدون JIT.\nتحقق من صفحة تشخيص بدون-JIT في الإعدادات إذا واجهت مشكلة في تفعيل وضع بدون-JIT.\nاضغط على زر الإضافة لتثبيت التطبيقات.\nاضغط مطولاً على التطبيق للوصول إلى إعدادات المحددة للتطبيق، وإصلاحات، وإضافة التطبيقات إلى الشاشة الرئيسية."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Richten Sie den JIT-freien-Modus (Patch Store) in den Einstellungen ein, um LiveContainer ohne JIT zu verwenden.\n\n**Prüfen Sie die JITless-Diagnose-Seite in den Einstellungen, wenn Sie Probleme mit der Aktivierung des JIT-Less-Modus haben.**\n\nDrücken Sie die Plus-Taste, um Apps zu installieren.\n\nDrücken Sie lange auf die App, um app-spezifische Einstellungen, Fehlerbehebungen und das Hinzufügen von Apps zum Homescreen zu erhalten."
+            "value" : "Richten Sie den JIT-freien-Modus in den Einstellungen ein, um LiveContainer ohne JIT zu verwenden.\n\n**Prüfen Sie die JITless-Diagnose-Seite in den Einstellungen, wenn Sie Probleme mit der Aktivierung des JIT-Less-Modus haben.**\n\nDrücken Sie die Plus-Taste, um Apps zu installieren.\n\nDrücken Sie lange auf die App, um app-spezifische Einstellungen, Fehlerbehebungen und das Hinzufügen von Apps zum Homescreen zu erhalten."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Setup JITLess mode (Patch Store) in settings to use LiveContainer without JIT.\n\n**Check JITLess Diagnose page in settings if you have trouble enabling JITLess mode.**\n\nPress plus button to install apps.\n\nHolding app banner for app-specific settings, fixes and adding apps to home screen."
+            "value" : "Setup JITLess mode in settings to use LiveContainer without JIT.\n\n**Check JITLess Diagnose page in settings if you have trouble enabling JITLess mode.**\n\nPress plus button to install apps.\n\nHolding app banner for app-specific settings, fixes and adding apps to home screen."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Configurer le mode sans JIT (patch du store) dans les paramètres pour utiliser LiveContainer sans le JIT.\n\n**Consultez la page Diagnostic du mode sans JIT dans les paramètres si vous avez des difficultés à activer le mode sans JIT.\n\nAppuyez sur le bouton Plus pour installer des applications.\n\nAppuyez longuement sur une application pour accéder aux paramètres spécifiques à l'application, aux correctifs et pour ajouter l'application à l'écran d'accueil."
+            "value" : "Configurer le mode sans JIT dans les paramètres pour utiliser LiveContainer sans le JIT.\n\n**Consultez la page Diagnostic du mode sans JIT dans les paramètres si vous avez des difficultés à activer le mode sans JIT.\n\nAppuyez sur le bouton Plus pour installer des applications.\n\nAppuyez longuement sur une application pour accéder aux paramètres spécifiques à l'application, aux correctifs et pour ajouter l'application à l'écran d'accueil."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Imposta la modalità JITLess (Patch Store) nelle impostazioni per utilizzare LiveContainer senza JIT.\n\n**Controlla la pagina JITLess Diagnose nelle impostazioni se hai problemi ad abilitare la modalità JITLess. *\n\nPremi il pulsante plus per installare le applicazioni.\n\nPremi a lungo l'app per le impostazioni, le correzioni e l'aggiunta di app alla schermata iniziale."
+            "value" : "Imposta la modalità JITLess nelle impostazioni per utilizzare LiveContainer senza JIT.\n\n**Controlla la pagina JITLess Diagnose nelle impostazioni se hai problemi ad abilitare la modalità JITLess. *\n\nPremi il pulsante plus per installare le applicazioni.\n\nPremi a lungo l'app per le impostazioni, le correzioni e l'aggiunta di app alla schermata iniziale."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "設定でJITレスモード (パッチストア) を設定して、JITなしでLiveContainerを使用します。\n\n**JITレスモードをオンにする際に問題がある場合は、設定内のJITレス診断ページを確認してください。**\n\nアプリをインストールするには、｢＋｣ボタンを押してください。\n\nアプリ固有の設定、修正、ホーム画面にアプリを追加するには、アプリを長押ししてください。"
+            "value" : "設定でJITレスモードを設定して、JITなしでLiveContainerを使用します。\n\n**JITレスモードをオンにする際に問題がある場合は、設定内のJITレス診断ページを確認してください。**\n\nアプリをインストールするには、｢＋｣ボタンを押してください。\n\nアプリ固有の設定、修正、ホーム画面にアプリを追加するには、アプリを長押ししてください。"
           }
         },
         "pt-BR" : {
@@ -10196,31 +10196,31 @@
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Konfigurera JITLess (Patch Store) i inställningar för att använda LiveContainer utan JIT.\n\n**Kontrollera JITLess diagnostisera sidan i inställningar om du har problem med att aktivera JITLess läge. **\n\nTryck på plusknappen för att installera appar.\n\nTryck länge på appen för appspecifika inställningar, fixar och lägger till appar på startskärmen."
+            "value" : "Konfigurera JITLess i inställningar för att använda LiveContainer utan JIT.\n\n**Kontrollera JITLess diagnostisera sidan i inställningar om du har problem med att aktivera JITLess läge. **\n\nTryck på plusknappen för att installera appar.\n\nTryck länge på appen för appspecifika inställningar, fixar och lägger till appar på startskärmen."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "JIT olmadan LiveContainer'ı kullanmak için ayarlarda JITLess modunu (Yama Mağazası) etkinleştirin.\n\n**JITLess modunu etkinleştirirken sorun yaşıyorsanız, ayarlardaki JITLess Teşhis sayfasını kontrol edin.**\n\nUygulamaları yüklemek için artı düğmesine basın.\n\nUygulamaya özgü ayarlar, düzeltmeler ve uygulamaları ana ekrana eklemek için uygulamaya uzun basın."
+            "value" : "JIT olmadan LiveContainer'ı kullanmak için ayarlarda JITLess modunu etkinleştirin.\n\n**JITLess modunu etkinleştirirken sorun yaşıyorsanız, ayarlardaki JITLess Teşhis sayfasını kontrol edin.**\n\nUygulamaları yüklemek için artı düğmesine basın.\n\nUygulamaya özgü ayarlar, düzeltmeler ve uygulamaları ana ekrana eklemek için uygulamaya uzun basın."
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Thiết lập chế độ JITLess (Vá Store) trong cài đặt để dùng LiveContainer không JIT.\n\n**Kiểm tra trang Chuẩn đoán JITLess trong cài đặt nếu bạn gặp vấn đề khi dùng chế độ này.**\n\nNhấn vào dấu cộng để cài thêm app.\n\nNhấn giữ app để mở cài đặt của app, các sửa lỗi và thêm app vào màn hình chính."
+            "value" : "Thiết lập chế độ JITLess trong cài đặt để dùng LiveContainer không JIT.\n\n**Kiểm tra trang Chuẩn đoán JITLess trong cài đặt nếu bạn gặp vấn đề khi dùng chế độ này.**\n\nNhấn vào dấu cộng để cài thêm app.\n\nNhấn giữ app để mở cài đặt của app, các sửa lỗi và thêm app vào màn hình chính."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "在设置中配置免JIT模式(打补丁)来使得LiveContainer无需JIT权限即可使用。\n\n**如果配置免JIT模式时遇到问题，请查看免JIT模式诊断页面。**\n\n点击加号按钮来安装App。\n\n长按App可查看App设置，修复App问题，以及将App添加到主屏幕。"
+            "value" : "在设置中配置免JIT模式来使得LiveContainer无需JIT权限即可使用。\n\n**如果配置免JIT模式时遇到问题，请查看免JIT模式诊断页面。**\n\n点击加号按钮来安装App。\n\n长按App可查看App设置，修复App问题，以及将App添加到主屏幕。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "在設定中設定免JIT模式(修補)來使得LiveContainer無需JIT即可使用。\n\n**如果在設定免JIT模式時遇到問題，請查看免JIT模式診斷頁面。 **\n\n點選加號按鈕來安裝App。\n\n長按App可以查看App設置、修復App問題、和將App添加至主畫面。"
+            "value" : "在設定中設定免JIT模式來使得LiveContainer無需JIT即可使用。\n\n**如果在設定免JIT模式時遇到問題，請查看免JIT模式診斷頁面。 **\n\n點選加號按鈕來安裝App。\n\n長按App可以查看App設置、修復App問題、和將App添加至主畫面。"
           }
         }
       }
@@ -12489,6 +12489,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "LiveContainer's bundle ID, \"%@\", does not match application-Identifier in entitlements, which expects the bundle ID to be \"%@\". Some functions may not be available."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'ID du bundle de LiveContainer, \"%@\", ne correspond pas à l'identificateur d'application dans les droits qui attendent que l'ID du bundle soit \"%@\". Certaines fonctions peuvent ne pas être disponibles."
           }
         },
         "zh-Hans" : {
