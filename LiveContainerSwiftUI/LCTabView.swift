@@ -29,11 +29,9 @@ struct LCTabView: View {
                     Tab("lc.tabView.apps".loc, systemImage: "square.stack.3d.up.fill") {
                         appListView
                     }
-                    Tab("lc.tabView.tweaks".loc, systemImage: "wrench.and.screwdriver") {
-                        if DataManager.shared.model.multiLCStatus != 2 {
+                    if DataManager.shared.model.multiLCStatus != 2 {
+                        Tab("lc.tabView.tweaks".loc, systemImage: "wrench.and.screwdriver") {
                             LCTweaksView(tweakFolders: $tweakFolderNames)
-                        } else {
-                            Text("lc.tabView.tweaksUnavailable".loc)
                         }
                     }
                     Tab("lc.tabView.settings".loc, systemImage: "gearshape.fill") {
