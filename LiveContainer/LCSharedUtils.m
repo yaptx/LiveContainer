@@ -1,6 +1,7 @@
 #import "LCSharedUtils.h"
 #import "FoundationPrivate.h"
 #import "UIKitPrivate.h"
+#import "utils.h"
 
 extern NSUserDefaults *lcUserDefaults;
 extern NSString *lcAppUrlScheme;
@@ -117,35 +118,34 @@ extern NSBundle *lcMainBundle;
 }
 
 + (BOOL)launchToGuestApp {
-    NSString *urlScheme;
+    if (self.certificatePassword) {
+        [[LSApplicationWorkspace defaultWorkspace] openApplicationWithBundleID:@"com.apple.springboard"];
+        [[LSApplicationWorkspace defaultWorkspace] openApplicationWithBundleID:NSUserDefaults.lcMainBundle.bundleIdentifier];
+        exit(0);
+    }
+    
+    NSString *urlScheme = nil;
     NSString *tsPath = [NSString stringWithFormat:@"%@/../_TrollStore", NSBundle.mainBundle.bundlePath];
     UIApplication *application = [NSClassFromString(@"UIApplication") sharedApplication];
     
-    int tries = 1;
     if (!access(tsPath.UTF8String, F_OK)) {
         urlScheme = @"apple-magnifier://enable-jit?bundle-id=%@";
-    } else if (self.certificatePassword) {
-        tries = 2;
-        urlScheme = [NSString stringWithFormat:@"%@://livecontainer-relaunch", lcAppUrlScheme];
+    } else if ([application canOpenURL:[NSURL URLWithString:@"stikjit://"]]) {
+        urlScheme = @"stikjit://enable-jit?bundle-id=%@";
     } else if ([application canOpenURL:[NSURL URLWithString:@"sidestore://"]]) {
         urlScheme = @"sidestore://sidejit-enable?bid=%@";
-    } else {
-        tries = 2;
-        urlScheme = [NSString stringWithFormat:@"%@://livecontainer-relaunch", lcAppUrlScheme];
+    }
+    if(urlScheme == nil) {
+        exit(0);
     }
     NSURL *launchURL = [NSURL URLWithString:[NSString stringWithFormat:urlScheme, NSBundle.mainBundle.bundleIdentifier]];
 
     if ([application canOpenURL:launchURL]) {
-        //[UIApplication.sharedApplication suspend];
-        for (int i = 0; i < tries; i++) {
+
             [application openURL:launchURL options:@{} completionHandler:^(BOOL b) {
                 exit(0);
             }];
-        }
-        // Workaround iOS 26 black screen
-        if(@available(iOS 19.0, *)) {
-            [[NSClassFromString(@"LSApplicationWorkspace") defaultWorkspace] openApplicationWithBundleID:@"com.apple.springboard"];
-        }
+        
         return YES;
     } else {
         // none of the ways work somehow (e.g. LC itself was hidden), we just exit and wait for user to manually launch it

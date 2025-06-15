@@ -153,7 +153,6 @@ struct LCAppBanner : View {
             })
             .clipShape(Capsule())
             .disabled(model.isAppRunning)
-            
         }
         .padding()
         .frame(height: 88)

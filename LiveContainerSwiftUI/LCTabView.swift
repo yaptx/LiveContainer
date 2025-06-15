@@ -15,28 +15,54 @@ struct LCTabView: View {
     @State var errorShow = false
     @State var errorInfo = ""
     
+    @EnvironmentObject var sharedModel : SharedModel
     @EnvironmentObject var sceneDelegate: SceneDelegate
     @State var shouldToggleMainWindowOpen = false
     @Environment(\.scenePhase) var scenePhase
     let pub = NotificationCenter.default.publisher(for: UIScene.didDisconnectNotification)
     
     var body: some View {
-        TabView {
-            LCAppListView(appDataFolderNames: $appDataFolderNames, tweakFolderNames: $tweakFolderNames)
-                .tabItem {
-                    Label("lc.tabView.apps".loc, systemImage: "square.stack.3d.up.fill")
-                }
-            if DataManager.shared.model.multiLCStatus != 2 {
-                LCTweaksView(tweakFolders: $tweakFolderNames)
-                    .tabItem{
-                        Label("lc.tabView.tweaks".loc, systemImage: "wrench.and.screwdriver")
+        Group {
+            let appListView = LCAppListView(appDataFolderNames: $appDataFolderNames, tweakFolderNames: $tweakFolderNames)
+            if #available(iOS 19.0, *), sharedModel.isPhone, dyld_get_program_sdk_version() >= 0x1a0000 {
+                TabView {
+                    Tab("lc.tabView.apps".loc, systemImage: "square.stack.3d.up.fill") {
+                        appListView
                     }
-            }
-
-            LCSettingsView(appDataFolderNames: $appDataFolderNames)
-                .tabItem {
-                    Label("lc.tabView.settings".loc, systemImage: "gearshape.fill")
+                    Tab("lc.tabView.tweaks".loc, systemImage: "wrench.and.screwdriver") {
+                        if DataManager.shared.model.multiLCStatus != 2 {
+                            LCTweaksView(tweakFolders: $tweakFolderNames)
+                        } else {
+                            Text("lc.tabView.tweaksUnavailable".loc)
+                        }
+                    }
+                    Tab("lc.tabView.settings".loc, systemImage: "gearshape.fill") {
+                        LCSettingsView(appDataFolderNames: $appDataFolderNames)
+                    }
+                    Tab("Search".loc, systemImage: "magnifyingglass", role: .search) {
+                        appListView
+                    }
                 }
+                .searchable(text: appListView.$searchContext.query)
+            } else {
+                TabView {
+                    appListView
+                        .tabItem {
+                            Label("lc.tabView.apps".loc, systemImage: "square.stack.3d.up.fill")
+                        }
+                    if DataManager.shared.model.multiLCStatus != 2 {
+                        LCTweaksView(tweakFolders: $tweakFolderNames)
+                            .tabItem{
+                                Label("lc.tabView.tweaks".loc, systemImage: "wrench.and.screwdriver")
+                            }
+                    }
+                    
+                    LCSettingsView(appDataFolderNames: $appDataFolderNames)
+                        .tabItem {
+                            Label("lc.tabView.settings".loc, systemImage: "gearshape.fill")
+                        }
+                }
+            }
         }
         .alert("lc.common.error".loc, isPresented: $errorShow){
             Button("lc.common.ok".loc, action: {
@@ -60,7 +86,6 @@ struct LCTabView: View {
                 }
             }
         }
-        .environmentObject(DataManager.shared.model)
     }
     
     func closeDuplicatedWindow() {

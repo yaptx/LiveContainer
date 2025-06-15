@@ -114,7 +114,6 @@ void LCPatchExecSlice(const char *path, struct mach_header_64 *header, bool doIn
                     if ( strcmp(loadPath, depPaths[i]) == 0 ) {
                         // replace this duplicated dylib command with an invalid command number
                         command2->cmd = 0x114515;
-                        NSLog(@"Fixed duplicated load command %s", loadPath);
                         continue;
                     }
                 }

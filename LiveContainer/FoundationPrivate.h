@@ -14,7 +14,7 @@
 - (void)beginExtensionRequestWithInputItems:(NSArray *)items completion:(void(^)(NSUUID *))callback;
 - (int)pidForRequestIdentifier:(NSUUID *)identifier;
 - (void)_kill:(int)arg1;
-- (void)setRequestInterruptionBlock:(void(^)(NSUUID *))callback;
+- (void)setRequestInterruptionBlock:(__attribute__((noescape)) void(^)(NSUUID *))callback;
 - (void)_hostDidEnterBackgroundNote:(NSNotification *)note;
 @end
 

@@ -19,6 +19,7 @@ NSString* getEntitlementXML(struct mach_header_64* header, void** entitlementXML
 NSString* getLCEntitlementXML(void);
 bool checkCodeSignature(const char* path);
 void refreshFile(NSString* execPath);
+int dyld_get_program_sdk_version(void);
 
 @interface PKZipArchiver : NSObject
 

@@ -69,6 +69,10 @@ static BOOL checkJITEnabled() {
     if (access("/var/mobile", R_OK) == 0) {
         return YES;
     }
+    
+    if(@available(iOS 26.0 ,*))  {
+        return false;
+    }
 
     // check csflags
     int flags;
