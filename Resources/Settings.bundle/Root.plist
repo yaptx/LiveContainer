@@ -12,7 +12,7 @@
 			<key>Key</key>
 			<string>com.apple.SwiftUI.IgnoreSolariumLinkedOnCheck</string>
 			<key>DefaultValue</key>
-			<true/>
+			<false/>
 		</dict>
 		<dict>
 			<key>Type</key>
