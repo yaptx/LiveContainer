@@ -554,7 +554,7 @@ BOOL canAppOpenItself(NSURL* url) {
 }
 - (void)updateWindowScene {
     for(UIWindowScene *windowScene in UIApplication.sharedApplication.connectedScenes) {
-        if(self.screen == windowScene.screen) {
+        if(!self.windowScene && self.screen == windowScene.screen) {
             self.windowScene = windowScene;
             break;
         }

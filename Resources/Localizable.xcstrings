@@ -16019,6 +16019,17 @@
         }
       }
     },
+    "lc.settings.notDevCert" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LiveContainer cannot work with this certificate. You must use Development Certificate to sign LiveContainer."
+          }
+        }
+      }
+    },
     "lc.settings.refreshCertificateFromStore %@" : {
       "extractionState" : "stale",
       "localizations" : {
