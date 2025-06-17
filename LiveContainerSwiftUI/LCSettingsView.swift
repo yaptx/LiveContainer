@@ -8,12 +8,6 @@
 import Foundation
 import SwiftUI
 
-enum PatchChoice {
-    case cancel
-    case autoPath
-    case archiveOnly
-}
-
 enum JITEnablerType : Int {
     case SideJITServer = 0
     case StkiJIT = 1
@@ -35,7 +29,7 @@ struct LCSettingsView: View {
     
     @Binding var appDataFolderNames: [String]
 
-    @StateObject private var installLC2Alert = AlertHelper<PatchChoice>()
+    @StateObject private var installLC2Alert = YesNoHelper()
     @State private var certificateDataFound = false
     
     @StateObject private var certificateImportAlert = YesNoHelper()
@@ -45,7 +39,6 @@ struct LCSettingsView: View {
     @State private var showShareSheet = false
     @State private var shareURL : URL? = nil
     
-    @State var isJitLessEnabled = false
     @AppStorage("LCFrameShortcutIcons") var frameShortIcon = false
     @AppStorage("LCSwitchAppWithoutAsking") var silentSwitchApp = false
     @AppStorage("LCOpenWebPageWithoutAsking") var silentOpenWebPage = false
@@ -56,6 +49,7 @@ struct LCSettingsView: View {
     @AppStorage("LCSideJITServerAddress", store: LCUtils.appGroupUserDefault) var sideJITServerAddress : String = ""
     @AppStorage("LCDeviceUDID", store: LCUtils.appGroupUserDefault) var deviceUDID: String = ""
     @AppStorage("LCJITEnablerType", store: LCUtils.appGroupUserDefault) var JITEnabler: JITEnablerType = .SideJITServer
+    
     @AppStorage("LCMultitaskMode", store: LCUtils.appGroupUserDefault) var multitaskMode: MultitaskMode = .virtualWindow
     @AppStorage("LCLaunchInMultitaskMode") var launchInMultitaskMode = false
     
@@ -72,7 +66,7 @@ struct LCSettingsView: View {
     let storeName = LCUtils.getStoreName()
     
     init(appDataFolderNames: Binding<[String]>) {
-        _isJitLessEnabled = State(initialValue: LCUtils.certificatePassword() != nil)
+        _certificateDataFound = State(initialValue: LCUtils.certificatePassword() != nil)
         _store = State(initialValue: LCUtils.store())
         
         _appDataFolderNames = appDataFolderNames
@@ -357,13 +351,13 @@ struct LCSettingsView: View {
             }
             .alert("lc.settings.multiLCInstall".loc, isPresented: $installLC2Alert.show) {
                 Button {
-                    installLC2Alert.close(result: .autoPath)
+                    installLC2Alert.close(result: true)
                 } label: {
                     Text("lc.common.continue".loc)
                 }
 
                 Button("lc.common.cancel".loc, role: .cancel) {
-                    installLC2Alert.close(result: .cancel)
+                    installLC2Alert.close(result: false)
                 }
             } message: {
                 Text("lc.settings.multiLCInstallAlertDesc %@".localizeWithFormat(storeName))
@@ -431,7 +425,7 @@ struct LCSettingsView: View {
             return;
         }
         
-        guard let result = await installLC2Alert.open(), result != .cancel else {
+        guard let result = await installLC2Alert.open(), result else {
             return
         }
         
@@ -568,7 +562,7 @@ struct LCSettingsView: View {
         LCUtils.appGroupUserDefault.set(certificateData, forKey: "LCCertificateData")
         LCUtils.appGroupUserDefault.set(password, forKey: "LCCertificatePassword")
         LCUtils.appGroupUserDefault.set(NSDate.now, forKey: "LCCertificateUpdateDate")
-        certificateDataFound = false
+        certificateDataFound = true
     }
     
     func removeCertificate() async {
